@@ -1,0 +1,953 @@
+{% load static %}
+{% load cart_template_tags %}
+{% load crispy_forms_tags %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <title>Mobile repairs Hamilton | Mobile Phone repairs Waikat</title>
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
+  <!-- Bootstrap core CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+  <!-- Material Design Bootstrap -->
+  <link href="{% static 'prod/css/mdb.min.css' %}" rel="stylesheet">
+  <!-- Your custom styles (optional) -->
+  <link href="{% static 'prod/css/style.min.css' %}" rel="stylesheet">
+  <style type="text/css">
+    html,
+    body,
+    header,
+    .carousel {
+      height: 60vh;
+    }
+
+    @media (max-width: 740px) {
+
+      html,
+      body,
+      header,
+      .carousel {
+        height: 100vh;
+      }
+    }
+
+    @media (min-width: 800px) and (max-width: 850px) {
+
+      html,
+      body,
+      header,
+      .carousel {
+        height: 100vh;
+      }
+    }
+
+    .col-md-3 img{
+      height: 125px;
+    }
+  </style>
+</head>
+
+<body>
+  <nav class="navbar navbar-light" style="background-color: #171a43;">
+    <div class="container">
+
+    </div>
+  </nav>
+  <!-- Navbar -->
+  <nav class="navbar sticky-top navbar-expand-lg navbar-light white scrolling-navbar">
+    <div class="container">
+
+      <!-- Brand -->
+      <a class="navbar-brand" href="{% url 'homie' %}">
+        <img src="{% static 'prod/img/logo-black.png' %}" alt="Logo" style="width:150px;">
+      </a>
+
+      {% if user.is_authenticated %}
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item">
+            <a class="nav-link waves-effect" href="{% url 'order-summary' %}">
+              {% if request.user|cart_item_count != 0 %}
+                <span class="badge red z-depth-1 mr-1" id="cartupd"> {{ request.user|cart_item_count }} </span>
+              {% endif %}
+              <i class="fas fa-shopping-cart" style="color: #444"></i>
+              <span class="clearfix d-none d-sm-inline-block"> Cart </span>
+            </a>
+          </li>
+        </ul>
+      {% else %}
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item">
+            <a class="nav-link waves-effect">
+              <span class="badge red z-depth-1 mr-1" id="cartlogout"></span>
+              <i class="fas fa-shopping-cart" style="color: #444"></i>
+              <span class="clearfix d-none d-sm-inline-block"> Cart </span>
+            </a>
+          </li>
+        </ul>
+      {% endif %}
+
+      <!-- Collapse -->
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <!-- Links -->
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+
+        <!-- Left -->
+        <ul class="navbar-nav mr-auto">
+        <!--  <li class="nav-item active">
+            <a class="nav-link waves-effect" href="#">Home
+              <span class="sr-only">(current)</span>
+            </a>
+          </li> -->
+          <li class="nav-item">
+            <a class="nav-link waves-effect" href="{% url 'about' %}" target="_self">About Us</a>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Repair Services
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <a class="dropdown-item" href="serv-prod/MobRep/">Mobile Repair</a>
+              <a class="dropdown-item" href="serv-prod/LapRep/">Laptop/Computer Repair</a>
+              <div class="dropdown-divider"></div>
+              <a class="dropdown-item" href="serv-prod/TabRep/">iPad/Tablet Repair</a>
+            </div>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link waves-effect" href="{% url 'contact' %}" target="_self">
+              Contact Us</a>
+          </li>
+        </ul>
+
+        <!-- Right -->
+        <ul class="navbar-nav nav-flex-icons">
+        <!--  <li class="nav-item">
+            <a class="nav-link waves-effect">
+              <span class="badge red z-depth-1 mr-1"> 1 </span>
+              <i class="fas fa-shopping-cart"></i>
+              <span class="clearfix d-none d-sm-inline-block"> Cart </span>
+            </a>
+          </li>-->
+          <li class="nav-item">
+            <a href="https://www.facebook.com/tngtechsolutions/" class="nav-link waves-effect" target="_blank">
+              <i class="fab fa-facebook-f"></i>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="https://twitter.com/tng_tech" class="nav-link waves-effect" target="_blank">
+              <i class="fab fa-twitter"></i>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="https://www.instagram.com/tngtech.nz/" class="nav-link waves-effect" target="_blank">
+              <i class="fab fa-instagram"></i>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="https://www.linkedin.com/company/tng-tech-solutions/" class="nav-link waves-effect" target="_blank">
+              <i class="fab fa-linkedin"></i>
+            </a>
+          </li>
+          {% if user.is_authenticated %}
+            <!--<li class="nav-item">
+              <a class="nav-link waves-effect" href="{% url 'order-summary' %}">
+                <span class="badge red z-depth-1 mr-1"> {{ request.user|cart_item_count }} </span>
+                <i class="fas fa-shopping-cart"></i>
+                <span class="clearfix d-none d-sm-inline-block"> Cart </span>
+              </a>
+            </li>-->
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                {{ user.username }}
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <a class="dropdown-item" href="{% url 'profile' %}">Profile</a>
+                <a class="dropdown-item" href="{% url 'logout' %}">Log Out</a>
+              </div>
+            </li>
+            
+          {% else %}
+            <li class="nav-item">
+              <a class="nav-link waves-effect" href="{% url 'login' %}">Log In</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link waves-effect" href="{% url 'userreg' %}">Register</a>
+            </li>
+          {% endif %}
+        </ul>
+
+      </div>
+
+    </div>
+  </nav>
+  <!-- Navbar -->
+
+  <!--Carousel Wrapper-->
+  <div id="carousel-example-1z" class="carousel slide carousel-fade pt-4" data-ride="carousel">
+
+    <!--Indicators-->
+    <ol class="carousel-indicators">
+      <li data-target="#carousel-example-1z" data-slide-to="0" class="active"></li>
+      <li data-target="#carousel-example-1z" data-slide-to="1"></li>
+      <li data-target="#carousel-example-1z" data-slide-to="2"></li>
+    </ol>
+    <!--/.Indicators-->
+
+    <!--Slides-->
+    <div class="carousel-inner" role="listbox">
+
+      <!--First slide-->
+      <div class="carousel-item active">
+        <div class="view" style="background-image: url('/static/prod/img/slide1.jpg'); background-repeat: no-repeat; background-size: cover;">
+
+          <!-- Mask & flexbox options-->
+          <div class="mask rgba-black-strong d-flex justify-content-center align-items-center">
+
+            <!-- Content -->
+            <div class="text-center white-text mx-5 wow fadeIn">
+              <h1 class="mb-4">
+                <strong>Repair Services</strong>
+              </h1>
+
+
+              <p class="mb-4 d-none d-md-block">
+                <strong>Get all your gadgets Repairs services in Hamilton, Nz with TNG Tech</strong>
+              </p>
+
+              <a target="_blank" href="{% url 'contact' %}" class="btn btn-outline-white btn-lg">Connect
+                  Now
+                <i class="fas fa-phone-alt ml-2"></i>
+              </a>
+            </div>
+            <!-- Content -->
+
+          </div>
+          <!-- Mask & flexbox options-->
+
+        </div>
+      </div>
+      <!--/First slide-->
+
+      <!--Second slide-->
+      <div class="carousel-item">
+        <div class="view" style="background-image: url('/static/prod/img/slide2.jpg'); background-repeat: no-repeat; background-size: cover;">
+
+          <!-- Mask & flexbox options-->
+          <div class="mask rgba-black-strong d-flex justify-content-center align-items-center">
+
+            <!-- Content -->
+            <div class="text-center white-text mx-5 wow fadeIn">
+              <h1 class="mb-4">
+                <strong>Accessories for your<br /> Mobile phone and laptop</strong>
+              </h1>
+
+
+              <p class="mb-4 d-none d-md-block">
+                <strong>Get latest Mobile phone and laptop accessories<br /> in Hamilton & Waikato and anywhere New Zealand</strong>
+              </p>
+
+              <a target="_blank" href="{% url 'contact' %}" class="btn btn-outline-white btn-lg">Connect
+                Now
+                <i class="fas fa-phone-alt ml-2"></i>
+              </a>
+            </div>
+            <!-- Content -->
+
+          </div>
+          <!-- Mask & flexbox options-->
+
+        </div>
+      </div>
+      <!--/Second slide-->
+
+      <!--Third slide-->
+      <div class="carousel-item">
+        <div class="view" style="background-image: url('/static/prod/img/slide3.jpg'); background-repeat: no-repeat; background-size: cover;">
+
+          <!-- Mask & flexbox options-->
+          <div class="mask rgba-black-strong d-flex justify-content-center align-items-center">
+
+            <!-- Content -->
+            <div class="text-center white-text mx-5 wow fadeIn">
+              <h1 class="mb-4" class="animated fadeInDown">
+                <strong>For Free Health Checkup</strong>
+              </h1>
+
+
+              <p class="mb-4 d-none d-md-block">
+                <strong>Mobile health repair services</strong>
+              </p>
+
+              <a target="_blank" href="{% url 'contact' %}" class="btn btn-outline-white btn-lg">Connect
+                  Now
+                <i class="fas fa-phone-alt ml-2"></i>
+              </a>
+            </div>
+            <!-- Content -->
+
+          </div>
+          <!-- Mask & flexbox options-->
+
+        </div>
+      </div>
+      <!--/Third slide-->
+
+
+
+
+      <!--<div class="carousel-item" style="background-image: url('assets/img/slide/slide-3.jpg');">
+         <div class="carousel-container">
+           <div class="carousel-content container">
+             <h2 class="animated fadeInDown">For Free Health Checkup</h2>
+     <p class="animated fadeInUp">Mobile health repair services</p>
+             <a href="aboutTngtech.php" class="btn-get-started animated fadeInUp scrollto">Connect Now</a>
+           </div>
+         </div>
+       </div>-->
+
+
+
+
+
+
+    </div>
+    <!--/.Slides-->
+
+    <!--Controls-->
+    <a class="carousel-control-prev" href="#carousel-example-1z" role="button" data-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="sr-only">Previous</span>
+    </a>
+    <a class="carousel-control-next" href="#carousel-example-1z" role="button" data-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="sr-only">Next</span>
+    </a>
+    <!--/.Controls-->
+
+  </div>
+  <!--/.Carousel Wrapper-->
+
+  <!--Main layout-->
+  <main>
+    <div class="container">
+
+      <!--Navbar-->
+      <nav class="navbar navbar-expand-lg navbar-dark lighten-3 mt-3 mb-5" style="background-color: #171a43;">
+
+        <!-- Navbar brand -->
+        <span class="navbar-brand">Categories:</span>
+
+        <!-- Collapse button -->
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#basicExampleNav"
+          aria-controls="basicExampleNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        
+        <!-- Collapsible content -->
+        <div class="collapse navbar-collapse" id="basicExampleNav">
+
+          <!-- Links -->
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+              <a class="nav-link" href="/serv-prod/All/">All
+                <span class="sr-only">(current)</span>
+              </a>
+            </li>
+            <!--<li class="nav-item">
+              <a class="nav-link" href="serv-prod/MobileAccessories/">Mobile Accessories</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="serv-prod/DeviceAccessories/">Device Accessories</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="serv-prod/Cool/">Cool Stuffs</a>
+            </li>-->
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Products
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <a class="dropdown-item" href="serv-prod/MobileAccessories/">Mobile Accessories</a>
+                <a class="dropdown-item" href="serv-prod/DeviceAccessories/">Device Accessories</a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="serv-prod/Cool/">Cool Stuffs</a>
+              </div>
+            </li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Repair Services
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <a class="dropdown-item" href="serv-prod/MobRep/">Mobile Repair</a>
+                <a class="dropdown-item" href="serv-prod/LapRep/">Laptop/Computer Repair</a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="serv-prod/TabRep/">iPad/Tablet Repair</a>
+              </div>
+            </li>
+          </ul>
+          <!-- Links -->
+
+
+        </div>
+        <!-- Collapsible content -->
+
+        <!--<div class="navbar-nav mr-auto">-->
+        <!--in input class mr-sm-2 instead of mr-auto -->
+        <form class="form-inline" method="get" action="{% url 'searchprod' %}">
+          <!--div class="md-form my-0" -->
+          <div class="input-group my-0">
+            <input class="form-control mr-auto mt-1" type="text" placeholder="Search" name="search" id="search" aria-label="Search">
+            <!--<button type="submit">Search</button>-->
+            <!-- input-group-btn-->
+            <div class="input-group-append">
+              <button class="btn my-sm-0 mr-auto" style="position: relative;" type="submit" id="button-addon2"><i class="fas fa-search" style="color:white;"></i></button>
+            </div>
+          </div>
+        </form>
+      </nav>
+      <!--/.Navbar-->
+      {% if messages %}
+        {% for message in messages %}
+          <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+            {{ message }}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+        {% endfor %}
+      {% endif %}
+
+
+      <div class="container pt-3 mb-4">
+        <div class="text-center pb-3">
+          <h2><strong>Our Repair Services</strong></h2>
+          <p>Come and get your device look and operate like new.<br>Experience our services with the best technical staff taking care of your gadget.</p>
+        </div>
+        <div class="row">
+          <div class="animated col-lg-4 col-md-4 icon-box wd-10 wow fadeInUpBig animated animated text-center" style="visibility: visible;">
+            <div style="display: flex;justify-content: center;"><i class="fas fa-desktop text-center" style="width: 80px;height: 80px;margin-bottom: 20px;background: #fff;border-radius: 50%;transition: 0.5s;color: #f13d51;font-size: 40px;overflow: hidden;padding-top: 20px;box-shadow: 0px 0 25px rgba(0, 0, 0, 0.15);"></i></div>
+            <h4 style="font-weight: 600;margin-bottom: 15px;font-size: 18px;position: relative;padding-bottom: 15px;"><a href="" style="color: #444;" id="cardi1">Computer / Laptop Repairs</a></h4>
+            <p class="description">Get your computer/ laptop repaired from best technical specialists.</p>
+			      <a href="{% url 'about' %}" class="btn btn-danger rounded-pill" id="chiek">Read more</a>
+          </div>
+
+          <div class="animated col-lg-4 col-md-4 icon-box wd-10 wow fadeInUpBig animated animated text-center">
+            <div style="display: flex;justify-content: center;"><i class="fas fa-mobile text-center" style="width: 80px;height: 80px;margin-bottom: 20px;background: #fff;border-radius: 50%;transition: 0.5s;color: #f13d51;font-size: 40px;overflow: hidden;padding-top: 20px;box-shadow: 0px 0 25px rgba(0, 0, 0, 0.15);"></i></div>
+            <h4 style="font-weight: 600;margin-bottom: 15px;font-size: 18px;position: relative;padding-bottom: 15px;"><a href="" style="color: #444;" id="cardi2">Mobile Phone Repairs</a></h4>
+            <p class="description">Get your smartphone repaired from best technical specialists.</p>
+			      <a href="{% url 'about' %}" class="btn btn-danger rounded-pill" id="chido">Read more</a>
+          </div>
+
+          <div class="animated col-lg-4 col-md-4 icon-box wd-10 wow fadeInUpBig animated animated text-center">
+            <div style="display: flex;justify-content: center;"><i class="fas fa-tablet-alt text-center" style="width: 80px;height: 80px;margin-bottom: 20px;background: #fff;border-radius: 50%;transition: 0.5s;color: #f13d51;font-size: 40px;overflow: hidden;padding-top: 20px;box-shadow: 0px 0 25px rgba(0, 0, 0, 0.15);"></i></div>
+            <h4 style="font-weight: 600;margin-bottom: 15px;font-size: 18px;position: relative;padding-bottom: 15px;"><a href="" style="color: #444;" id="cardi3">Tablet / iPad Repairs</a></h4>
+            <p class="description">Get your tablet repaired from best technical specialists.</p>
+			      <a href="{% url 'about' %}" class="btn btn-danger rounded-pill" id="chiteen">Read more</a>
+          </div>
+        </div>
+
+      </div>
+
+
+      <!--Section: Products v.3-->
+      <section class="text-center mb-4">
+
+        <!--<div class="container" style="padding-bottom:35px;">
+          <div class="row">
+            <div class="col-xs-12">
+              <div class="row">
+                <div class="col-md-6 col-sm-12 col-xs-12 aos-init aos-animate" data-aos="fade-up">
+                  <div class="float-left hidden-sm"><img src="{% static 'prod/img/about.jpg' %}" width="525" height="525" alt="About-TNGtech"></div>
+                </div>
+                <div class="col-md-6 col-sm-12 col-xs-12 aos-init aos-animate" data-aos="fade-up">
+                  <div class="aboutus-content ">
+                    <div class="text-left">
+                      <h2><strong>Years of experience in digital device repair service</strong></h2>
+                    </div>
+                          <p style="font-size: 14px;line-height: 24px;">Our team has worked hard to build a good reputation in Hamilton,NZ. Our quick and easy mobile phone repairs services have satisfied thousands of customers and we are now among the Best Mobile Phone repairs stores in Hamilton, NZ. We have experts to fix any damage to your device.</p>
+                          <p><b><strong>Our Services Include</strong></b></p>
+                        <ul>
+                          <li><i class="fas fa-check-circle"></i> Screen Repair Services ( iPhone screen repair, Samsung screen repair, or any other brand’s screen repair)</li>
+                          <li><i class="fas fa-check-circle"></i> Headphone repair services</li>
+                          <li><i class="fas fa-check-circle"></i> Mic repair</li>
+                          <li><i class="fas fa-check-circle"></i> Keypad repair</li>
+                          <li><i class="fas fa-check-circle"></i> Signal issue repair</li>
+                          <li><i class="fas fa-check-circle"></i> Laptop Repair</li>
+                          <li><i class="fas fa-check-circle"></i> Battery Replacement (iPhone battery replacement or other brand’s repair)</li>
+
+                        </ul>
+
+                      <div class="call-area">
+                             <a href="#" class="btn btn-danger rounded-pill">Connect Now</a>
+                         <a href="#contact" class="btn btn-outline-danger rounded-pill">Contact Us</a>
+
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+        </div>-->
+
+
+
+        <h2><strong>Services/Products</strong></h2>
+        <!--Grid row-->
+        <div class="row pt-3">
+
+          <!--Grid column-->
+          {% for prd in object_list %}
+          <div class="col-6 col-sm-3 col-lg-3 col-md-3 mb-4">
+
+            <!--Card-->
+            <div class="card">
+
+              <!--Card image-->
+              <div class="view overlay">
+                <img src="{{ prd.image.url }}" class="card-img-top"
+                  alt="">
+                <a href="{{ prd.get_absolute_url }}">
+                  <div class="mask rgba-white-slight"></div>
+                </a>
+              </div>
+              <!--Card image-->
+
+              <!--Card content-->
+              <div class="card-body text-center">
+                <!--Category & Title-->
+                <a href="" class="grey-text">
+                  <h5>{{ prd.get_category_display }}</h5>
+                </a>
+                <h5>
+                  <strong>
+                    <a href="{{ prd.get_absolute_url }}" class="dark-grey-text">{{ prd.Name }}
+                      {% if prd.get_label_display == 'NEW' %}
+                      <span class="badge badge-pill danger-color">NEW</span> <!--Check if label is new or bestseller and change accordingly -->
+                      {% endif %}
+                      {% if prd.get_label_display == 'BESTSELLER' %}
+                      <span class="badge badge-pill primary-color">BESTSELLER</span> <!--Check if label is new or bestseller and change accordingly -->
+                      {% endif %}
+                    </a>
+                  </strong>
+                </h5>
+
+                <h4 class="font-weight-bold blue-text">
+                  <strong>$
+                    {% if prd.Discount_Price %}
+                      {{ prd.Discount_Price }}
+                    {% else %}
+                    {{ prd.Price }}
+                    {% endif %}</strong>
+                </h4>
+
+              </div>
+              <!--Card content-->
+
+            </div>
+            <!--Card-->
+
+          </div>
+          {% endfor %}
+          <!--Grid column-->
+
+
+        </div>
+
+        <!--Grid row-->
+
+
+      </section>
+      <!--Section: Products v.3-->
+
+
+
+      <!--Pagination-->
+      {% if is_paginated %}  <!-- passed by class based view -->
+      <nav class="d-flex justify-content-center wow fadeIn">
+        <ul class="pagination pg-blue">
+
+          <!--Arrow left-->
+          {% if page_obj.has_previous %}
+          <li class="page-item">
+            <a class="page-link" href="?page={{ page_obj.previous_page_number }}" aria-label="Previous">
+              <span aria-hidden="true">&laquo;</span>
+              <span class="sr-only">Previous</span>
+            </a>
+          </li>
+          {% endif %}
+
+          <li class="page-item active">
+            <a class="page-link" href="?page={{ page_obj.number }}">{{ page_obj.number }}
+              <span class="sr-only">(current)</span>
+            </a>
+          </li>
+
+          {% if page_obj.has_next %}
+          <li class="page-item">
+            <a class="page-link" href="?page={{ page_obj.next_page_number }}" aria-label="Next">
+              <span aria-hidden="true">&raquo;</span>
+              <span class="sr-only">Next</span>
+            </a>
+          </li>
+          {% endif %}
+        </ul>
+      </nav>
+      {% endif %}
+      <!--Pagination-->
+
+    </div>
+
+    <!--<div class="testimonial">
+		  <div class="section-title">
+			  <h2>Client Testimonial</h2>
+		  </div>
+		    <div class="col-lg-10 offset-lg-1 text-light">
+          <div id="client-testimonial-carousel" class="carousel slide" data-ride="carousel">
+            <div class="carousel-inner" role="listbox">
+              <div class="carousel-item text-center p-4 active">
+                <blockquote class="blockquote text-center">
+                  <p><i class="fa fa-quote-left"></i> The TNG Tech Solutions team was remarkably helpful and friendly. I had Tej serve me and he did a brilliant job by repairing my cell phone on the same day. TNG people repaired my I phone very efficiently at a very reasonable cost.  Moreover, I also found an extremely beautiful cover case for my mobile phone, thank you for the huge discount on the same. TNG Tech Solutions team is for sure trustful and reliable for mobile phone repair in Hamilton, New Zealand. Would 100% recommend to others to visit the TNG tech store for getting any mobile phone, laptop/computer related repair in one day at moderately prices.
+                  </p>
+                  <footer class="blockquote-footer">Aamir Sethi </footer>-->
+                  <!-- Client review stars -->
+                  <!-- "fas fa-star" for a full star, "far fa-star" for an empty star, "far fa-star-half-alt" for a half star. -->
+                  <!--<p class="client-review-stars">
+                    <i class="icofont-star"></i>
+                    <i class="icofont-star"></i>
+                    <i class="icofont-star"></i>
+                    <i class="icofont-star-half-alt"></i>
+                    <i class="icofont-star"></i>
+                  </p>
+                </blockquote>
+              </div>
+              <div class="carousel-item text-center p-4">
+                <blockquote class="blockquote text-center">
+                  <p><i class="fa fa-quote-left"></i> Great service! These guys were fast and nicely priced. Super friendly and explained everything. I will be back again. Thanks
+                  </p>
+                  <footer class="blockquote-footer">Albert Einstein <cite title="Source Title">genius</cite></footer>-->
+                  <!-- Client review stars -->
+                  <!-- "fas fa-star" for a full star, "far fa-star" for an empty star, "far fa-star-half-alt" for a half star. -->
+                  <!--<p class="client-review-stars">
+                    <i class="icofont-star"></i>
+                    <i class="icofont-star"></i>
+                    <i class="icofont-star"></i>
+                    <i class="icofont-star-half-alt"></i>
+                    <i class="icofont-star"></i>
+                  </p>
+                </blockquote>
+              </div>
+              <div class="carousel-item text-center p-4">
+                <blockquote class="blockquote text-center">
+                  <p><i class="fa fa-quote-left"></i> My laptop got water damage and was said to be not repairable by some service technicians. someone suggested me to visit this place and I don't what these guys did, but they put life back into it. would recommend for their services and friendly staff.
+cheers  </p>
+                  <footer class="blockquote-footer">Albert Einstein <cite title="Source Title">genius</cite></footer>-->
+                  <!-- Client review stars -->
+                  <!-- "fas fa-star" for a full star, "far fa-star" for an empty star, "far fa-star-half-alt" for a half star. -->
+                  <!--<p class="client-review-stars">
+                    <i class="icofont-star"></i>
+                    <i class="icofont-star"></i>
+                    <i class="icofont-star"></i>
+                    <i class="icofont-star-half-alt"></i>
+                    <i class="icofont-star"></i>
+                  </p>
+                </blockquote>
+              </div>
+            </div>
+            <ol class="carousel-indicators">
+              <li data-target="#client-testimonial-carousel" data-slide-to="0" class="active"></li>
+              <li data-target="#client-testimonial-carousel" data-slide-to="1" class=""></li>
+              <li data-target="#client-testimonial-carousel" data-slide-to="2" class=""></li>
+            </ol>
+          </div>
+		    </div>
+    </div>-->
+
+    <div class="container-fluid text-center" style="background:#333;padding: 15px 0px;">
+      <h2 class="text-white">CLIENT TESTIMONIAL</h2>
+      <div class="col-lg-10 offset-lg-1">
+        <div id="carouselExampleCaptions" class="carousel slide carousel-fade" data-ride="carousel">
+          <ol class="carousel-indicators">
+            <li data-target="#carouselExampleCaptions" data-slide-to="0" class="active"></li>
+            <li data-target="#carouselExampleCaptions" data-slide-to="1"></li>
+            <li data-target="#carouselExampleCaptions" data-slide-to="2"></li>
+          </ol>
+          <div class="carousel-inner">
+            <div class="carousel-item active">
+              <blockquote class="blockquote text-center">
+                <p class="text-white"><i class="fa fa-quote-left"></i> The TNG Tech Solutions team was remarkably helpful and friendly. I had Tej serve me and he did a brilliant job by repairing my cell phone on the same day. TNG people repaired my I phone very efficiently at a very reasonable cost.  Moreover, I also found an extremely beautiful cover case for my mobile phone, thank you for the huge discount on the same. TNG Tech Solutions team is for sure trustful and reliable for mobile phone repair in Hamilton, New Zealand. Would 100% recommend to others to visit the TNG tech store for getting any mobile phone, laptop/computer related repair in one day at moderately prices.
+                </p>
+                <footer class="blockquote-footer text-white">Aamir Sethi </footer>
+                <!-- Client review stars -->
+                <!-- "fas fa-star" for a full star, "far fa-star" for an empty star, "far fa-star-half-alt" for a half star. -->
+                <p class="client-review-stars text-white">
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                </p>
+              </blockquote>
+              <!--<p class="text-white d-block w-100"><i class="fa fa-quote-left"></i> The TNG Tech Solutions team was remarkably helpful and friendly. I had Tej serve me and he did a brilliant job by repairing my cell phone on the same day. TNG people repaired my I phone very efficiently at a very reasonable cost.  Moreover, I also found an extremely beautiful cover case for my mobile phone, thank you for the huge discount on the same. TNG Tech Solutions team is for sure trustful and reliable for mobile phone repair in Hamilton, New Zealand. Would 100% recommend to others to visit the TNG tech store for getting any mobile phone, laptop/computer related repair in one day at moderately prices.
+              </p>
+              <div class="carousel-caption d-none d-md-block">
+                <h5>First slide label</h5>
+                <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
+              </div>-->
+            </div>
+            <div class="carousel-item">
+              <blockquote class="blockquote text-center">
+                <p class="text-white"><i class="fa fa-quote-left"></i> Great service! These guys were fast and nicely priced. Super friendly and explained everything. I will be back again. Thanks
+                </p>
+                <footer class="blockquote-footer text-white">Jensen Archer</footer>
+                <!-- Client review stars -->
+                <!-- "fas fa-star" for a full star, "far fa-star" for an empty star, "far fa-star-half-alt" for a half star. -->
+                <p class="client-review-stars text-white">
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star-half"></i>
+                </p>
+              </blockquote>
+            </div>
+            <div class="carousel-item">
+              <blockquote class="blockquote text-center">
+                <p class="text-white"><i class="fa fa-quote-left"></i> My laptop got water damage and was said to be not repairable by some service technicians. someone suggested me to visit this place and I don't what these guys did, but they put life back into it. would recommend for their services and friendly staff.
+cheers</p>
+              <footer class="blockquote-footer text-white">Alex Cummins</footer>
+              <!-- Client review stars -->
+              <!-- "fas fa-star" for a full star, "far fa-star" for an empty star, "far fa-star-half-alt" for a half star. -->
+              <p class="client-review-stars text-white">
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+              </p>
+            </blockquote>
+            </div>
+          </div>
+        </div>
+    </div>
+  </div>
+
+  </main>
+  <!--Main layout-->
+
+  <!--Footer-->
+  <footer class="page-footer text-center font-small mt-4 wow fadeIn" style="background-color: #171a43;">
+
+
+
+    <div class="container text-center text-md-left" style="padding:35px;">
+      <div class="row mt-3">
+        <!--First column-->
+        <div class="col-md-6 col-lg-4"> <!--col-xl-3 mb-4 -->
+          <h3 class="text-uppercase font-weight-bold">
+            <strong>TNG Tech Solutions</strong>
+          </h3>
+          <hr class="info-color mb-4 mt-0 d-inline-block mx-auto" style="width: 60px;">
+          <p>
+                  109-ward street,<br> Hamilton Central, Hamilton,3204 <br>
+    				<strong>Phone:</strong> <a href="tel:+64 7 834 1325">+64 7 834 1325</a>,  <a href="tel:+64 27 393 3614"> +64 27 393 3614</a><br>
+    				<strong>Email:</strong><a href="mailto:info@tngtechsolutions.co.nz"> info@tngtechsolutions.co.nz</a><br>
+          </p>
+        </div>
+        <!--/.First column-->
+
+
+        <!--Third column-->
+        <div class="col-xs-8 col-md-3 col-lg-2 col-xl-2 mx-auto mb-4"> <!--col-md-6 col-lg-4 col-xl-2 mx-auto mb-4   and   col-md-3 col-lg-2 col-xl-2 mx-auto mb-4-->
+          <h6 class="text-uppercase font-weight-bold">
+            <strong>Useful Links</strong>
+          </h6>
+          <hr class="info-color mb-4 mt-0 d-inline-block mx-auto" style="width: 60px;">
+          <ul style="list-style: none;" class="ml-0 mr-4">
+              <li><a href="{% url 'homie' %}">Home</a></li>
+              <li> <a href="{% url 'about' %}">About us</a></li>
+              <li> <a href="#">Services</a></li>
+              <li> <a href="/serv-prod/All/">Products</a></li>
+              <li> <a href="#">Online Booking</a></li>
+              <li><a href="{% url 'contact' %}">Contact Us</a></li>
+          </ul>
+        </div>
+        <!--/.Third column-->
+        <!--Fourth column-->
+        <div class="col-md-6 col-lg-4 col-xl-3">
+          <h6 class="text-uppercase font-weight-bold">
+            <strong>Newsletter</strong>
+          </h6>
+          <hr class="info-color mb-4 mt-0 d-inline-block mx-auto" style="width: 60px;">
+         <!-- <p>
+                <i class="fas fa-building mr-3"></i> Our story</p> -->
+          <p>Get our subscription for latest updates on services and accessories</p>
+          <!--<form action="ajax/ajaxnewsletter.php" id="form-newsletter" method="post">
+              <input type="email" name="email" placeholder="Enter Your email" required="">  <input type="submit" value="Subscribe">
+          </form>-->
+          <!--<form method="POST">
+
+            <fieldset class="form-group">
+                <legend class="border-bottom mb-4">Join Today</legend>
+
+            </fieldset>
+            <div class="form-group">
+                <button class="btn btn-outline-info" type="submit">Sign Up</button>
+            </div>
+          </form>-->
+          <form method="POST">
+            {% csrf_token %}
+            <!--<div class="md my-0">-->
+              <!--<input class="form-control mr-sm-2 text-white" type="text" placeholder="Enter Your email" name="newsletter" id="newsletter" aria-label="Newsletter">-->
+              <!--<button type="submit">Search</button>-->
+              <fieldset class="form-group">
+                <input class="form-control mr-sm-2" type="text" placeholder="Enter Your email" name="email" id="email" aria-label="email">
+              </fieldset>
+              <button class="btn btn-outline-white my-2 my-sm-0" type="submit">SUBSCRIBE</button>
+          </form>
+        </div>
+        <!--/.Fourth column-->
+      </div>
+    </div>
+
+
+
+  <!--
+    <div class="pt-4">
+      <a class="btn btn-outline-white" href="https://mdbootstrap.com/docs/jquery/getting-started/download/" target="_blank"
+        role="button">Download MDB
+        <i class="fas fa-download ml-2"></i>
+      </a>
+      <a class="btn btn-outline-white" href="https://mdbootstrap.com/education/bootstrap/" target="_blank" role="button">Start
+        free tutorial
+        <i class="fas fa-graduation-cap ml-2"></i>
+      </a>
+    </div>-->
+    <!--/.Call to action-->
+
+    <hr class="my-4">
+
+    <!-- Social icons -->
+    <div class="pb-4">
+      <a href="https://www.facebook.com/tngtechsolutions/" target="_blank">
+        <i class="fab fa-facebook-f mr-3"></i>
+      </a>
+
+      <a href="https://twitter.com/tng_tech" target="_blank">
+        <i class="fab fa-twitter mr-3"></i>
+      </a>
+
+      <a href="https://www.instagram.com/tngtech.nz/" target="_blank">
+        <i class="fab fa-instagram mr-3"></i>
+      </a>
+
+      <a href="https://www.linkedin.com/company/tng-tech-solutions/" target="_blank">
+        <i class="fab fa-linkedin mr-3"></i>
+      </a>
+
+    </div>
+    <!-- Social icons -->
+
+    <!--Copyright-->
+    <div class="footer-copyright py-3">
+      © 2019 Copyright:
+      <a href="#" target="_blank"> tngtechsolutions.co.nz </a>
+    </div>
+    <!--/.Copyright-->
+
+  </footer>
+  <!--/.Footer-->
+
+  <!-- SCRIPTS -->
+  <!-- JQuery -->
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+  <!-- Bootstrap tooltips -->
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+  <!-- Bootstrap core JavaScript -->
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+  <!-- MDB core JavaScript -->
+  <script type="text/javascript" src="{% static 'prod/js/mdb.min.js' %}"></script>
+  <!-- Initializations -->
+  <script type="text/javascript">
+    // Animations initialization
+    // new WOW().init();
+
+    var tn = document.getElementById("chiek");
+    var tn1 = document.getElementById("chido");
+    var tn2 = document.getElementById("chiteen");
+    var cd1 = document.getElementById("cardi1");
+    var cd2 = document.getElementById("cardi2");
+    var cd3 = document.getElementById("cardi3");
+
+    cd1.addEventListener('mouseenter',function(){
+      cd1.style.color = "red";
+    })
+    cd1.addEventListener('mouseleave',function(){
+      cd1.style.color = "#444";
+    })
+    cd2.addEventListener('mouseenter',function(){
+      cd2.style.color = "red";
+    })
+    cd2.addEventListener('mouseleave',function(){
+      cd2.style.color = "#444";
+    })
+    cd3.addEventListener('mouseenter',function(){
+      cd3.style.color = "red";
+    })
+    cd3.addEventListener('mouseleave',function(){
+      cd3.style.color = "#444";
+    })
+    tn.addEventListener('mouseenter',function(){
+      tn.style.color = "black";
+    })
+    tn.addEventListener('mouseleave',function(){
+      tn.style.color = "white";
+    })
+    tn1.addEventListener('mouseenter',function(){
+      tn1.style.color = "black";
+    })
+    tn1.addEventListener('mouseleave',function(){
+      tn1.style.color = "white";
+    })
+    tn2.addEventListener('mouseenter',function(){
+      tn2.style.color = "black";
+    })
+    tn2.addEventListener('mouseleave',function(){
+      tn2.style.color = "white";
+    })
+
+    
+  </script>
+  {% if not user.is_authenticated %}
+    <script type="text/javascript">
+      cart = JSON.parse(localStorage.getItem('cart'));
+    if(cart != null){  
+      if(Object.keys(cart).length > 0){
+      document.getElementById('cartlogout').innerHTML = Object.keys(cart).length;
+
+      }
+    }
+    </script>
+  {% else %}
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.5.1.min.js">
+      window.onload = function(){
+        console.log('hello')
+        var cartsend = localStorage.getItem('cart');
+        if (cartsend != null){        
+          $.ajax({
+            url:"{% url 'addtocartlout' %}",
+            type:"POST",
+            data:{'cart':cartsend,"csrfmiddlewaretoken" : "{{csrf_token}}"}
+          })
+          localStorage.clear();
+        }
+      }
+    </script>
+  {% endif %}
+</body>
+
+</html>

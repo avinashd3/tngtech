@@ -1,0 +1,399 @@
+{% load static %}
+{% load cart_template_tags %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <title>Mobile repairs Hamilton | Mobile Phone repairs Waikat</title>
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
+  <!-- Bootstrap core CSS -->
+  <link href="{% static 'prod/css/bootstrap.min.css' %}" rel="stylesheet">
+  <!-- Material Design Bootstrap -->
+  <link href="{% static 'prod/css/mdb.min.css' %}" rel="stylesheet">
+  <!-- Your custom styles (optional) -->
+  <link href="{% static 'prod/css/style.min.css' %}" rel="stylesheet">
+  <style>
+    .map-responsive {
+      overflow: hidden;
+      padding-bottom: 56.25%;
+      position: relative;
+      height: 0;
+    }
+    .map-responsive iframe {
+      left: 0;
+      top: 0;
+      height: 100%;
+      width: 100%;
+      position: absolute;
+    }
+    .map-container-6{
+      overflow:hidden;
+      padding-bottom:56.25%;
+      position:relative;
+      height:0;
+    }
+    .map-container-6 iframe{
+      left:0;
+      top:0;
+      height:100%;
+      width:100%;
+      position:absolute;
+    }
+  </style>
+  {% block css %}
+  {% endblock css %}
+</head>
+<body>
+  <!-- Navbar -->
+  <nav class="navbar fixed-top navbar-expand-lg navbar-light white scrolling-navbar">
+    <div class="container">
+
+      <!-- Brand -->
+      <a class="navbar-brand" href="{% url 'homie' %}">
+        <img src="{% static 'prod/img/logo-black.png' %}" alt="Logo" style="width:150px;">
+      </a>
+
+      {% if user.is_authenticated %}
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item">
+          <a class="nav-link waves-effect" href="{% url 'order-summary' %}">
+            {% if request.user|cart_item_count != 0 %}
+              <span class="badge red z-depth-1 mr-1"> {{ request.user|cart_item_count }} </span>
+            {% endif %}
+            <i class="fas fa-shopping-cart" style="color: #444"></i>
+            <span class="clearfix d-none d-sm-inline-block"> Cart </span>
+          </a>
+        </li>
+      </ul>
+      {% else %}
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item">
+            <a class="nav-link waves-effect" href="{% url 'order-summary' %}">
+              <span class="badge red z-depth-1 mr-1" id="cartlogout"></span>
+              <i class="fas fa-shopping-cart" style="color: #444"></i>
+              <span class="clearfix d-none d-sm-inline-block"> Cart </span>
+            </a>
+          </li>
+        </ul>
+      {% endif %}
+
+      <!-- Collapse -->
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <!-- Links -->
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+
+        <!-- Left -->
+        <ul class="navbar-nav mr-auto">
+          <!-- <li class="nav-item active">
+            <a class="nav-link waves-effect" href="{% url 'homie' %}">Home
+              <span class="sr-only">(current)</span>
+            </a>
+          </li> -->
+          <li class="nav-item">
+            <a class="nav-link waves-effect" href="{% url 'about' %}" target="_self">About Us</a>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Repair Services
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <a class="dropdown-item" href="/serv-prod/MobRep/">Mobile Repair</a>
+              <a class="dropdown-item" href="/serv-prod/LapRep/">Laptop/Computer Repair</a>
+              <div class="dropdown-divider"></div>
+              <a class="dropdown-item" href="/serv-prod/TabRep/">iPad/Tablet Repair</a>
+            </div>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link waves-effect" href="{% url 'contact' %}" target="_self">
+              Contact Us</a>
+          </li>
+        </ul>
+
+        <!-- Right -->
+        <ul class="navbar-nav nav-flex-icons">
+          <li class="nav-item">
+            <a href="https://www.facebook.com/tngtechsolutions/" class="nav-link waves-effect" target="_blank">
+              <i class="fab fa-facebook-f"></i>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="https://twitter.com/tng_tech" class="nav-link waves-effect" target="_blank">
+              <i class="fab fa-twitter"></i>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="https://www.instagram.com/tngtech.nz/" class="nav-link waves-effect" target="_blank">
+              <i class="fab fa-instagram"></i>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="https://www.linkedin.com/company/tng-tech-solutions/" class="nav-link waves-effect" target="_blank">
+              <i class="fab fa-linkedin"></i>
+            </a>
+          </li>
+          {% if user.is_authenticated %}
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                {{ user.username }}
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <a class="dropdown-item" href="{% url 'profile' %}">Profile</a>
+                <a class="dropdown-item" href="{% url 'logout' %}">Log Out</a>
+              </div>
+            </li>
+            <!-- <li class="nav-item">
+              <a class="nav-link waves-effect" href="{% url 'profile' %}">Profile</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link waves-effect" href="{% url 'logout' %}">Log Out</a>
+            </li> -->
+          {% else %}
+            <li class="nav-item">
+              <a class="nav-link waves-effect" href="{% url 'login' %}">Log In</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link waves-effect" href="{% url 'userreg' %}">Register</a>
+            </li>
+          {% endif %}
+        </ul>
+
+      </div>
+
+    </div>
+  </nav>
+  <!-- Navbar -->
+
+  <main class="mt-5 pt-4">
+    <div class="container dark-grey-text mt-5">
+      {% if messages %}
+        {% for message in messages %}
+          <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+            {{ message }}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+        {% endfor %}
+      {% endif %}
+
+      <!-- add mb-5 in below nav class -->
+      <nav class="navbar navbar-expand-lg navbar-dark lighten-3 mt-3" style="background-color: #171a43;">
+
+        <!-- Navbar brand -->
+        <span class="navbar-brand">Categories:</span>
+
+        <!-- Collapse button -->
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#basicExampleNav"
+          aria-controls="basicExampleNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <!-- Collapsible content -->
+        <div class="collapse navbar-collapse" id="basicExampleNav">
+
+          <!-- Links -->
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+              <a class="nav-link" href="/serv-prod/All/">All
+                <span class="sr-only">(current)</span>
+              </a>
+            </li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Products
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <a class="dropdown-item" href="/serv-prod/MobileAccessories/">Mobile Accessories</a>
+                <a class="dropdown-item" href="/serv-prod/DeviceAccessories/">Device Accessories</a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="/serv-prod/Cool/">Cool Stuffs</a>
+              </div>
+            </li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Repair Services
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <a class="dropdown-item" href="/serv-prod/MobRep/">Mobile Repair</a>
+                <a class="dropdown-item" href="/serv-prod/LapRep/">Laptop/Computer Repair</a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="/serv-prod/TabRep/">iPad/Tablet Repair</a>
+              </div>
+            </li>
+          </ul>
+          <!-- Links -->
+
+        </div>
+        <!-- Collapsible content -->
+
+        <!-- <form class="form-inline" method="get" action="{% url 'searchprod' %}">
+          <div class="md-form my-0">
+            <input class="form-control mr-auto" type="text" placeholder="Search" name="search" id="search" aria-label="Search">
+            <button class="btn btn-outline-white my-2 my-sm-0 mr-auto" type="submit"><i class="fas fa-search"></i></button>
+          </div>
+        </form> -->
+        <form class="form-inline" method="get" action="{% url 'searchprod' %}">
+          <!--div class="md-form my-0" -->
+          <div class="input-group my-0">
+            <input class="form-control mr-auto mt-1" type="text" placeholder="Search" name="search" id="search" aria-label="Search">
+            <!--<button type="submit">Search</button>-->
+            <!-- input-group-btn-->
+            <div class="input-group-append">
+              <button class="btn my-sm-0 mr-auto" style="position: relative;" type="submit" id="button-addon2"><i class="fas fa-search" style="color:white;"></i></button>
+            </div>
+          </div>
+        </form>
+
+      </nav>
+
+
+      {% block content  %}
+      {% endblock content %}
+    </div>
+  </main>
+
+  <!--Footer-->
+  <footer class="page-footer text-center font-small mt-4 wow fadeIn" style="background-color: #171a43;">
+
+    <div class="container text-center text-md-left" style="padding:35px;">
+      <div class="row mt-3">
+        <!--First column-->
+        <div class="col-md-6 col-lg-4"> <!--col-xl-3 mb-4 -->
+          <h3 class="text-uppercase font-weight-bold">
+            <strong>TNG Tech Solutions</strong>
+          </h3>
+          <hr class="info-color mb-4 mt-0 d-inline-block mx-auto" style="width: 60px;">
+          <p>
+                  109-ward street,<br> Hamilton Central, Hamilton,3204 <br>
+    				<strong>Phone:</strong> <a href="tel:+64 7 834 1325">+64 7 834 1325</a>,  <a href="tel:+64 27 393 3614"> +64 27 393 3614</a><br>
+    				<strong>Email:</strong><a href="mailto:info@tngtechsolutions.co.nz"> info@tngtechsolutions.co.nz</a><br>
+          </p>
+        </div>
+        <!--/.First column-->
+
+
+        <!--Third column-->
+        <div class="col-md-6 col-lg-4 col-xl-2 mx-auto mb-4"> <!--col-md-3 col-lg-2 col-xl-2 mx-auto mb-4 -->
+          <h6 class="text-uppercase font-weight-bold">
+            <strong>Useful Links</strong>
+          </h6>
+          <hr class="info-color mb-4 mt-0 d-inline-block mx-auto" style="width: 60px;">
+          <ul style="list-style: none;" class="ml-0 mr-4">
+              <li><i class="bx bx-chevron-right"></i> <a href="{% url 'homie' %}">Home</a></li>
+              <li><i class="bx bx-chevron-right"></i> <a href="{% url 'about' %}">About us</a></li>
+              <!-- <li><i class="bx bx-chevron-right"></i> <a href="mobile-phone-service.php">Services</a></li> -->
+              <li><i class="bx bx-chevron-right"></i> <a href="/serv-prod/All/">Products</a></li>
+              <!-- <li><i class="bx bx-chevron-right"></i> <a href="booking-online.php">Online Booking</a></li> -->
+              <li><i class="bx bx-chevron-right"></i><a href="{% url 'contact' %}">Contact Us</a></li>
+          </ul>
+        </div>
+        <!--/.Third column-->
+        <!--Fourth column-->
+        <div class="col-md-6 col-lg-4 col-xl-3">
+          <h6 class="text-uppercase font-weight-bold">
+            <strong>Newsletter</strong>
+          </h6>
+          <hr class="info-color mb-4 mt-0 d-inline-block mx-auto" style="width: 60px;">
+         <!-- <p>
+                <i class="fas fa-building mr-3"></i> Our story</p> -->
+          <p>Get our subscription for latest updates on services and accessories</p>
+          <!--<form action="ajax/ajaxnewsletter.php" id="form-newsletter" method="post">
+              <input type="email" name="email" placeholder="Enter Your email" required="">  <input type="submit" value="Subscribe">
+          </form>-->
+          <form method="POST" action="{% url 'homenews' %}">
+            {% csrf_token %}
+              <fieldset class="form-group">
+                <input class="form-control mr-sm-2" type="text" placeholder="Enter Your email" name="email" id="email" aria-label="email">
+              </fieldset>
+              <button class="btn btn-outline-white my-2 my-sm-0" type="submit">SUBSCRIBE</button>
+          </form>
+            <!-- <button class="btn btn-outline-white my-2 my-sm-0"><a href="{% url 'newsl' %}">SUBSCRIBE</a></button> -->
+        </div>
+        <!--/.Fourth column-->
+      </div>
+    </div>
+
+    <hr class="my-4">
+
+    <!-- Social icons -->
+    <div class="pb-4">
+      <a href="https://www.facebook.com/tngtechsolutions/" target="_blank">
+        <i class="fab fa-facebook-f mr-3"></i>
+      </a>
+
+      <a href="https://twitter.com/tng_tech" target="_blank">
+        <i class="fab fa-twitter mr-3"></i>
+      </a>
+
+      <a href="https://www.instagram.com/tngtech.nz/" target="_blank">
+        <i class="fab fa-instagram mr-3"></i>
+      </a>
+
+      <a href="https://www.linkedin.com/company/tng-tech-solutions/" target="_blank">
+        <i class="fab fa-linkedin mr-3"></i>
+      </a>
+
+    </div>
+    <!-- Social icons -->
+
+    <!--Copyright-->
+    <div class="footer-copyright py-3">
+      © 2019 Copyright:
+      <a href="#" target="_blank"> tngtechsolutions.co.nz </a>
+    </div>
+    <!--/.Copyright-->
+
+  </footer>
+  <!--/.Footer-->
+
+  <!-- SCRIPTS -->
+  <!-- JQuery -->
+  <script type="text/javascript" src="{% static 'prod/js/jquery-3.4.1.min.js' %}"></script>
+  <!-- Bootstrap tooltips -->
+  <script type="text/javascript" src="{% static 'prod/js/popper.min.js' %}"></script>
+  <!-- Bootstrap core JavaScript -->
+  <script type="text/javascript" src="{% static 'prod/js/bootstrap.min.js' %}"></script>
+  <!-- MDB core JavaScript -->
+  <script type="text/javascript" src="{% static 'prod/js/mdb.min.js' %}"></script>
+  <!-- Initializations -->
+  <script type="text/javascript">
+    // Animations initialization
+    new WOW().init();
+
+  </script>
+  {% if not user.is_authenticated %}
+    <script type="text/javascript">
+      cart = JSON.parse(localStorage.getItem('cart'));
+      if(cart != null){
+        if(Object.keys(cart).length > 0){
+        document.getElementById('cartlogout').innerHTML = Object.keys(cart).length;
+
+        }
+      }
+    </script>
+  {% else %}
+    <script type="text/javascript">
+      window.onload = function(){
+        var cartsend = localStorage.getItem('cart');
+        if (cartsend != null){
+          $.ajax({
+            url:"{% url 'addtocartlout' %}",
+            type:"POST",
+            data:{'cart':cartsend,"csrfmiddlewaretoken" : "{{csrf_token}}"}
+          })
+          localStorage.clear();
+        }
+      }
+    </script>
+  {% endif %}
+  {% block js %}
+  {% endblock js %}
+</body>
+</html>

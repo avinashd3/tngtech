@@ -1,0 +1,175 @@
+{% extends "prod/base.html" %}
+<!DOCTYPE html>
+{% block content %}
+
+<!--Grid row-->
+<div class="row wow fadeIn">
+
+  <!--Grid column-->
+  <div class="col-md-6 mb-4">
+
+    <img src="{{ object.image.url }}" class="img-fluid" alt="">
+
+  </div>
+  <!--Grid column-->
+
+  <!--Grid column-->
+  <div class="col-md-6 mb-4">
+
+    <!--Content-->
+    <div class="p-4">
+
+      <div class="mb-3">
+        <a href="">
+          <span class="badge purple mr-1">{{ object.get_category_display }}</span>
+        </a>
+      </div>
+
+      <p class="lead">
+        {% if object.Discount_Price %}
+        <span class="mr-1">
+          <del>${{ object.Price }}</del>
+        </span>
+        <span>${{ object.Discount_Price }}</span>
+        {% else %}
+        <span>${{ object.Price }}</span>
+        {% endif %}
+      </p>
+
+      <p class="lead font-weight-bold">Description</p>
+
+      <p>{{ object.Details }}</p>
+
+      <!--<form class="d-flex justify-content-left">
+
+        <input type="number" value="1" aria-label="Search" class="form-control" style="width: 100px">
+        <button class="btn btn-primary btn-md my-0 p" type="submit">Add to cart
+          <i class="fas fa-shopping-cart ml-1"></i>
+        </button>
+
+      </form>-->
+      {% if user.is_authenticated %}
+        {% if object.category == 'MR' or object.category == 'LR' or object.category == 'TR' %}
+          <a href="{% url 'onlinebooking' object.category %}" class="btn btn-primary btn-md my-2 p">Book Online
+          </a>
+        {% else %}
+          <a href="{{ object.get_add_to_cart_url }}" class="btn btn-primary btn-md my-2 p">Add to cart
+            <i class="fas fa-shopping-cart ml-1"></i>
+          </a>
+        {% endif %}
+      {% else %}
+        {% if object.category == 'MR' or object.category == 'LR' or object.category == 'TR' %}
+          <a href="{% url 'onlinebooking' object.category %}" class="btn btn-primary btn-md my-2 p">Book Online
+          </a>
+        {% else %}
+          <a id="{{ object.id }}" class="btn btn-primary btn-md my-2 p cart">Add to Cart
+            <i class="fas fa-shopping-cart ml-1"></i>
+          </a>
+        {% endif %}
+      {% endif %}
+
+      <a href="{{ object.get_remove_from_cart_url }}" class="btn btn-danger btn-md my-2 p">Remove from cart
+      </a>
+
+    </div>
+    <!--Content-->
+
+  </div>
+  <!--Grid column-->
+
+</div>
+<!--Grid row-->
+
+<hr>
+
+<!--Grid row-->
+<div class="row d-flex justify-content-center wow fadeIn">
+
+  <!--Grid column-->
+  <div class="col-md-6 text-center">
+
+
+    <h4 class="my-4 h4">Additional information</h4>
+
+    <p>{{ object.Additional_Details }}</p>
+
+  </div>
+  <!--Grid column-->
+
+</div>
+<!--Grid row-->
+
+<!--Grid row-->
+<div class="row wow fadeIn">
+
+  <!--Grid column-->
+  <div class="col-lg-4 col-md-12 mb-4">
+
+    <img src="https://mdbootstrap.com/img/Photos/Horizontal/E-commerce/Products/11.jpg" class="img-fluid" alt="">
+
+  </div>
+  <!--Grid column-->
+
+  <!--Grid column-->
+  <div class="col-lg-4 col-md-6 mb-4">
+
+    <img src="https://mdbootstrap.com/img/Photos/Horizontal/E-commerce/Products/12.jpg" class="img-fluid" alt="">
+
+  </div>
+  <!--Grid column-->
+
+  <!--Grid column-->
+  <div class="col-lg-4 col-md-6 mb-4">
+
+    <img src="https://mdbootstrap.com/img/Photos/Horizontal/E-commerce/Products/13.jpg" class="img-fluid" alt="">
+
+  </div>
+  <!--Grid column-->
+
+</div>
+<!--Grid row-->
+
+{% endblock %}
+
+{% if not user.is_authenticated %}
+{% block js %}
+<script>
+  // console.log("working");
+
+  if (localStorage.getItem('cart') == null) {
+    var cart = {};
+  } else {
+    cart = JSON.parse(localStorage.getItem('cart'));
+    // console.log(cart);
+    // document.getElementById('cart').innerHTML = Object.keys(cart).length;
+  }
+
+  $('.cart').click(function () {
+    console.log('clicked');
+    var idstr = this.id.toString();
+    console.log(idstr);
+
+    if (cart[idstr] != undefined) {
+      cart[idstr] = cart[idstr] + 1;
+    }
+    else {
+      cart[idstr] = 1;
+    }
+    localStorage.setItem('cart', JSON.stringify(cart));
+    console.log(cart);
+
+    document.getElementById('cartlogout').innerHTML = Object.keys(cart).length;
+  })
+
+  var cartsend = localStorage.getItem('cart');
+  if (cartsend != null) {
+    // console.log(cartsend)
+    $.ajax({
+      url: "{% url 'addtocartlout' %}",
+      type: "POST",
+      data: { 'cart': cartsend, "csrfmiddlewaretoken": "{{csrf_token}}" }
+    })
+  }
+</script>
+{% endblock %}
+{% endif %}

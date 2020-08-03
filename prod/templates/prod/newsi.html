@@ -1,0 +1,18 @@
+{% extends "prod/base.html" %}
+{% load crispy_forms_tags %}
+<!DOCTYPE html>
+{% block content %}
+    <h1 class="text-center mb-3" style="color: #444;">Subscribe to our newsletter</h1>
+    <div class="container text-center mb-4">
+        <form method="POST">
+            {% csrf_token %}
+            <!--<div class="md my-0">-->
+              <!--<input class="form-control mr-sm-2 text-white" type="text" placeholder="Enter Your email" name="newsletter" id="newsletter" aria-label="Newsletter">-->
+              <!--<button type="submit">Search</button>-->
+              <fieldset class="form-group">
+                {{ form|crispy }}
+              </fieldset>
+              <button class="btn btn-warning my-2 my-sm-0" type="submit">SUBSCRIBE</button>
+          </form>
+    </div>
+{% endblock %}

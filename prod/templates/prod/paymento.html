@@ -1,0 +1,19 @@
+{% extends "prod/base.html" %}
+<!DOCTYPE html>
+{% block content %}
+  <div class="container text-center pt-3 pb-3 mb-4">
+    {% if status == 'SUCCESSFUL' %}
+      <h1 class="mb-4"><i class="fa fa-check-circle" style="color: chartreuse;"></i> Transaction was {{ status }}</h1>
+      <ul style="list-style: none;">
+        <li><strong> transaction id: {{ tid }} </strong></li>
+        <li><strong>Date of order: {{ dt }} </strong></li>
+        <li><strong>Amount: {{ amt }} </strong></li>
+      </ul>
+    {% else %}
+      <h1><i class="fa fa-times-circle" style="color: red;"></i> Transaction was {{ status }}</h1>
+    {% endif %}
+    <div class="container-fluid pb-5">
+      <a href="{% url 'homie' %}" class='btn btn-primary float-right'>CONTINUE SHOPPING</a>
+    </div>
+  </div>
+{% endblock %}

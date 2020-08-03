@@ -1,0 +1,108 @@
+{% extends "prod/base.html" %}
+<!DOCTYPE html>
+{% block content %}
+<div class="table-responsive">
+  <h2>YOUR SHIPPING ADDRESS</h2>
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Street Address</th>
+        <th scope="col">Apartment Address</th>
+        <th scope="col">Zip</th>
+        <th scope="col">Country</th>
+        <th scope="col">Default</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for order_item in object.all %}
+      {% if order_item.get_address_type_display == 'Shipping' %}
+        <tr>
+          <th scope="row">#</th>
+          <td>{{ order_item.street_address }}</td>
+          <td>{{ order_item.apartment_address }}</td>
+          <td>{{ order_item.zip }}</td>
+          <td>{{ order_item.addr_code }}</td>
+          {% if order_item.default %}
+            <td><i class="fa fa-check-circle" style="color:green;"></i></td>
+          {% else %}
+            <td><i class="fa fa-times-circle" style="color:red;"></i></td>
+          {% endif %}
+          <td><a style="color:red;" href="{% url 'remadd' order_item.addr_code %}"><i class="fa fa-trash float-right"></i></a></td>
+        </tr>
+      {% endif %}
+      {% empty %}
+        <tr>
+          <td colspan="5">No address till now</td>
+        </tr>
+        <!--<tr>
+          <td colspan="5">
+            <a href="/" class='btn btn-primary float-right'>Add/Edit Address</a>
+          </td>
+        </tr>-->
+      {% endfor %}
+      <tr>
+        <td colspan="5">
+          <a href="/changeadd/S/" class='btn btn-primary float-right'>ADD SHIPPING ADDRESS</a>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <h2>YOUR BILLING ADDRESS</h2>
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Street Address</th>
+        <th scope="col">Apartment Address</th>
+        <th scope="col">Zip</th>
+        <th scope="col">Country</th>
+        <th scope="col">Default</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for order_item in object.all %}
+      {% if order_item.get_address_type_display == 'Billing' %}
+        <tr>
+          <th scope="row">#</th>
+          <td>{{ order_item.street_address }}</td>
+          <td>{{ order_item.apartment_address }}</td>
+          <td>{{ order_item.zip }}</td>
+          <td>{{ order_item.country }}</td>
+          {% if order_item.default %}
+            <td><i class="fa fa-check-circle" style="color:green;"></i></td>
+          {% else %}
+            <td><i class="fa fa-times-circle" style="color:red;"></i></td>
+          {% endif %}
+          <td><a style="color:red;" href="{% url 'remadd' order_item.addr_code %}"><i class="fa fa-trash float-right"></i></a></td>
+        </tr>
+      {% endif %}
+      {% empty %}
+        <tr>
+          <td colspan="5">No address till now</td>
+        </tr>
+        <!--<tr>
+          <td colspan="5">
+            <a href="/" class='btn btn-primary float-right'>Add/Edit Address</a>
+          </td>
+        </tr>-->
+      {% endfor %}
+      <!--<tr>
+        <td colspan="5">
+          <a href="/" class='btn btn-primary float-right'>Add/Edit Address</a>
+        </td>
+      </tr>-->
+      <tr>
+        <td colspan="5">
+          <a href="/changeadd/B/" class='btn btn-primary float-right'>ADD BILLING ADDRESS</a>
+        </td>
+      </tr>
+      <tr>
+        <td colspan="5">
+          <a href="{% url 'profile' %}" class='btn btn-primary float-right'>RETURN TO PROFILE</a>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+{% endblock content %}

@@ -1,0 +1,53 @@
+{% extends "prod/base.html" %}
+<!DOCTYPE html>
+{% block content %}
+<div class="table-responsive">
+  <h2>YOUR ORDERS</h2>
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Services/Products</th>
+        <th scope="col">Order ref_code</th>
+        <th scope="col">Price Paid</th>
+        <th scope="col">Transaction id</th>
+        <th scope="col">Date of order</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for order_item in object.all %}
+      <tr>
+        <th scope="row">{{ forloop.counter }}</th>
+        <td>
+          {% for oi in order_item.tngproduct.all %}
+            {{ oi.quantity }} x {{ oi.tngproducts.Name }},
+          {% endfor %}
+        </td>
+        <td>{{ order_item.ref_code }}</td>
+        <td>{{ order_item.payment.amount }}</td>
+        <td>{{ order_item.payment.stripe_charge_id }}</td>
+        <td>{{ order_item.ordered_date }}</td>
+      </tr>
+      {% empty %}
+        <tr>
+          <td colspan="5">No orders till now</td>
+        </tr>
+        <tr>
+          <td colspan="5">
+            <a href="/" class='btn btn-primary float-right'>Continue Shopping</a>
+          </td>
+        </tr>
+      {% endfor %}
+      <tr>
+        <td colspan="5">
+          <a href="{% url 'profile' %}" class='btn btn-primary float-right'>RETURN TO PROFILE</a>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="container-fluid mt-3 mb-3 pt-2">
+    <h2 class="text-center mb-2">Your recent order</h2>
+    <p><strong> {{ rct.ref_code }} ----- Name ----  </strong></p>
+  </div>
+</div>
+{% endblock content %}

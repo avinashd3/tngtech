@@ -1,0 +1,544 @@
+{% extends "prod/base.html" %}
+<!DOCTYPE html>
+{% block content %}
+<div class="container-fluid mb-5"
+  style="background-image: url('/static/prod/img/slide1.jpg'); background-repeat: no-repeat; background-size: cover;padding-top: 110px;padding-bottom: 110px;color: #fff">
+  <div class="row">
+    <div class="col-md-12">
+      <h1 class="lg-text-white">Welcome:</h1>
+    </div>
+  </div>
+</div>
+
+<!--Section: Products v.3-->
+<!-- <section class="text-center mb-4">
+
+  
+  <div class="row wow fadeIn">
+
+    
+    {% for prd in prody %}
+    <div class="col-lg-3 col-md-6 mb-4">
+
+      
+      <div class="card">
+
+        
+        <div class="view overlay">
+          <img src="{{ prd.image.url }}" class="card-img-top" alt="">
+          <a href="{{ prd.get_absolute_url }}">
+            <div class="mask rgba-white-slight"></div>
+          </a>
+        </div>
+        
+
+        
+        <div class="card-body text-center">
+          
+          <a href="" class="grey-text">
+            <h5>{{ prd.get_category_display }}</h5>
+          </a>
+          <h5>
+            <strong>
+              <a href="{{ prd.get_absolute_url }}" class="dark-grey-text">{{ prd.Name }}
+                {% if prd.get_label_display == 'NEW' %}
+                <span class="badge badge-pill danger-color">NEW</span>
+                
+                {% endif %}
+                {% if prd.get_label_display == 'BESTSELLER' %}
+                <span class="badge badge-pill primary-color">BESTSELLER</span>
+                
+                {% endif %}
+              </a>
+            </strong>
+          </h5>
+
+          <h4 class="font-weight-bold blue-text">
+            <strong>$
+              {% if prd.Discount_Price %}
+              {{ prd.Discount_Price }}
+              {% else %}
+              {{ prd.Price }}
+              {% endif %}</strong>
+          </h4>
+
+        </div>
+        
+
+      </div>
+      
+
+    </div>
+    {% endfor %}
+    
+
+
+  </div>
+
+  
+
+
+</section> -->
+<!--Section: Products v.3-->
+
+<!-- SECTION -->
+<div class="section">
+  <!-- container -->
+  <div class="container">
+    <!-- row -->
+    <div class="row">
+
+      <!-- section title -->
+      <div class="col-md-12">
+        <div class="section-title">
+          {% if kya == 'services' %}
+            <h3 class="title">Services</h3>
+          {% elif kya == 'prdcts' %}
+            <h3 class="title">Products</h3>
+          {% endif %}
+          <div class="section-nav">
+            <ul class="section-tab-nav tab-nav">
+              <li class="active"><a data-toggle="tab" href="#tab1">All</a></li>
+              {% if kya == 'services' %}
+              <li><a data-toggle="tab" href="#tab2">Laptop/Computer Repair</a></li>
+              <li><a data-toggle="tab" href="#tab3">Tablet/iPad Repair</a></li>
+              <li><a data-toggle="tab" href="#tab4">Mobile Repair</a></li>
+              {% elif kya == 'prdcts' %}
+              <li><a data-toggle="tab" href="#tab2">Mobile Accessories</a></li>
+              <li><a data-toggle="tab" href="#tab3">Device Accessories</a></li>
+              <li><a data-toggle="tab" href="#tab4">Other Cool Stuffs</a></li>
+              {% endif %}
+              <!-- <li><a data-toggle="tab" href="#tab1">Accessories</a></li> -->
+            </ul>
+          </div>
+        </div>
+      </div>
+      <!-- /section title -->
+
+      <!-- Products tab & slick -->
+      <div class="col-md-12">
+        <div class="row">
+          <div class="products-tabs">
+            <!-- tab -->
+            <div id="tab1" class="tab-pane active">
+              <div class="products-slick" data-nav="#slick-nav-1">
+                <!-- product -->
+                {% for prd in prody %}
+                <div class="product">
+                  <div class="product-img">
+
+                    <img src="{{ prd.image.url }}" alt="">
+                    <div class="product-label">
+                      <span class="sale">-30%</span>
+                      {% if prd.get_label_display == 'NEW' %}
+                      <span class="new">NEW</span>
+                      {% elif prd.get_label_display == 'BESTSELLER' %}
+                      <span class="new">BESTSELLER</span>
+                      {% endif %}
+                    </div>
+                  </div>
+                  <div class="product-body">
+                    <p class="product-category">{{ prd.get_category_display }}</p>
+                    <h3 class="product-name"><a href="{{ prd.get_absolute_url }}">{{ prd.Name }}</a></h3>
+                    {% if prd.Discount_Price %}
+                    <h4 class="product-price">${{ prd.Discount_Price }} <del
+                        class="product-old-price">${{ prd.Price }}</del></h4>
+                    {% else %}
+                    <h4 class="product-price">${{ prd.Price }}</h4>
+                    {% endif %}
+                    <div class="product-rating">
+                      <i class="fa fa-star"></i>
+                      <i class="fa fa-star"></i>
+                      <i class="fa fa-star"></i>
+                      <i class="fa fa-star"></i>
+                      <i class="fa fa-star"></i>
+                    </div>
+                    <div class="product-btns">
+                      <!-- <button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button> -->
+                      <!-- <a href="{{ prd.get_absolute_url }}" class="quick-view" style="text-decoration: none;"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></a> -->
+                      <button class="quick-view"><i class="fa fa-eye"></i><a href="{{ prd.get_absolute_url }}"><span
+                            class="tooltipp">quick
+                            view</span></a></button>
+                    </div>
+                  </div>
+                  <div class="add-to-cart">
+                    {% if user.is_authenticated %}
+                    {% if prd.category == 'MR' or prd.category == 'LR' or prd.category == 'TR' %}
+                    <a href="{% url 'onlinebooking' prd.category %}"><button class="add-to-cart-btn"><i
+                          class="fa fa-shopping-cart"></i>book
+                        online</button></a>
+                    {% else %}
+                    <a href="{{ prd.get_add_to_cart_url }}"><button class="add-to-cart-btn"><i
+                          class="fa fa-shopping-cart"></i>add to cart</button></a>
+                    {% endif %}
+                    {% else %}
+                    {% if prd.category == 'MR' or prd.category == 'LR' or prd.category == 'TR' %}
+                    <a href="{% url 'onlinebooking' prd.category %}"><button class="add-to-cart-btn"><i
+                      class="fa fa-shopping-cart"></i>book
+                    online</button></a>
+                    {% else %}
+                    <button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to
+                      cart</button>
+                    {% endif %}
+                    {% endif %}
+                  </div>
+                </div>
+                {% endfor %}
+
+                <!-- /product -->
+
+              </div>
+              <div id="slick-nav-1" class="products-slick-nav"></div>
+            </div>
+            <!-- /tab -->
+
+            <!-- tab2 -->
+            <div id="tab2" class="tab-pane">
+              <div class="products-slick" data-nav="#slick-nav-2">
+                
+                {% for prd in prody %}
+                {% if prd.category == 'LR' %}
+                <div class="product">
+                  <div class="product-img">
+
+                    <img src="{{ prd.image.url }}" alt="">
+                    <div class="product-label">
+                      <span class="sale">-30%</span>
+                      {% if prd.get_label_display == 'NEW' %}
+                      <span class="new">NEW</span>
+                      {% elif prd.get_label_display == 'BESTSELLER' %}
+                      <span class="new">BESTSELLER</span>
+                      {% endif %}
+                    </div>
+                  </div>
+                  <div class="product-body">
+                    <p class="product-category">{{ prd.get_category_display }}</p>
+                    <h3 class="product-name"><a
+                        href="{{ prd.get_absolute_url }}">{{ prd.Name }}</a></h3>
+                    {% if prd.Discount_Price %}
+                    <h4 class="product-price">${{ prd.Discount_Price }} <del
+                        class="product-old-price">${{ prd.Price }}</del></h4>
+                    {% else %}
+                    <h4 class="product-price">${{ prd.Price }}</h4>
+                    {% endif %}
+                    <div class="product-rating">
+                      <i class="fa fa-star"></i>
+                      <i class="fa fa-star"></i>
+                      <i class="fa fa-star"></i>
+                      <i class="fa fa-star"></i>
+                      <i class="fa fa-star"></i>
+                    </div>
+                    <div class="product-btns">
+
+                      <button class="quick-view"><i class="fa fa-eye"></i><a
+                          href="{{ prd.get_absolute_url }}"><span class="tooltipp">quick
+                            view</span></a></button>
+                    </div>
+                  </div>
+                  <div class="add-to-cart">
+                    {% if user.is_authenticated %}
+                      <a href="{% url 'onlinebooking' prd.category %}"><button
+                          class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i>book
+                          online</button></a>
+                    {% else %}
+                    <a href="{% url 'onlinebooking' prd.category %}"><button class="add-to-cart-btn"><i
+                      class="fa fa-shopping-cart"></i>book
+                    online</button></a>
+                    {% endif %}
+                  </div>
+                </div>
+                {% elif prd.category == 'MA' %}
+                <div class="product">
+                  <div class="product-img">
+
+                    <img src="{{ prd.image.url }}" alt="">
+                    <div class="product-label">
+                      <span class="sale">-30%</span>
+                      {% if prd.get_label_display == 'NEW' %}
+                      <span class="new">NEW</span>
+                      {% elif prd.get_label_display == 'BESTSELLER' %}
+                      <span class="new">BESTSELLER</span>
+                      {% endif %}
+                    </div>
+                  </div>
+                  <div class="product-body">
+                    <p class="product-category">{{ prd.get_category_display }}</p>
+                    <h3 class="product-name"><a
+                        href="{{ prd.get_absolute_url }}">{{ prd.Name }}</a></h3>
+                    {% if prd.Discount_Price %}
+                    <h4 class="product-price">${{ prd.Discount_Price }} <del
+                        class="product-old-price">${{ prd.Price }}</del></h4>
+                    {% else %}
+                    <h4 class="product-price">${{ prd.Price }}</h4>
+                    {% endif %}
+                    <div class="product-rating">
+                      <i class="fa fa-star"></i>
+                      <i class="fa fa-star"></i>
+                      <i class="fa fa-star"></i>
+                      <i class="fa fa-star"></i>
+                      <i class="fa fa-star"></i>
+                    </div>
+                    <div class="product-btns">
+
+                      <button class="quick-view"><i class="fa fa-eye"></i><a
+                          href="{{ prd.get_absolute_url }}"><span class="tooltipp">quick
+                            view</span></a></button>
+                    </div>
+                  </div>
+                  <div class="add-to-cart">
+                    {% if user.is_authenticated %}
+                    <a href="{{ prd.get_add_to_cart_url }}"><button class="add-to-cart-btn"><i
+                      class="fa fa-shopping-cart"></i>add to cart</button></a>
+                    {% else %}
+                    <button class="add-to-cart-btn cart" id="{{ prd.id }}"><i class="fa fa-shopping-cart"></i> add to
+                      cart</button>
+                    {% endif %}
+                  </div>
+                </div>
+                {% endif %}
+                {% endfor %}
+
+
+
+              </div>
+              <div id="slick-nav-2" class="products-slick-nav"></div>
+            </div>
+            <!-- /tab2 -->
+
+            <!-- tab3 -->
+            <div id="tab3" class="tab-pane">
+              <div class="products-slick" data-nav="#slick-nav-3">
+                
+                {% for prd in prody %}
+                {% if prd.category == 'TR' %}
+                <div class="product">
+                  <div class="product-img">
+
+                    <img src="{{ prd.image.url }}" alt="">
+                    <div class="product-label">
+                      <span class="sale">-30%</span>
+                      {% if prd.get_label_display == 'NEW' %}
+                      <span class="new">NEW</span>
+                      {% elif prd.get_label_display == 'BESTSELLER' %}
+                      <span class="new">BESTSELLER</span>
+                      {% endif %}
+                    </div>
+                  </div>
+                  <div class="product-body">
+                    <p class="product-category">{{ prd.get_category_display }}</p>
+                    <h3 class="product-name"><a
+                        href="{{ prd.get_absolute_url }}">{{ prd.Name }}</a></h3>
+                    {% if prd.Discount_Price %}
+                    <h4 class="product-price">${{ prd.Discount_Price }} <del
+                        class="product-old-price">${{ prd.Price }}</del></h4>
+                    {% else %}
+                    <h4 class="product-price">${{ prd.Price }}</h4>
+                    {% endif %}
+                    <div class="product-rating">
+                      <i class="fa fa-star"></i>
+                      <i class="fa fa-star"></i>
+                      <i class="fa fa-star"></i>
+                      <i class="fa fa-star"></i>
+                      <i class="fa fa-star"></i>
+                    </div>
+                    <div class="product-btns">
+
+                      <button class="quick-view"><i class="fa fa-eye"></i><a
+                          href="{{ prd.get_absolute_url }}"><span class="tooltipp">quick
+                            view</span></a></button>
+                    </div>
+                  </div>
+                  <div class="add-to-cart">
+                    {% if user.is_authenticated %}
+                      <a href="{% url 'onlinebooking' prd.category %}"><button
+                          class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i>book
+                          online</button></a>
+                    {% else %}
+                    <a href="{% url 'onlinebooking' prd.category %}"><button class="add-to-cart-btn"><i
+                      class="fa fa-shopping-cart"></i>book
+                    online</button></a>
+                    {% endif %}
+                  </div>
+                </div>
+                {% elif prd.category == 'DA' %}
+                <div class="product">
+                  <div class="product-img">
+
+                    <img src="{{ prd.image.url }}" alt="">
+                    <div class="product-label">
+                      <span class="sale">-30%</span>
+                      {% if prd.get_label_display == 'NEW' %}
+                      <span class="new">NEW</span>
+                      {% elif prd.get_label_display == 'BESTSELLER' %}
+                      <span class="new">BESTSELLER</span>
+                      {% endif %}
+                    </div>
+                  </div>
+                  <div class="product-body">
+                    <p class="product-category">{{ prd.get_category_display }}</p>
+                    <h3 class="product-name"><a
+                        href="{{ prd.get_absolute_url }}">{{ prd.Name }}</a></h3>
+                    {% if prd.Discount_Price %}
+                    <h4 class="product-price">${{ prd.Discount_Price }} <del
+                        class="product-old-price">${{ prd.Price }}</del></h4>
+                    {% else %}
+                    <h4 class="product-price">${{ prd.Price }}</h4>
+                    {% endif %}
+                    <div class="product-rating">
+                      <i class="fa fa-star"></i>
+                      <i class="fa fa-star"></i>
+                      <i class="fa fa-star"></i>
+                      <i class="fa fa-star"></i>
+                      <i class="fa fa-star"></i>
+                    </div>
+                    <div class="product-btns">
+
+                      <button class="quick-view"><i class="fa fa-eye"></i><a
+                          href="{{ prd.get_absolute_url }}"><span class="tooltipp">quick
+                            view</span></a></button>
+                    </div>
+                  </div>
+                  <div class="add-to-cart">
+                    {% if user.is_authenticated %}
+                    <a href="{{ prd.get_add_to_cart_url }}"><button class="add-to-cart-btn"><i
+                      class="fa fa-shopping-cart"></i>add to cart</button></a>
+                    {% else %}
+                    <button class="add-to-cart-btn cart" id="{{ prd.id }}"><i class="fa fa-shopping-cart"></i> add to
+                      cart</button>
+                    {% endif %}
+                  </div>
+                </div>
+                {% endif %}
+                {% endfor %}
+
+
+
+              </div>
+              <div id="slick-nav-3" class="products-slick-nav"></div>
+            </div> 
+            <!-- /tab3 -->
+
+            <!-- tab4 -->
+            <div id="tab4" class="tab-pane">
+              <div class="products-slick" data-nav="#slick-nav-4">
+                
+                {% for prd in prody %}
+                {% if prd.category == 'MR' %}
+                <div class="product">
+                  <div class="product-img">
+
+                    <img src="{{ prd.image.url }}" alt="">
+                    <div class="product-label">
+                      <span class="sale">-30%</span>
+                      {% if prd.get_label_display == 'NEW' %}
+                      <span class="new">NEW</span>
+                      {% elif prd.get_label_display == 'BESTSELLER' %}
+                      <span class="new">BESTSELLER</span>
+                      {% endif %}
+                    </div>
+                  </div>
+                  <div class="product-body">
+                    <p class="product-category">{{ prd.get_category_display }}</p>
+                    <h3 class="product-name"><a
+                        href="{{ prd.get_absolute_url }}">{{ prd.Name }}</a></h3>
+                    {% if prd.Discount_Price %}
+                    <h4 class="product-price">${{ prd.Discount_Price }} <del
+                        class="product-old-price">${{ prd.Price }}</del></h4>
+                    {% else %}
+                    <h4 class="product-price">${{ prd.Price }}</h4>
+                    {% endif %}
+                    <div class="product-rating">
+                      <i class="fa fa-star"></i>
+                      <i class="fa fa-star"></i>
+                      <i class="fa fa-star"></i>
+                      <i class="fa fa-star"></i>
+                      <i class="fa fa-star"></i>
+                    </div>
+                    <div class="product-btns">
+
+                      <button class="quick-view"><i class="fa fa-eye"></i><a
+                          href="{{ prd.get_absolute_url }}"><span class="tooltipp">quick
+                            view</span></a></button>
+                    </div>
+                  </div>
+                  <div class="add-to-cart">
+                    {% if user.is_authenticated %}
+                      <a href="{% url 'onlinebooking' prd.category %}"><button
+                          class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i>book
+                          online</button></a>
+                    {% else %}
+                    <a href="{% url 'onlinebooking' prd.category %}"><button class="add-to-cart-btn"><i
+                      class="fa fa-shopping-cart"></i>book
+                    online</button></a>
+                    {% endif %}
+                  </div>
+                </div>
+                {% elif prd.category == 'CS' %}
+                <div class="product">
+                  <div class="product-img">
+
+                    <img src="{{ prd.image.url }}" alt="">
+                    <div class="product-label">
+                      <span class="sale">-30%</span>
+                      {% if prd.get_label_display == 'NEW' %}
+                      <span class="new">NEW</span>
+                      {% elif prd.get_label_display == 'BESTSELLER' %}
+                      <span class="new">BESTSELLER</span>
+                      {% endif %}
+                    </div>
+                  </div>
+                  <div class="product-body">
+                    <p class="product-category">{{ prd.get_category_display }}</p>
+                    <h3 class="product-name"><a
+                        href="{{ prd.get_absolute_url }}">{{ prd.Name }}</a></h3>
+                    {% if prd.Discount_Price %}
+                    <h4 class="product-price">${{ prd.Discount_Price }} <del
+                        class="product-old-price">${{ prd.Price }}</del></h4>
+                    {% else %}
+                    <h4 class="product-price">${{ prd.Price }}</h4>
+                    {% endif %}
+                    <div class="product-rating">
+                      <i class="fa fa-star"></i>
+                      <i class="fa fa-star"></i>
+                      <i class="fa fa-star"></i>
+                      <i class="fa fa-star"></i>
+                      <i class="fa fa-star"></i>
+                    </div>
+                    <div class="product-btns">
+
+                      <button class="quick-view"><i class="fa fa-eye"></i><a
+                          href="{{ prd.get_absolute_url }}"><span class="tooltipp">quick
+                            view</span></a></button>
+                    </div>
+                  </div>
+                  <div class="add-to-cart">
+                    {% if user.is_authenticated %}
+                    <a href="{{ prd.get_add_to_cart_url }}"><button class="add-to-cart-btn"><i
+                      class="fa fa-shopping-cart"></i>add to cart</button></a>
+                    {% else %}
+                    <button class="add-to-cart-btn cart" id="{{ prd.id }}"><i class="fa fa-shopping-cart"></i> add to
+                      cart</button>
+                    {% endif %}
+                  </div>
+                </div>
+                {% endif %}
+                {% endfor %}
+
+
+
+              </div>
+              <div id="slick-nav-4" class="products-slick-nav"></div>
+            </div> 
+            <!-- /tab4 -->
+
+          </div>
+        </div>
+      </div>
+      <!-- Products tab & slick -->
+    </div>
+    <!-- /row -->
+  </div>
+  <!-- /container -->
+</div>
+<!-- /SECTION -->
+{% endblock content %}

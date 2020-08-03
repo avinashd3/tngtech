@@ -1,0 +1,472 @@
+{% load static %}
+{% load crispy_forms_tags %}
+{% load cart_template_tags %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <title>Checkout</title>
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
+  <!-- Bootstrap core CSS -->
+  <link href="{% static 'prod/css/bootstrap.min.css' %}" rel="stylesheet">
+  <!-- Material Design Bootstrap -->
+  <link href="{% static 'prod/css/mdb.min.css' %}" rel="stylesheet">
+  <!-- Your custom styles (optional) -->
+  <link href="{% static 'prod/css/style.min.css' %}" rel="stylesheet">
+</head>
+
+<body class="grey lighten-3">
+
+  <!-- Navbar -->
+  <nav class="navbar sticky-top navbar-expand-lg navbar-light white scrolling-navbar">
+    <div class="container">
+
+      <!-- Brand -->
+      <a class="navbar-brand" href="{% url 'homie' %}">
+        <img src="{% static 'prod/img/logo-black.png' %}" alt="Logo" style="width:150px;">
+      </a>
+
+      <!-- Collapse -->
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <!-- Links -->
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+
+        <!-- Left -->
+        <ul class="navbar-nav mr-auto">
+        <!--  <li class="nav-item active">
+            <a class="nav-link waves-effect" href="#">Home
+              <span class="sr-only">(current)</span>
+            </a>
+          </li> -->
+          <li class="nav-item">
+            <a class="nav-link waves-effect" href="{% url 'about' %}" target="_self">About Us</a>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Repair Services
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <a class="dropdown-item" href="serv-prod/MobRep/">Mobile Repair</a>
+              <a class="dropdown-item" href="serv-prod/LapRep/">Laptop/Computer Repair</a>
+              <div class="dropdown-divider"></div>
+              <a class="dropdown-item" href="serv-prod/TabRep/">iPad/Tablet Repair</a>
+            </div>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link waves-effect" href="{% url 'contact' %}" target="_self">
+              Contact Us</a>
+          </li>
+        </ul>
+
+        <!-- Right -->
+        <ul class="navbar-nav nav-flex-icons">
+        <!--  <li class="nav-item">
+            <a class="nav-link waves-effect">
+              <span class="badge red z-depth-1 mr-1"> 1 </span>
+              <i class="fas fa-shopping-cart"></i>
+              <span class="clearfix d-none d-sm-inline-block"> Cart </span>
+            </a>
+          </li>-->
+          <li class="nav-item">
+            <a href="https://www.facebook.com/tngtechsolutions/" class="nav-link waves-effect" target="_blank">
+              <i class="fab fa-facebook-f"></i>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="https://twitter.com/tng_tech" class="nav-link waves-effect" target="_blank">
+              <i class="fab fa-twitter"></i>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="https://www.instagram.com/tngtech.nz/" class="nav-link waves-effect" target="_blank">
+              <i class="fab fa-instagram"></i>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="https://www.linkedin.com/company/tng-tech-solutions/" class="nav-link waves-effect" target="_blank">
+              <i class="fab fa-linkedin"></i>
+            </a>
+          </li>
+          {% if user.is_authenticated %}
+            <li class="nav-item">
+              <a class="nav-link waves-effect" href="{% url 'order-summary' %}">
+                {% if request.user|cart_item_count != 0 %}
+                  <span class="badge red z-depth-1 mr-1"> {{ request.user|cart_item_count }} </span>
+                {% endif %}
+                <i class="fas fa-shopping-cart"></i>
+                <span class="clearfix d-none d-sm-inline-block"> Cart </span>
+              </a>
+            </li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                {{ user.username }}
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <a class="dropdown-item" href="{% url 'profile' %}">Profile</a>
+                <a class="dropdown-item" href="{% url 'logout' %}">Log Out</a>
+              </div>
+            </li>
+            <!-- <li class="nav-item">
+              <a class="nav-link waves-effect" href="{% url 'profile' %}">Profile</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link waves-effect" href="{% url 'logout' %}">Log Out</a>
+            </li> -->
+          {% else %}
+            <li class="nav-item">
+              <a class="nav-link waves-effect" href="{% url 'login' %}">Log In</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link waves-effect" href="{% url 'userreg' %}">Register</a>
+            </li>
+          {% endif %}
+        </ul>
+
+      </div>
+
+    </div>
+  </nav>
+  <!-- Navbar -->
+
+  <!--Main layout-->
+  <main class="mt-5 pt-4">
+    <div class="container wow fadeIn">
+
+      {% if messages %}
+        {% for message in messages %}
+          <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+            {{ message }}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+        {% endfor %}
+      {% endif %}
+
+      <!-- Heading -->
+      <h2 class="my-5 h2 text-center">Checkout form</h2>
+
+      <!--Grid row-->
+      <div class="row">
+
+        <!--Grid column-->
+        <div class="col-md-8 mb-4">
+
+          <!--Card-->
+          <div class="card">
+
+            <!--Card content-->
+            <form method="POST" class="card-body">
+              {% csrf_token %}
+              <h3>Shipping Address</h3>
+
+              <div class="hideable_shipping_form">
+                <!--address-->
+                <div class="md-form mb-5">
+                  <!--{{ form.street_address }}-->
+                  <input type="text" id="shipping_address" name="shipping_address" class="form-control" placeholder="1234 Main St">
+                  <label for="shipping_address" class="">Address</label>
+                </div>
+
+                <!--address-2-->
+                <div class="md-form mb-5">
+                  <!--{{ form.apartment_address }}-->
+                  <input type="text" id="shipping_address2" name="shipping_address2" class="form-control" placeholder="Apartment or suite">
+                  <label for="shipping_address2" class="">Address 2 (optional)</label>
+                </div>
+
+                <!--Grid row-->
+                <div class="row">
+
+                  <!--Grid column-->
+                 <div class="col-lg-4 col-md-12 mb-4">
+
+                    <label for="shipping_country">Country</label>
+
+                    {{ form.shipping_country }}
+                    <div class="invalid-feedback">
+                      Please select a valid country.
+                    </div>
+
+                  </div>
+
+                  <div class="col-lg-4 col-md-6 mb-4">
+
+                    <label for="shipping_zip">Zip</label>
+                    <input type="text" class="form-control" id="shipping_zip" name="shipping_zip" placeholder="Zip Code">
+                    <!--{{ form.zip }}-->
+                    <div class="invalid-feedback">
+                      Zip code required.
+                    </div>
+
+                  </div>
+                  <!--Grid column-->
+
+                </div>
+                <!--Grid row-->
+
+                <div class="custom-control custom-checkbox">
+                  <input type="checkbox" class="custom-control-input" name="same_billing_address" id="same_billing_address">
+                  <label class="custom-control-label" for="same_billing_address">Billing address is the same as my shipping address</label>
+                </div>
+                <div class="custom-control custom-checkbox">
+                  <input type="checkbox" class="custom-control-input" name="set_default_shipping" id="set_default_shipping">
+                  <label class="custom-control-label" for="set_default_shipping">Save as default shipping address</label>
+                </div>
+
+
+
+              </div>
+
+              {% if default_shipping_address %}
+              <div class="custom-control custom-checkbox">
+                <input type="checkbox" class="custom-control-input" name="use_default_shipping" id="use_default_shipping">
+                <label class="custom-control-label" for="use_default_shipping">Use default shipping address: {{ default_shipping_address.street_address|truncatechars:10 }}</label>
+              </div>
+              {% endif %}
+
+              <hr>
+
+              <h3>Billing Address</h3>
+
+              <div class="hideable_billing_form">
+                <!--address-->
+                <div class="md-form mb-5">
+                  <input type="text" id="billing_address" name="billing_address" class="form-control" placeholder="1234 Main St">
+                  <label for="billing_address" class="">Address</label>
+                </div>
+
+                <!--address-2-->
+                <div class="md-form mb-5">
+                  <input type="text" id="billing_address2" name="billing_address2" class="form-control" placeholder="Apartment or suite">
+                  <label for="billing_address2" class="">Address 2 (optional)</label>
+                </div>
+
+                <!--Grid row-->
+                <div class="row">
+
+                  <!--Grid column-->
+                 <div class="col-lg-4 col-md-12 mb-4">
+
+                    <label for="billing_country">Country</label>
+
+                    {{ form.billing_country }}
+                    <div class="invalid-feedback">
+                      Please select a valid country.
+                    </div>
+
+                  </div>
+
+                  <div class="col-lg-4 col-md-6 mb-4">
+
+                    <label for="billing_zip">Zip</label>
+                    <input type="text" class="form-control" id="billing_zip" name="billing_zip" placeholder="Zip Code">
+                    <div class="invalid-feedback">
+                      Zip code required.
+                    </div>
+
+                  </div>
+                  <!--Grid column-->
+
+                </div>
+                <!--Grid row-->
+
+                <div class="custom-control custom-checkbox" id="bill_savedef">
+                  <input type="checkbox" class="custom-control-input" name="set_default_billing" id="set_default_billing">
+                  <label class="custom-control-label" for="set_default_billing">Save as default billing address</label>
+                </div>
+
+              </div>
+
+              {% if default_billing_address %}
+              <div class="custom-control custom-checkbox" id="bill_usedef">
+                <input type="checkbox" class="custom-control-input" name="use_default_billing" id="use_default_billing">
+                <label class="custom-control-label" for="use_default_billing">Use default billing address: {{ default_billing_address.street_address|truncatechars:10 }}</label>
+              </div>
+              {% endif %}
+              <hr>
+
+              <h3> Payment Option </h3>
+
+              <div class="d-block my-3">
+                {% for value,name in form.fields.payment_option.choices %}
+                <div class="custom-control custom-radio">
+                  <input id="{{ name }}" name="payment_option" value="{{ value }}" type="radio" class="custom-control-input" required>  <!-- to select one option the name field has to be same -->
+                  <label class="custom-control-label" for="{{ name }}">{{ name }}</label>
+                </div>
+                {% endfor %}
+                <!--<div class="custom-control custom-radio">
+                  <input id="paypal" name="paymentMethod" type="radio" class="custom-control-input" required>
+                  <label class="custom-control-label" for="paypal">Paypal</label>
+                </div>-->
+              </div>
+
+
+              <hr class="mb-4">
+              <button class="btn btn-primary btn-lg btn-block" type="submit">Continue to checkout</button>
+
+            </form>
+
+          </div>
+          <!--/.Card-->
+
+        </div>
+        <!--Grid column-->
+
+        <!--Grid column-->
+        <div class="col-md-4 mb-4">
+
+          {% include "prod/order_snippet.html" %}
+
+        </div>
+        <!--Grid column-->
+
+      </div>
+      <!--Grid row-->
+
+    </div>
+  </main>
+  <!--Main layout-->
+
+  <!--Footer-->
+  <footer class="page-footer text-center font-small mt-4 wow fadeIn" style="background-color: #171a43;">
+
+
+
+    <div class="container text-center text-md-left" style="padding:35px;">
+      <div class="row mt-3">
+        <!--First column-->
+        <div class="col-md-6 col-lg-4"> <!--col-xl-3 mb-4 -->
+          <h3 class="text-uppercase font-weight-bold">
+            <strong>TNG Tech Solutions</strong>
+          </h3>
+          <hr class="info-color mb-4 mt-0 d-inline-block mx-auto" style="width: 60px;">
+          <p>
+                  109-ward street,<br> Hamilton Central, Hamilton,3204 <br>
+    				<strong>Phone:</strong> <a href="tel:+64 7 834 1325">+64 7 834 1325</a>,  <a href="tel:+64 27 393 3614"> +64 27 393 3614</a><br>
+    				<strong>Email:</strong><a href="mailto:info@tngtechsolutions.co.nz"> info@tngtechsolutions.co.nz</a><br>
+          </p>
+        </div>
+        <!--/.First column-->
+
+
+        <!--Third column-->
+        <div class="col-md-6 col-lg-4 col-xl-2 mx-auto mb-4"> <!--col-md-3 col-lg-2 col-xl-2 mx-auto mb-4 -->
+          <h6 class="text-uppercase font-weight-bold">
+            <strong>Useful Links</strong>
+          </h6>
+          <hr class="info-color mb-4 mt-0 d-inline-block mx-auto" style="width: 60px;">
+          <ul style="list-style: none;">
+              <li><i class="bx bx-chevron-right"></i> <a href="{% url 'homie' %}">Home</a></li>
+              <li><i class="bx bx-chevron-right"></i> <a href="{% url 'about' %}">About us</a></li>
+              <li><i class="bx bx-chevron-right"></i> <a href="#">Services</a></li>
+              <li><i class="bx bx-chevron-right"></i> <a href="/serv-prod/All/">Products</a></li>
+              <li><i class="bx bx-chevron-right"></i> <a href="#">Online Booking</a></li>
+              <li><i class="bx bx-chevron-right"></i><a href="{% url 'contact' %}">Contact Us</a></li>
+          </ul>
+        </div>
+        <!--/.Third column-->
+        <!--Fourth column-->
+        <div class="col-md-6 col-lg-4 col-xl-3">
+          <h6 class="text-uppercase font-weight-bold">
+            <strong>Newsletter</strong>
+          </h6>
+          <hr class="info-color mb-4 mt-0 d-inline-block mx-auto" style="width: 60px;">
+         <!-- <p>
+                <i class="fas fa-building mr-3"></i> Our story</p> -->
+          <p>Get our subscription for latest updates on services and accessories</p>
+          
+          <form method="POST" action="{% url 'homenews' %}">
+            {% csrf_token %}
+              <fieldset class="form-group">
+                <input class="form-control mr-sm-2" type="text" placeholder="Enter Your email" name="email" id="email" aria-label="email">
+              </fieldset>
+              <button class="btn btn-outline-white my-2 my-sm-0" type="submit">SUBSCRIBE</button>
+          </form>
+          <!-- <button class="btn btn-outline-white my-2 my-sm-0"><a href="{% url 'newsl' %}">SUBSCRIBE</a></button> -->
+        </div>
+        <!--/.Fourth column-->
+      </div>
+    </div>
+  <!--/.Footer-->
+
+  <!-- SCRIPTS -->
+  <!-- JQuery -->
+  <script type="text/javascript" src="{% static 'prod/js/jquery-3.4.1.min.js' %}"></script>
+  <!-- Bootstrap tooltips -->
+  <script type="text/javascript" src="{% static 'prod/js/popper.min.js' %}"></script>
+  <!-- Bootstrap core JavaScript -->
+  <script type="text/javascript" src="{% static 'prod/js/bootstrap.min.js' %}"></script>
+  <!-- MDB core JavaScript -->
+  <script type="text/javascript" src="{% static 'prod/js/mdb.min.js' %}"></script>
+  <!-- Initializations -->
+  <script type="text/javascript">
+    // Animations initialization
+    new WOW().init();
+  </script>
+
+  <script>
+
+    var hideable_shipping_form = $('.hideable_shipping_form');
+    var hideable_billing_form = $('.hideable_billing_form');
+    let bill_savedef = document.getElementById("bill_savedef");
+    // let bill_usedef = document.getElementById("bill_usedef");
+
+    var use_default_shipping = document.querySelector("input[name=use_default_shipping]");
+    var use_default_billing = document.querySelector("input[name=use_default_billing]");
+    var same_billing_address = document.querySelector("input[name=same_billing_address]");
+    var shipping_address = document.querySelector("input[name=shipping_address]");
+    var shipping_address2 = document.querySelector("input[name=shipping_address2]");
+    var shipping_zip = document.querySelector("input[name=shipping_zip]");
+
+    // console.log(shipping_address.value);
+    same_billing_address.addEventListener('change',function(){
+      if(this.checked){
+        document.querySelector("input[name=billing_address]").value=shipping_address.value;
+        document.querySelector("input[name=billing_address2]").value=shipping_address2.value;
+        document.querySelector("input[name=billing_zip]").value=shipping_zip.value;
+        // console.log(bill_savedef)
+        // bill_savedef.style.visibility = "hidden";
+        bill_usedef.style.visibility = "hidden";
+        // console.log(bill_usedef.value); change the value if checked  <===================
+        // bill_usedef.style.display = "none";
+      } else {
+        document.querySelector("input[name=billing_address]").value=null;
+        document.querySelector("input[name=billing_address2]").value=null;
+        document.querySelector("input[name=billing_zip]").value=null;
+        // bill_savedef.style.visibility = "visible";
+        bill_usedef.style.visibility = "visible";
+        //console.log(bill_usedef.value);
+        // bill_usedef.style.display = "block";
+      }
+    })
+
+    use_default_shipping.addEventListener('change',function() {
+      if (this.checked) {
+        hideable_shipping_form.hide();
+        // console.log(hideable_shipping_form);
+      } else {
+        hideable_shipping_form.show();
+      }
+    })
+
+    use_default_billing.addEventListener('change',function() {
+      if (this.checked) {
+        hideable_billing_form.hide();
+      } else {
+        hideable_billing_form.show();
+      }
+    })
+
+  </script>
+</body>
+
+</html>

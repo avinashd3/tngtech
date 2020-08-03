@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+  <body>
+    <h1>Hey , {{ obj.user.username }}</h1>
+    <h3>Thank you for letting us serve you,here are your details:</h3>
+    <hr>
+    <p><strong>Your ordered items :</strong></p>
+    <p>
+      <strong>
+        {% for oi in obj.tngproduct.all %}
+          {{ oi.quantity }} x {{ oi.tngproducts.Name }},
+        {% endfor %}
+      </strong>
+    </p>
+    <br>
+    <p><strong> Your order's reference code : {{ obj.ref_code }} </strong></p>
+    <p><strong>Amount paid : {{ obj.payment.amount }}</strong></p>
+    <p><strong>Transaction id: {{ obj.payment.stripe_charge_id }}</strong></p>
+  </body>
+</html>

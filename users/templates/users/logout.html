@@ -1,0 +1,12 @@
+{% extends "prod/base.html" %}
+<!DOCTYPE html>
+{% block content %}
+  <h2>You have been loggedOut</h2>
+  <div class="content-section">
+    <div class="border-top pt-3">
+      <small class="text-muted">
+        <a class="ml-2" href="{% url 'login' %}">LogIn Again</a>
+      </small>
+    </div>
+  </div>
+{% endblock content %}

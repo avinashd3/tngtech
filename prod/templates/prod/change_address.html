@@ -1,0 +1,86 @@
+{% extends "prod/base.html" %}
+<!DOCTYPE html>
+{% block content %}
+<h2 class="my-5 h2 text-center">Add your address here</h2>
+
+<!--Grid row-->
+<div class="row">
+
+  <!--Grid column-->
+  <div class="col-md-8 mb-4">
+
+    <!--Card-->
+    <div class="card">
+
+      <!--Card content-->
+      <form method="POST" class="card-body">
+        {% csrf_token %}
+        {% if sl == 'S' %}
+          <h3>Shipping Address</h3>
+        {% else %}
+          <h3>Billing Address</h3>
+        {% endif %}
+
+          <!--address-->
+          <div class="md-form mb-5">
+            <!--{{ form.street_address }}-->
+            <input type="text" id="street_address" name="street_address" class="form-control" placeholder="1234 Main St">
+            <label for="street_address" class="">Address</label>
+          </div>
+
+          <!--address-2-->
+          <div class="md-form mb-5">
+            <!--{{ form.apartment_address }}-->
+            <input type="text" id="apartment_address" name="apartment_address" class="form-control" placeholder="Apartment or suite">
+            <label for="apartment_address" class="">Address 2 (optional)</label>
+          </div>
+
+          <!--Grid row-->
+          <div class="row">
+
+            <!--Grid column-->
+           <!--<div class="col-lg-4 col-md-12 mb-4">
+
+              <label for="shipping_country">Country</label>
+
+              {{ form.shipping_country }}
+              <div class="invalid-feedback">
+                Please select a valid country.
+              </div>
+
+            </div>-->
+
+            <div class="col-lg-4 col-md-6 mb-4">
+
+              <label for="zip">Zip</label>
+              <input type="text" class="form-control" id="zip" name="zip" placeholder="Zip Code">
+              <!--{{ form.zip }}-->
+              <div class="invalid-feedback">
+                Zip code required.
+              </div>
+
+            </div>
+            <!--Grid column-->
+
+          </div>
+          <!--Grid row-->
+
+          <div class="custom-control custom-checkbox">
+            <input type="checkbox" class="custom-control-input" name="set_default_address" id="set_default_address" value="Y">
+            <label class="custom-control-label" for="set_default_address">Save as default shipping address</label>
+          </div>
+
+
+
+        <hr class="mb-4">
+        <button class="btn btn-primary btn-lg btn-block" type="submit">SAVE</button>
+
+      </form>
+
+    </div>
+    <!--/.Card-->
+
+  </div>
+  <!--Grid column-->
+</div>
+{% endblock %}

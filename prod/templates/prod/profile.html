@@ -1,0 +1,154 @@
+{% extends "prod/base.html" %}
+<!DOCTYPE html>
+{% block content %}
+{% if obj.first_name %}
+  <h1 class="text-center mb-3" style="color: #444;">Hey {{ obj.first_name }}</h1>
+{% else %}
+  <h1 class="text-center mb-3" style="color: #444;">Hey {{ obj.username }}</h1>
+{% endif %}
+<div class="row">
+  <div class="col-lg-3 col-md-6 mb-4">
+
+    <div class="card gradient-card">
+
+           <div class="card-image" style="background-image: url(https://mdbootstrap.com/img/Photos/Horizontal/Work/4-col/img%20%2814%29.jpg)">
+
+             <!-- Content -->
+             <a href="{% url 'vieworders' %}">
+               <div class="text-white d-flex h-100 mask blue-gradient-rgba">
+                 <div class="first-content align-self-center p-3">
+                   <h3 class="card-title">Your Orders</h3>
+                   <p class="lead mb-0">Click here to see order details</p>
+                 </div>
+               </div>
+             </a>
+
+           </div>
+      </div>
+
+  </div>
+
+  <div class="col-lg-3 col-md-6 mb-4">
+
+    <div class="card gradient-card">
+
+          <div class="card-image" style="background-image: url(https://mdbootstrap.com/img/Photos/Horizontal/Work/4-col/img%20%2814%29.jpg)">
+
+             <!-- Content -->
+             <a href="{% url 'passwordchange' %}">
+               <div class="text-white d-flex h-100 mask purple-gradient-rgba">
+                 <div class="first-content align-self-center p-3">
+                   <h3 class="card-title">Change Password</h3>
+                   <p class="lead mb-0">Click here to change password</p>
+                 </div>
+               </div>
+             </a>
+
+           </div>
+      </div>
+
+
+  </div>
+
+  <div class="col-lg-3 col-md-6 mb-4">
+
+    <div class="card gradient-card">
+
+           <div class="card-image" style="background-image: url(https://mdbootstrap.com/img/Photos/Horizontal/Work/4-col/img%20%2814%29.jpg)">
+
+             <!-- Content -->
+             <a href="{% url 'request-refund' %}">
+               <div class="text-white d-flex h-100 mask peach-gradient-rgba">
+                 <div class="first-content align-self-center p-3">
+                   <h3 class="card-title">Request Refund</h3>
+                   <p class="lead mb-0">Click here to request refund</p>
+                 </div>
+               </div>
+             </a>
+
+           </div>
+      </div>
+
+
+  </div>
+
+  <div class="col-lg-3 col-md-6 mb-4">
+
+    <div class="card gradient-card">
+
+           <div class="card-image" style="background-image: url(https://mdbootstrap.com/img/Photos/Horizontal/Work/4-col/img%20%2814%29.jpg)">
+
+             <!-- Content -->
+             <a href="{% url 'viewaddresses' %}">
+               <div class="text-white d-flex h-100 mask aqua-gradient-rgba">
+                 <div class="first-content align-self-center p-3">
+                   <h3 class="card-title">Your Address</h3>
+                   <p class="lead mb-0">Click here to view your current address</p>
+                 </div>
+               </div>
+             </a>
+
+           </div>
+      </div>
+
+
+  </div>
+
+</div>
+
+
+
+</div>
+{% endblock %}
+
+
+
+
+
+
+
+
+
+<!--<div class="card">
+
+
+  <div class="card-body text-center">
+    <h5>
+      <strong>
+        <a href="{% url 'vieworders' %}" class="dark-grey-text">Your Orders
+        </a>
+      </strong>
+    </h5>
+
+  </div>
+
+
+</div>-->
+<!--Card-->
+
+
+
+
+
+
+
+
+<!--<div class="card gradient-card">
+
+       <div class="card-image" style="background-image: url(https://mdbootstrap.com/img/Photos/Horizontal/Work/4-col/img%20%2814%29.jpg)">
+
+
+         <a href="#!">
+           <div class="text-white d-flex h-100 mask blue-gradient-rgba">
+             <div class="first-content align-self-center p-3">
+               <h3 class="card-title">Today's sales</h3>
+               <p class="lead mb-0">Click on this card to see details</p>
+             </div>
+             <div class="second-content align-self-center mx-auto text-center">
+               <i class="far fa-money-bill-alt fa-3x"></i>
+             </div>
+           </div>
+         </a>
+
+       </div>
+  </div>-->

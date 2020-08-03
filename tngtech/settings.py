@@ -29,7 +29,7 @@ SECRET_KEY = os.environ['SECRET_KEY']
 # SECRET_KEY = config['SECRET_KEY']
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = []
 # ALLOWED_HOSTS = ['139.59.90.204']
@@ -165,7 +165,7 @@ EMAIL_HOST_USER = os.environ.get('BUSI_MAIL')
 EMAIL_HOST_PASSWORD = os.environ.get('BUSI_PASS')
 SERVER_EMAIL=os.environ.get('BUSI_MAIL')
 
-STRIPE_SECRET_KEY='sk_test_4eC39HqLyjWDarjtT1zdp7dc'
+STRIPE_SECRET_KEY=os.environ.get('STRIPE_SECRET_KEY')
 
 SOCIAL_AUTH_FACEBOOK_KEY = os.environ.get('FB_KEY')
 SOCIAL_AUTH_FACEBOOK_SECRET = os.environ.get('FB_SECRET')

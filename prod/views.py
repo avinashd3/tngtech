@@ -174,17 +174,24 @@ def catgdisp(request):
 
 #Check if our user is authenticated
 
-class OrderSummaryView(LoginRequiredMixin,View):
+class OrderSummaryView(View):
     def get(self,*args,**kwargs):
-        try:
-            order=Order.objects.get(user=self.request.user,ordered=False)
-            context={
-                'object':order
+        if self.request.user.is_authenticated:
+            try:
+                order=Order.objects.get(user=self.request.user,ordered=False)
+                context={
+                    'object':order
+                }
+                return render(self.request,'prod/order-summary.html',context)
+            except ObjectDoesNotExist:
+                messages.warning(self.request,f'You do not have an active order')
+                return redirect("/")
+        else :
+            prs = TngProducts.objects.all()
+            context = {
+                'prs': prs
             }
             return render(self.request,'prod/order-summary.html',context)
-        except ObjectDoesNotExist:
-            messages.warning(self.request,f'You do not have an active order')
-            return redirect("/")
 
 def is_valid_form(values):
     valid = True

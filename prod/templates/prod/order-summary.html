@@ -13,6 +13,7 @@
         <th scope="col">Total Price</th>
       </tr>
     </thead>
+    {% if user.is_authenticated %}
     <tbody>
       {% for order_item in object.tngproduct.all %}
       <tr>
@@ -66,6 +67,131 @@
         {% endif %}
       {% endif %}
     </tbody>
+    {% else %}
+    <tbody>
+      {% for prd in prs %}
+      <tr class="apnacart{{ prd.id }} apnpur">
+        <th scope="row">{{ forloop.counter }}</th>
+        <td>{{ prd.Name }}</td>
+        {% if prd.Discount_Price %}
+          <td><span id="dp{{ prd.id }}">{{ prd.Discount_Price }}</span></td>
+        {% else %}
+          <td><span id="op{{ prd.id }}">{{ prd.Price }}</span></td>
+        {% endif %}
+        <td>
+          <a class="minus" id="{{ prd.id }}"><i class="fa fa-minus mr-2"></i></a>
+          <span id="apnctqt{{ prd.id }}"></span>
+          <a class="plus" id="{{ prd.id }}"><i class="fa fa-plus ml-2"></i></a>
+        </td>
+        <td>$<span id="itot{{ prd.id }}"></span></td>
+        <td><a style="color:red;" class="remitem" id="{{ prd.id }}"><i class="fa fa-trash float-right"></i></a></td>
+      </tr>
+      {% endfor %}
+        <tr>
+          <td colspan="4"><b>Order Total</b></td>
+          <td><b>$<span id="toot"></span></b></td>
+        </tr>  
+      <tr>
+        <td colspan="5">
+          <a class='btn btn-warning my-2 float-right ml-2' href='/checkout/'>Proceed to checkout</a>
+          <a href="/" class='btn btn-primary my-2 float-right'>Continue Shopping</a>
+        </td>
+      </tr>
+    </tbody>
+    {% endif %}
   </table>
 </div>
 {% endblock secheku %}
+{% block js %}
+<script>
+  if (localStorage.getItem('cart') == null) {
+    var cart = {};
+    var cart = new Object();
+  } else {
+    cart = JSON.parse(localStorage.getItem('cart'));
+    // console.log(carti);
+
+  }
+
+  var apnpur = $('.apnpur');
+  apnpur.hide();
+
+  updatecart(cart);
+
+
+  cart = JSON.parse(localStorage.getItem('cart'));
+  if (cart != null) {
+    if (Object.keys(cart).length > 0) {
+      document.getElementById('cartlogout').innerHTML = Object.keys(cart).length;
+
+    }
+  }
+
+  function updatecart(cart) {
+    var total = 0;
+    for (var i in cart) {
+      var itot = 0;
+      var dp = document.getElementById('dp' + i)
+      var op = document.getElementById('op' + i)
+      if (dp != null)
+        dp = dp.innerHTML;
+      total += (cart[i] * dp);
+      itot += (cart[i] * dp);
+      if (op != null)
+        op = op.innerHTML;
+      total += (cart[i] * op);
+      itot += (cart[i] * op);
+      var qntdp = document.getElementById('apnctqt' + i)
+      
+      if (qntdp != null) {
+        qntdp.innerHTML = cart[i];
+      }
+      
+      document.getElementById('itot'+i).innerHTML = itot;
+
+      var apnacart = $('.apnacart' + i);
+      apnacart.show();
+      
+    }
+    
+    localStorage.setItem('cart', JSON.stringify(cart));
+    document.getElementById('cartlogout').innerHTML = Object.keys(cart).length;
+    
+    document.getElementById('toot').innerHTML = total;
+
+  }
+
+  $('.minus').click(function(){
+    var idd = this.id;
+    if(cart[idd] > 1){
+      cart[idd] = cart[idd] - 1;
+      updatecart(cart);
+    } 
+  })
+
+  $('.plus').click(function(){
+    var idd = this.id;
+    cart[idd] = cart[idd] + 1;
+    updatecart(cart);
+  })
+
+  $('.remitem').click(function(){
+    var ids = this.id;
+    cart = JSON.parse(localStorage.getItem('cart'));
+    remitemcart(cart,ids);
+    
+  })
+  
+  
+
+  // Yeh hai remove item ka code
+  function remitemcart(cart, a) {
+    delete cart[a];
+    localStorage.setItem('cart', JSON.stringify(cart));
+    var apnacart = $('.apnacart' + a);
+    apnacart.hide();
+    updatecart(cart);
+    document.getElementById('cartlogout').innerHTML = Object.keys(cart).length;
+  }
+</script>
+{% endblock js %}

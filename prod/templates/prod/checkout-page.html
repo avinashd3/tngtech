@@ -218,13 +218,13 @@
 						
 					</div>
 					<div class="input-checkbox">
-						<input type="checkbox" id="terms">
+						<input type="checkbox" id="terms" name="readtnc">
 						<label for="terms">
 							<span></span>
-							I've read and accept the <a href="#">terms & conditions</a>
+							I've read and accept the <a href="{% url 'tandc' %}">terms & conditions</a>
 						</label>
 					</div>
-					<button class="btn btn-danger btn-lg btn-block" type="submit">Place order</button>
+					<span id="rnatnc"><a class="primary-btn order-submit">Place order</a></span>
 				</div>
 				<!-- /Order Details -->
 			</form>
@@ -250,9 +250,11 @@
 	var hideable_shipping_form = $('.hideable_shipping_form');
 	var hideable_billing_form = $('.hideable_billing_form');
 	let bill_savedef = document.getElementById("bill_savedef");
+	var rnatnc = document.getElementById("rnatnc");
 	// let bill_usedef = document.getElementById("bill_usedef");
 
 	var use_default_shipping = document.querySelector("input[name=use_default_shipping]");
+	var read_tnc = document.querySelector("input[name=readtnc]");
 	var use_default_billing = document.querySelector("input[name=use_default_billing]");
 	var same_billing_address = document.querySelector("input[name=same_billing_address]");
 	var shipping_address = document.querySelector("input[name=shipping_address]");
@@ -278,6 +280,15 @@
 			bill_usedef.style.visibility = "visible";
 			//console.log(bill_usedef.value);
 			// bill_usedef.style.display = "block";
+		}
+	})
+
+	read_tnc.addEventListener('change', function(){
+		if(this.checked){
+			rnatnc.innerHTML = '<button class="btn btn-danger btn-lg btn-block" type="submit">Place order</button>';
+		}
+		else{
+			rnatnc.innerHTML = '<a class="primary-btn order-submit">Place order</a>';
 		}
 	})
 

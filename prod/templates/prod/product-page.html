@@ -1116,7 +1116,7 @@
 	</script>
 	{% else %}
 	<script type="text/javascript">
-		window.onload = function () {
+		// window.onload = function () {
 			console.log('hello')
 			var cartsend = localStorage.getItem('cart');
 			if (cartsend != null) {
@@ -1128,7 +1128,7 @@
 				localStorage.clear();
 				window.location.reload();
 			}
-		}
+		// }
 	</script>
 	{% endif %}
 

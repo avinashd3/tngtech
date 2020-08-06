@@ -653,7 +653,7 @@
 	</script>
 	{% else %}
 	<script type="text/javascript">
-		window.onload = function () {
+		// window.onload = function () {
 			var cartsend = localStorage.getItem('cart');
 			if (cartsend != null) {
 				$.ajax({
@@ -663,7 +663,7 @@
 				})
 				localStorage.clear();
 				window.location.reload();
-			}
+			// }
 		}
 	</script>
 	{% endif %}

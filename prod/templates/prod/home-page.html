@@ -1426,7 +1426,7 @@
 	</script>
 	{% else %}
 	<script type="text/javascript">
-		window.onload = function () {
+		// window.onload = function () {
 			console.log('hello')
 			var cartsend = localStorage.getItem('cart');
 			if (cartsend != null) {
@@ -1436,8 +1436,9 @@
 					data: { 'cart': cartsend, "csrfmiddlewaretoken": "{{csrf_token}}" }
 				})
 				localStorage.clear();
+				window.location.reload();
 			}
-		}
+		// }
 	</script>
 	{% endif %}
 	<script src="{% static 'prod/js/main.js' %}"></script>

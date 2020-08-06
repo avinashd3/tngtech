@@ -1126,6 +1126,7 @@
 					data: { 'cart': cartsend, "csrfmiddlewaretoken": "{{csrf_token}}" }
 				})
 				localStorage.clear();
+				window.location.reload();
 			}
 		}
 	</script>

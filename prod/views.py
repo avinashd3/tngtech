@@ -521,6 +521,7 @@ def add_to_cart_lout(request):
                         #return redirect('order-summary')
                     else:
                         order_item.quantity=qnt
+                        order_item.save()
                         order.tngproduct.add(order_item)
                         # messages.success(request, f'Product added successfully!')
                         # return HttpResponseRedirect(reverse('itemlist', kwargs={'slug':p.slug}))
@@ -529,6 +530,7 @@ def add_to_cart_lout(request):
                     ordered_date=timezone.now()
                     order=Order.objects.create(user=request.user,ordered_date=ordered_date)
                     order_item.quantity=qnt
+                    order_item.save()
                     order.tngproduct.add(order_item)
                     # messages.success(request, f'Product added successfully')
                     # return HttpResponseRedirect(reverse('itemlist', kwargs={'slug':p.slug}))

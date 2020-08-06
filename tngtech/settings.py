@@ -32,7 +32,7 @@ SECRET_KEY = os.environ['SECRET_KEY']
 DEBUG = True
 
 ALLOWED_HOSTS = []
-# ALLOWED_HOSTS = ['139.59.90.204']
+# ALLOWED_HOSTS = ['tngtechsolutions.co.nz','127.0.0.1','139.59.90.204']
 
 # Application definition
 

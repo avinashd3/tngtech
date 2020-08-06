@@ -44,6 +44,6 @@ Features of this project:
 
 Keynotes for backend:
 1. The cart features(adding/removing item to cart , viewing items in cart) are handled by javascript when user is logged out and cart details are stored in localStorage functionality of javascript.
-    However when user is logged in , these cart items and all functionality described above are handled by functions written in python and handled by django.
+    However when user is logged in , these cart items and all functionality described above are carried out by functions written in python and handled by django.
 
 This project is currently deployed at http://139.59.90.204:8080/

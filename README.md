@@ -8,13 +8,13 @@ Special thanks to:
   seniors(shubhamdhama sir): without his help and motivation this project would not be possible.
 
 Keynotes of this project:
-1. The current template design is provided by Colorlib. (This will be updated and changed in upcoming updates)
-2. The payment gateway that this project uses is Paymark.(No card details are stored .This will be provided in upcoming updates)
-3. Since the current payment gateway performs its services only in NewZealand, only users from NZ can buy products from this site.However this payment gateway be changed according to one's needs.
-4. Technologies used are : Django , Python , HTML 5 , CSS 3 , JavaScript , Bootstrap 4 .
-5. Deployment vps : Digital Ocean(Ubuntu 18)
-6. Deployment OS : Linux
-7. Deployment server : Apache
+<!-- 1. The current template design is provided by Colorlib. (This will be updated and changed in upcoming updates) -->
+1. The payment gateway that this project uses is Paymark.(No card details are stored .This will be provided in upcoming updates)
+<!-- 3. Since the current payment gateway performs its services only in NewZealand, only users from NZ can buy products from this site.However this payment gateway be changed according to one's needs. -->
+2. Technologies used are : Django , Python , HTML 5 , CSS 3 , JavaScript , Bootstrap 4 .
+3. Deployment vps : Digital Ocean(Ubuntu 18)
+4. Deployment OS : Linux
+5. Deployment server : Apache
 
 Features of this project:
 1. Admin part:

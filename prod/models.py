@@ -41,6 +41,10 @@ class TngProducts(models.Model):
     label=models.CharField(max_length=1,choices=LABEL_CHOICES,default='R')
     slug=models.SlugField(default='test-product')
     image=models.ImageField(default='default.jpg',upload_to='product_pics')
+    image1=models.ImageField(default='default.jpg',upload_to='product_pics')
+    image2=models.ImageField(default='default.jpg',upload_to='product_pics')
+    image3=models.ImageField(default='default.jpg',upload_to='product_pics')
+    image4=models.ImageField(default='default.jpg',upload_to='product_pics')
 
     def __str__(self):
         return self.Name

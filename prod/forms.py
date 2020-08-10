@@ -7,6 +7,15 @@ PAYMENT_CHOICES=(
 ('P','Paymark')
 )
 
+DELIVERY_CHOICES=(
+    ('Auckland','Delivery - Auckland'),
+    ('Whangarei to Hamilton','Delivery - Whangarei to Hamilton'),
+    ('Rest of north island','Delivery - Rest of north island'),
+    ('Kaikoura to Timaru','Delivery - Kaikoura to Timaru'),
+    ('Christchurch','Delivery - Christchurch'),
+    ('Rest of south island','Delivery - Rest of south island')
+)
+
 class CheckoutForm(forms.Form):
     shipping_address = forms.CharField(required=False)
     shipping_address2 = forms.CharField(required=False)
@@ -29,6 +38,7 @@ class CheckoutForm(forms.Form):
     use_default_billing = forms.BooleanField(required=False)
 
     payment_option=forms.ChoiceField(widget=forms.RadioSelect,choices=PAYMENT_CHOICES)
+    shiploc = forms.ChoiceField(choices=DELIVERY_CHOICES)
 
 #widget=forms.CheckboxInput()
 

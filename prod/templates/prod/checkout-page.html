@@ -199,11 +199,22 @@
 						{% endfor %}
 						<div class="order-col">
 							<div>Shiping</div>
-							<div><strong>FREE</strong></div>
+							<!-- <div><strong>FREE</strong></div> -->
+							<label for="shiploc">Choose loaction</label>
+							<select name="shiploc" id="shiploc">
+								<option selected="selected">Choose</option>
+								<option value="Auckland">Delivery - Auckland</option>
+								<option value="Whangarei to Hamilton">Delivery - Whangarei to Hamilton</option>
+								<option value="Rest of north island">Delivery - Rest of north island</option>
+								<option value="Kaikoura to Timaru">Delivery - Kaikoura to Timaru</option>
+								<option value="Christchurch">Delivery - Christchurch</option>
+								<option value="Rest of south island">Delivery - Rest of south island</option>
+							</select>
+							<div><strong><span id="delcharge"></span></strong></div>
 						</div>
 						<div class="order-col">
 							<div><strong>TOTAL (NZD)</strong></div>
-							<div><strong class="order-total">${{ order.get_total }}</strong></div>
+							<div><strong class="order-total yetot" id="{{ order.get_total }}">$<span id="ttlw">{{ order.get_total }}</span></strong></div>
 						</div>
 					</div>
 					<div class="d-block my-3">
@@ -260,6 +271,79 @@
 	var shipping_address = document.querySelector("input[name=shipping_address]");
 	var shipping_address2 = document.querySelector("input[name=shipping_address2]");
 	var shipping_zip = document.querySelector("input[name=shipping_zip]");
+	var delbill = document.querySelector("select[name=shiploc]");
+	var delship = $('#shiploc').val();
+	if(delship == "Choose"){
+		rnatnc.innerHTML = '<a class="primary-btn order-submit">Place order</a>';
+	}
+	delbill.addEventListener('change', function(){
+	delship = $('#shiploc').val();
+	var totalwa = parseFloat($('.yetot').attr("id"));
+	if(delship == "Choose"){
+		rnatnc.innerHTML = '<a class="primary-btn order-submit">Place order</a>';
+	}
+	if(delship == "Auckland"){
+		totalwa += 5.0;
+		document.getElementById("delcharge").innerHTML="$"+5.00;
+		if(read_tnc.checked){
+			rnatnc.innerHTML = '<button class="btn btn-danger btn-lg btn-block" type="submit">Place order</button>';			
+		}
+		else{
+			rnatnc.innerHTML = '<a class="primary-btn order-submit">Place order</a>';
+		}
+	}
+	if(delship == "Whangarei to Hamilton"){
+		totalwa += 6.37;
+		document.getElementById("delcharge").innerHTML="$"+6.37;
+		if(read_tnc.checked){
+			rnatnc.innerHTML = '<button class="btn btn-danger btn-lg btn-block" type="submit">Place order</button>';			
+		}
+		else{
+			rnatnc.innerHTML = '<a class="primary-btn order-submit">Place order</a>';
+		}
+	}
+	if(delship == "Rest of north island"){
+		totalwa += 11.99;
+		document.getElementById("delcharge").innerHTML="$"+11.99;
+		if(read_tnc.checked){
+			rnatnc.innerHTML = '<button class="btn btn-danger btn-lg btn-block" type="submit">Place order</button>';			
+		}
+		else{
+			rnatnc.innerHTML = '<a class="primary-btn order-submit">Place order</a>';
+		}
+	}
+	if(delship == "Kaikoura to Timaru"){
+		totalwa += 19.14;
+		document.getElementById("delcharge").innerHTML="$"+19.14;
+		if(read_tnc.checked){
+			rnatnc.innerHTML = '<button class="btn btn-danger btn-lg btn-block" type="submit">Place order</button>';			
+		}
+		else{
+			rnatnc.innerHTML = '<a class="primary-btn order-submit">Place order</a>';
+		}
+	}
+	if(delship == "Christchurch"){
+		totalwa += 5.00;
+		document.getElementById("delcharge").innerHTML="$"+5.0;
+		if(read_tnc.checked){
+			rnatnc.innerHTML = '<button class="btn btn-danger btn-lg btn-block" type="submit">Place order</button>';			
+		}
+		else{
+			rnatnc.innerHTML = '<a class="primary-btn order-submit">Place order</a>';
+		}
+	}
+	if(delship == "Rest of south island"){
+		totalwa += 19.14;
+		document.getElementById("delcharge").innerHTML="$"+19.14;
+		if(read_tnc.checked){
+			rnatnc.innerHTML = '<button class="btn btn-danger btn-lg btn-block" type="submit">Place order</button>';			
+		}
+		else{
+			rnatnc.innerHTML = '<a class="primary-btn order-submit">Place order</a>';
+		}
+	}
+	document.getElementById("ttlw").innerHTML=totalwa;
+	})
 
 	// console.log(shipping_address.value);
 	same_billing_address.addEventListener('change', function () {
@@ -285,7 +369,13 @@
 
 	read_tnc.addEventListener('change', function(){
 		if(this.checked){
-			rnatnc.innerHTML = '<button class="btn btn-danger btn-lg btn-block" type="submit">Place order</button>';
+			delship = $('#shiploc').val();
+			if(delship == "Choose"){
+				rnatnc.innerHTML = '<a class="primary-btn order-submit">Place order</a>';
+			}
+			else{
+				rnatnc.innerHTML = '<button class="btn btn-danger btn-lg btn-block" type="submit">Place order</button>';
+			}
 		}
 		else{
 			rnatnc.innerHTML = '<a class="primary-btn order-submit">Place order</a>';

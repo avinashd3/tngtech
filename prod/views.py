@@ -329,13 +329,27 @@ class CheckoutView(LoginRequiredMixin,View):
                     else:
                         messages.info(self.request,"Please fill in the required billing address fields")
 
+                
+                delcharges = form.cleaned_data.get('shiploc')
+                if delcharges == 'Auckland':
+                    delamt = 5.00
+                elif delcharges == 'Whangarei to Hamilton':
+                    delamt = 6.37
+                elif delcharges == 'Rest of north island':
+                    delamt = 11.99
+                elif delcharges == 'Kaikoura to Timaru':
+                    delamt = 19.14
+                elif delcharges == 'Christchurch':
+                    delamt = 5.00
+                elif delcharges == 'Rest of south island':
+                    delamt = 19.14
 
                 payment_option=form.cleaned_data.get('payment_option')
                 # TODO: add redirect to selected payment option
                 if payment_option=='S':
                     return redirect('payment',payment_option='stripe')
                 elif payment_option=='P':
-                    amt = order.get_total()
+                    amt = order.get_total() + delamt
                     payment = {'account_id': 625807,'username': '104374','password': settings.PAY_PASS,'cmd': '_xclick','amount': amt,'return_url': 'https://tngtechsolutions.co.nz/paymento/'}
                     r = requests.post("https://uat.paymarkclick.co.nz/api/webpayments/paymentservice/rest/WPRequest", data=payment)
                     root = ET.fromstring(r.text)

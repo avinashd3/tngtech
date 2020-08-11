@@ -69,6 +69,9 @@ class TngProducts(models.Model):
             img.thumbnail(output_size)
             img.save(self.image.path)
 
+    class Meta:
+        verbose_name_plural = 'Products'
+
 
 #It links products to cart.Once a product is added to cart it becomes an orderitem
 #Intermediate model between Order and Products
@@ -135,7 +138,7 @@ class Address(models.Model):
         return self.user.username
 
     class Meta:
-        verbose_name_plural = 'Adresses'
+        verbose_name_plural = 'Addresses'
 
 class Payment(models.Model):
     stripe_charge_id = models.CharField(max_length=50)

@@ -736,7 +736,7 @@ def viewaddress(request):
         return render(request,'prod/view-address.html',context)
     else:
         messages.warning(request,f'You do not have an address')
-        return redirect('profile')
+        # return redirect('viewaddresses')
     return render(request,'prod/view-address.html')
 
 def catgdisp(request,slug):

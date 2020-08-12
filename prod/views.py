@@ -133,8 +133,9 @@ class HomeView(ListView):
     def get_context_data(self,**kwargs):
         context = super().get_context_data(**kwargs)
         if self.request.user.is_authenticated:
-            car_qs = Order.objects.get(user=self.request.user,ordered=False)
-            context['ctq'] = car_qs
+            if Order.objects.filter(user=self.request.user,ordered=False).exists():
+                car_qs = Order.objects.get(user=self.request.user,ordered=False)
+                context['ctq'] = car_qs
             return context
         else:
             return context
@@ -148,8 +149,10 @@ class ProductsDetailView(DetailView):
         allpr_qs = TngProducts.objects.all()
         context['allprd'] = allpr_qs
         if self.request.user.is_authenticated:
-            car_qs = Order.objects.get(user=self.request.user,ordered=False)
-            context['ctq'] = car_qs
+            if Order.objects.filter(user=self.request.user,ordered=False).exists():
+                car_qs = Order.objects.get(user=self.request.user,ordered=False)
+                # if car_qs.exists():
+                context['ctq'] = car_qs
             return context
         else:
             return context

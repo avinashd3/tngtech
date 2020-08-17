@@ -61,13 +61,13 @@ class TngProducts(models.Model):
         return reverse('removefromcart', kwargs={
             'slug':self.slug})
     
-    def save(self,*args,**kwargs):
-        super().save(self,*args,**kwargs)
-        img = Image.open(self.image.path)
-        if img.height > 600 or img.width > 600:
-            output_size = (600,600)
-            img.thumbnail(output_size)
-            img.save(self.image.path)
+    # def save(self,*args,**kwargs):
+    #     super().save(self,*args,**kwargs)
+    #     img = Image.open(self.image.path)
+    #     if img.height > 600 or img.width > 600:
+    #         output_size = (600,600)
+    #         img.thumbnail(output_size)
+    #         img.save(self.image.path)
 
     class Meta:
         verbose_name_plural = 'Products'

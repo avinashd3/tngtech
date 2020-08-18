@@ -404,7 +404,7 @@
 									<div class="product">
 										<div class="product-img">
 
-											<img src="{{ prd.image.url }}" alt="">
+											<a href="{{ prd.get_absolute_url }}" class="imagekaa"><img src="{{ prd.image.url }}" alt="" style="width: 100%;"></a>
 											<div class="product-label">
 												<span class="sale">-30%</span>
 												{% if prd.get_label_display == 'NEW' %}
@@ -480,7 +480,7 @@
 									<div class="product">
 										<div class="product-img">
 
-											<img src="{{ prd.image.url }}" alt="">
+											<a href="{{ prd.get_absolute_url }}" class="imagekaa"><img src="{{ prd.image.url }}" alt="" style="width: 100%;"></a>
 											<div class="product-label">
 												<span class="sale">-30%</span>
 												{% if prd.get_label_display == 'NEW' %}
@@ -545,7 +545,7 @@
 									<div class="product">
 										<div class="product-img">
 
-											<img src="{{ prd.image.url }}" alt="">
+											<a href="{{ prd.get_absolute_url }}" class="imagekaa"><img src="{{ prd.image.url }}" alt="" style="width: 100%;"></a>
 											<div class="product-label">
 												<span class="sale">-30%</span>
 												{% if prd.get_label_display == 'NEW' %}

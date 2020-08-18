@@ -24,10 +24,11 @@ ADDRESS_CHOICES=(
 #Products
 class TngProducts(models.Model):
     CATEGORY_CHOICES=(
-        ('A','All'),
         ('MA','Mobile Accessories'),
-        ('DA','Device Accessories'),
-        ('CS','Cool Stuffs'),
+        ('LA','Laptop Accessories'),
+        ('TA','Tablet Accessories'),
+        ('EG','Electronic Gadgets'),
+        ('LA','Latest Accessories'),
         ('MR','Mobile Repair'),
         ('LR','Laptop/Computer Repair'),
         ('TR','iPad/Tablet Repair')
@@ -38,6 +39,8 @@ class TngProducts(models.Model):
     Price=models.FloatField()
     Discount_Price=models.FloatField(blank=True,null=True)
     category=models.CharField(max_length=2,choices=CATEGORY_CHOICES,default='A')
+    subcategory = models.CharField(max_length = 100,default='none')
+    brand = models.CharField(max_length = 50,default='none')
     label=models.CharField(max_length=1,choices=LABEL_CHOICES,default='R')
     slug=models.SlugField(default='test-product')
     image=models.ImageField(default='default.jpg',upload_to='product_pics')

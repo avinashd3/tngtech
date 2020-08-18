@@ -857,8 +857,9 @@ def onlinebooking(request,slug):
         device_type = request.POST.get('url_type')
         device_model = request.POST.get('type')
         repair_type = request.POST.get('repair')
+        time = request.POST.get('time')
         OnlineBooking.objects.create(Name=name,email=email,brand=brand,contact=contact,
-            device_model=device_model,device_type=device_type,repair_type=repair_type)
+            device_model=device_model,device_type=device_type,repair_type=repair_type,time=time)
         messages.success(request,f'Your service has been booked')
         return redirect('homie')
     return render(request,'prod/online-booking.html',{'ob':slug})

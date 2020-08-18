@@ -179,3 +179,4 @@ class OnlineBooking(models.Model):
     device_type = models.CharField(max_length=50)
     device_model = models.CharField(max_length=50)
     repair_type = models.CharField(max_length=50)
+    time = models.CharField(max_length=20)

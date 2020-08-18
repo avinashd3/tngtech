@@ -706,6 +706,10 @@ textarea.input {
     padding: 15px;
     color: #FFF;
   }
+  .main-nav>li>div>a {
+    /* padding: 2px; */
+    color: #FFF;
+  }
 }
 
 /*=========================================================

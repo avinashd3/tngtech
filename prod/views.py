@@ -776,7 +776,12 @@ def catgdisp(request,slug):
             p='DA'
         elif slug == 'Cool':
             p='CS'
-        prody = TngProducts.objects.filter(category=p)
+        elif slug == 'hotdeals':
+            p='H'
+        if p=='H':
+            prody = TngProducts.objects.filter(label=p)
+        else:
+            prody = TngProducts.objects.filter(category=p)
         context = {
             'prody': prody
         }

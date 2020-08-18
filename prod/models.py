@@ -12,6 +12,7 @@ from django_countries.fields import CountryField
 LABEL_CHOICES=(
     ('P','BESTSELLER'),
     ('D','NEW'),
+    ('H','HotDeals'),
     ('R','Regular')
 )
 

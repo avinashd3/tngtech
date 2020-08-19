@@ -120,17 +120,20 @@
 
 
   cart = JSON.parse(localStorage.getItem('cart'));
-  if (cart != null) {
-    if (Object.keys(cart).length > 0) {
-      document.getElementById('cartlogout').innerHTML = Object.keys(cart).length;
+  updatecart(cart);
+  // if (cart != null) {
+  //   if (Object.keys(cart).length > 0) {
+  //     document.getElementById('cartlogout').innerHTML = Object.keys(cart).length;
 
-    }
-  }
+  //   }
+  // }
 
   function updatecart(cart) {
     var total = 0;
+    var sum = 0;
     for (var i in cart) {
       var itot = 0;
+      sum += cart[i];
       var dp = document.getElementById('dp' + i)
       var op = document.getElementById('op' + i)
       if (dp != null)
@@ -155,7 +158,7 @@
     }
     
     localStorage.setItem('cart', JSON.stringify(cart));
-    document.getElementById('cartlogout').innerHTML = Object.keys(cart).length;
+    document.getElementById('cartlogout').innerHTML = sum;
     
     document.getElementById('toot').innerHTML = total;
 
@@ -191,7 +194,7 @@
     var apnacart = $('.apnacart' + a);
     apnacart.hide();
     updatecart(cart);
-    document.getElementById('cartlogout').innerHTML = Object.keys(cart).length;
+    // document.getElementById('cartlogout').innerHTML = Object.keys(cart).length;
   }
 </script>
 {% endblock js %}

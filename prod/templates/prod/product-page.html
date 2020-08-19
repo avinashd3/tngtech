@@ -443,7 +443,7 @@
 							<div class="qty-label">
 								Qty
 								<div class="input-number">
-									<input type="number" min="1" oninput="validity.valid||(value='');" value="1">
+									<input type="number" min="1" oninput="validity.valid||(value='');" value="1" name="prodqnty">
 									<span class="qty-up">+</span>
 									<span class="qty-down">-</span>
 								</div>
@@ -1057,8 +1057,9 @@
 		$('.cart').click(function () {
 			console.log('clicked');
 			var idstr = this.id.toString();
-			console.log(idstr);
-
+			
+			var prodqnty = parseInt(document.querySelector("input[name=prodqnty]").value);
+			
 			if (localStorage.getItem('cart') == null) {
 				var cart = new Object();
 			} else {
@@ -1067,30 +1068,33 @@
 			}
 
 			if (cart[idstr] != undefined) {
-				cart[idstr] = cart[idstr] + 1;
+				cart[idstr] = cart[idstr] + prodqnty;
 			}
 			else {
-				cart[idstr] = 1;
+				cart[idstr] = prodqnty;
 			}
 			localStorage.setItem('cart', JSON.stringify(cart));
 			console.log(cart);
 
-			document.getElementById('cartlogout').innerHTML = Object.keys(cart).length;
+			// document.getElementById('cartlogout').innerHTML = Object.keys(cart).length;
 
 			updatecart(cart);
 		})
 
 		cart = JSON.parse(localStorage.getItem('cart'));
-		if (cart != null) {
-			if (Object.keys(cart).length > 0) {
-				document.getElementById('cartlogout').innerHTML = Object.keys(cart).length;
+		updatecart(cart);
+		// if (cart != null) {
+		// 	if (Object.keys(cart).length > 0) {
+		// 		document.getElementById('cartlogout').innerHTML = Object.keys(cart).length;
 
-			}
-		}
+		// 	}
+		// }
 
 		function updatecart(cart) {
 			var total = 0;
+			var sum = 0;
 			for (var i in cart) {
+				sum += cart[i];
 				var dp = document.getElementById('dp' + i)
 				var op = document.getElementById('op' + i)
 				if (dp != null)
@@ -1114,7 +1118,7 @@
 			}
 			document.getElementById('titms').innerHTML = Object.keys(cart).length;
 			document.getElementById('tot').innerHTML = "SUBTOTAL:  " + total;
-
+			document.getElementById('cartlogout').innerHTML = sum;
 		}
 
 		$('.remitem').click(function(){
@@ -1135,7 +1139,7 @@
 			var apnacart = $('.apnacart' + a);
 			apnacart.hide();
 			updatecart(cart);
-			document.getElementById('cartlogout').innerHTML = Object.keys(cart).length;
+			// document.getElementById('cartlogout').innerHTML = Object.keys(cart).length;
 		}
 	</script>
 	{% else %}

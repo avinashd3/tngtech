@@ -7,6 +7,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.utils.decorators import method_decorator
 from django.views.generic import ListView,DetailView,View
 from .models import TngProducts,OrderItem,Order,Address,Payment,Coupon,Refund,NewsLetter,OnlineBooking
+from changes.models import Shophome
 from django.utils import timezone
 from django.urls import reverse
 from .forms import CheckoutForm,CouponForm,RefundForm,NewsletForm
@@ -132,6 +133,8 @@ class HomeView(ListView):
     
     def get_context_data(self,**kwargs):
         context = super().get_context_data(**kwargs)
+        shop_qs = Shophome.objects.all()[:3]
+        context['shopc'] = shop_qs
         if self.request.user.is_authenticated:
             if Order.objects.filter(user=self.request.user,ordered=False).exists():
                 car_qs = Order.objects.get(user=self.request.user,ordered=False)

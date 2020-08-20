@@ -29,7 +29,7 @@ class TngProducts(models.Model):
         ('LA','Laptop Accessories'),
         ('TA','Tablet Accessories'),
         ('EG','Electronic Gadgets'),
-        ('LA','Latest Accessories'),
+        ('NA','Latest Accessories'),
         ('MR','Mobile Repair'),
         ('LR','Laptop/Computer Repair'),
         ('TR','iPad/Tablet Repair')

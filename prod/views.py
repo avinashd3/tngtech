@@ -7,7 +7,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.utils.decorators import method_decorator
 from django.views.generic import ListView,DetailView,View
 from .models import TngProducts,OrderItem,Order,Address,Payment,Coupon,Refund,NewsLetter,OnlineBooking
-from changes.models import Shophome,HotDeals
+from changes.models import Shophome,HotDeals,Category
 from django.utils import timezone
 from django.urls import reverse
 from .forms import CheckoutForm,CouponForm,RefundForm,NewsletForm
@@ -762,24 +762,24 @@ def catgdisp(request,slug):
         context = {
             'prody': prdi
         }
-    elif slug == 'serv':
-        mr = TngProducts.objects.filter(category='MR')
-        lr = TngProducts.objects.filter(category='LR')
-        tr = TngProducts.objects.filter(category='TR')
-        prdtri = list(chain(mr,lr,tr))
-        context = {
-            'prody': prdtri,
-            'kya': 'services'
-        }
-    elif slug == 'prdcts':
-        ma = TngProducts.objects.filter(category='MA')
-        da = TngProducts.objects.filter(category='DA')
-        cs = TngProducts.objects.filter(category='CS')
-        prdtri = list(chain(ma,da,cs))
-        context = {
-            'prody': prdtri,
-            'kya': 'prdcts'
-        }
+    # elif slug == 'serv':
+    #     mr = TngProducts.objects.filter(category='MR')
+    #     lr = TngProducts.objects.filter(category='LR')
+    #     tr = TngProducts.objects.filter(category='TR')
+    #     prdtri = list(chain(mr,lr,tr))
+    #     context = {
+    #         'prody': prdtri,
+    #         'kya': 'services'
+    #     }
+    # elif slug == 'prdcts':
+    #     ma = TngProducts.objects.filter(category='MA')
+    #     da = TngProducts.objects.filter(category='DA')
+    #     cs = TngProducts.objects.filter(category='CS')
+    #     prdtri = list(chain(ma,da,cs))
+    #     context = {
+    #         'prody': prdtri,
+    #         'kya': 'prdcts'
+    #     }
     else:
         if slug == 'MobRep':
             p='MR'
@@ -789,10 +789,14 @@ def catgdisp(request,slug):
             p='TR'
         if slug == 'MobileAccessories':
             p='MA'
-        elif slug == 'DeviceAccessories':
-            p='DA'
-        elif slug == 'Cool':
-            p='CS'
+        elif slug == 'LaptopAccessories':
+            p='LA'
+        elif slug == 'TabletAccessories':
+            p='TA'
+        elif slug == 'ElectronicGadgets':
+            p='EG'
+        elif slug == 'LatestAccessories':
+            p='NA'
         elif slug == 'hotdeals':
             p='H'
         if p=='H':
@@ -885,3 +889,19 @@ def onlinebooking(request,slug):
         messages.success(request,f'Your service has been booked')
         return redirect('homie')
     return render(request,'prod/online-booking.html',{'ob':slug})
+
+def shopp(request,slug):
+    if slug == 'prdcts':
+        thisset = {"Mobile Accessories", "Laptop Accessories", "Tablet Accessories","Electronic Gadgets","Latest Accessories"}
+    elif slug == 'serv':
+        thisset = {"Mobile Repair","Laptop/Computer Repair","iPad/Tablet Repair"}
+    ma_qs = Category.objects.get(name='Mobile Accessories')
+    la_qs = Category.objects.get(name='Laptop Accessories')
+    ta_qs = Category.objects.get(name='Tablet Accessories')
+    eg_qs = Category.objects.get(name='Electronic Gadgets')
+    na_qs = Category.objects.get(name='Latest Accessories')
+    mr = Category.objects.get(name='Mobile Repair')
+    lr = Category.objects.get(name='Laptop/Computer Repair')
+    tr = Category.objects.get(name='iPad/Tablet Repair')
+    return render(request,'prod/store.html',{'ts':thisset,'ma':ma_qs,'la':la_qs,'ta':ta_qs,
+    'eg':eg_qs,'na':na_qs,'mr':mr,'lr':lr,'tr':tr})

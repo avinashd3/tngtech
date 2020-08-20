@@ -1,85 +1,494 @@
 {% extends "prod/base.html" %}
+{% load static %}
 <!DOCTYPE html>
-{% block content %}
-<div class="container-fluid mb-5"
-  style="background-image: url('/static/prod/img/slide1.jpg'); background-repeat: no-repeat; background-size: cover;padding-top: 110px;padding-bottom: 110px;color: #fff">
-  <div class="row">
-    <div class="col-md-12">
-      <h1 class="lg-text-white">Welcome:</h1>
-    </div>
-  </div>
-</div>
+{% block secheku %}
+<!-- SECTION -->
+<div class="section">
+  <!-- container -->
+  <div class="container">
+    <!-- row -->
+    {% if scbset %}
+    <div class="row">
+      <!-- ASIDE -->
+      <div id="aside" class="col-md-3">
+        <!-- aside Widget -->
+        <!-- <div class="aside">
+          <h3 class="aside-title">Categories</h3>
+          <div class="checkbox-filter">
 
-<!--Section: Products v.3-->
-<!-- <section class="text-center mb-4">
+            <div class="input-checkbox">
+              <input type="checkbox" id="category-1">
+              <label for="category-1">
+                <span></span>
+                Laptops
+                <small>(120)</small>
+              </label>
+            </div>
 
-  
-  <div class="row wow fadeIn">
+            <div class="input-checkbox">
+              <input type="checkbox" id="category-2">
+              <label for="category-2">
+                <span></span>
+                Smartphones
+                <small>(740)</small>
+              </label>
+            </div>
 
-    
-    {% for prd in prody %}
-    <div class="col-lg-3 col-md-6 mb-4">
+            <div class="input-checkbox">
+              <input type="checkbox" id="category-3">
+              <label for="category-3">
+                <span></span>
+                Cameras
+                <small>(1450)</small>
+              </label>
+            </div>
 
-      
-      <div class="card">
+            <div class="input-checkbox">
+              <input type="checkbox" id="category-4">
+              <label for="category-4">
+                <span></span>
+                Accessories
+                <small>(578)</small>
+              </label>
+            </div>
 
-        
-        <div class="view overlay">
-          <img src="{{ prd.image.url }}" class="card-img-top" alt="">
-          <a href="{{ prd.get_absolute_url }}">
-            <div class="mask rgba-white-slight"></div>
-          </a>
-        </div>
-        
+            <div class="input-checkbox">
+              <input type="checkbox" id="category-5">
+              <label for="category-5">
+                <span></span>
+                Laptops
+                <small>(120)</small>
+              </label>
+            </div>
 
-        
-        <div class="card-body text-center">
-          
-          <a href="" class="grey-text">
-            <h5>{{ prd.get_category_display }}</h5>
-          </a>
-          <h5>
-            <strong>
-              <a href="{{ prd.get_absolute_url }}" class="dark-grey-text">{{ prd.Name }}
-                {% if prd.get_label_display == 'NEW' %}
-                <span class="badge badge-pill danger-color">NEW</span>
-                
-                {% endif %}
-                {% if prd.get_label_display == 'BESTSELLER' %}
-                <span class="badge badge-pill primary-color">BESTSELLER</span>
-                
-                {% endif %}
-              </a>
-            </strong>
-          </h5>
+            <div class="input-checkbox">
+              <input type="checkbox" id="category-6">
+              <label for="category-6">
+                <span></span>
+                Smartphones
+                <small>(740)</small>
+              </label>
+            </div>
+          </div>
+        </div> -->
+        <!-- /aside Widget -->
 
-          <h4 class="font-weight-bold blue-text">
-            <strong>$
-              {% if prd.Discount_Price %}
-              {{ prd.Discount_Price }}
-              {% else %}
-              {{ prd.Price }}
-              {% endif %}</strong>
-          </h4>
+        <!-- aside Widget -->
+        <!-- <div class="aside">
+          <h3 class="aside-title">Price</h3>
+          <div class="price-filter">
+            <div id="price-slider"></div>
+            <div class="input-number price-min">
+              <input id="price-min" type="number">
+              <span class="qty-up">+</span>
+              <span class="qty-down">-</span>
+            </div>
+            <span>-</span>
+            <div class="input-number price-max">
+              <input id="price-max" type="number">
+              <span class="qty-up">+</span>
+              <span class="qty-down">-</span>
+            </div>
+          </div>
+        </div> -->
+        <!-- /aside Widget -->
 
-        </div>
-        
+        <!-- aside Widget -->
+        <!-- <div class="aside">
+          <h3 class="aside-title">Brand</h3>
+          <div class="checkbox-filter">
+            <div class="input-checkbox">
+              <input type="checkbox" id="brand-1">
+              <label for="brand-1">
+                <span></span>
+                SAMSUNG
+                <small>(578)</small>
+              </label>
+            </div>
+            <div class="input-checkbox">
+              <input type="checkbox" id="brand-2">
+              <label for="brand-2">
+                <span></span>
+                LG
+                <small>(125)</small>
+              </label>
+            </div>
+            <div class="input-checkbox">
+              <input type="checkbox" id="brand-3">
+              <label for="brand-3">
+                <span></span>
+                SONY
+                <small>(755)</small>
+              </label>
+            </div>
+            <div class="input-checkbox">
+              <input type="checkbox" id="brand-4">
+              <label for="brand-4">
+                <span></span>
+                SAMSUNG
+                <small>(578)</small>
+              </label>
+            </div>
+            <div class="input-checkbox">
+              <input type="checkbox" id="brand-5">
+              <label for="brand-5">
+                <span></span>
+                LG
+                <small>(125)</small>
+              </label>
+            </div>
+            <div class="input-checkbox">
+              <input type="checkbox" id="brand-6">
+              <label for="brand-6">
+                <span></span>
+                SONY
+                <small>(755)</small>
+              </label>
+            </div>
+          </div>
+        </div> -->
+        <!-- /aside Widget -->
 
+        <!-- aside Widget -->
+        <!-- <div class="aside">
+          <h3 class="aside-title">Top selling</h3>
+          <div class="product-widget">
+            <div class="product-img">
+              <img src="./img/product01.png" alt="">
+            </div>
+            <div class="product-body">
+              <p class="product-category">Category</p>
+              <h3 class="product-name"><a href="#">product name goes here</a></h3>
+              <h4 class="product-price">$980.00 <del class="product-old-price">$990.00</del></h4>
+            </div>
+          </div>
+
+          <div class="product-widget">
+            <div class="product-img">
+              <img src="./img/product02.png" alt="">
+            </div>
+            <div class="product-body">
+              <p class="product-category">Category</p>
+              <h3 class="product-name"><a href="#">product name goes here</a></h3>
+              <h4 class="product-price">$980.00 <del class="product-old-price">$990.00</del></h4>
+            </div>
+          </div>
+
+          <div class="product-widget">
+            <div class="product-img">
+              <img src="./img/product03.png" alt="">
+            </div>
+            <div class="product-body">
+              <p class="product-category">Category</p>
+              <h3 class="product-name"><a href="#">product name goes here</a></h3>
+              <h4 class="product-price">$980.00 <del class="product-old-price">$990.00</del></h4>
+            </div>
+          </div>
+        </div> -->
+        <!-- /aside Widget -->
       </div>
-      
+      <!-- /ASIDE -->
 
+      <!-- STORE -->
+      <div id="store" class="col-md-9">
+        <!-- store top filter -->
+        <div class="store-filter clearfix">
+          <div class="store-sort">
+            <label>
+              
+              <h1><strong>Categories</strong></h1>
+              
+              <!-- <select class="input-select">
+                <option value="0">Popular</option>
+                <option value="1">Position</option>
+              </select> -->
+            </label>
+
+            
+          </div>
+          <!-- <ul class="store-grid">
+            <li class="active"><i class="fa fa-th"></i></li>
+            <li><a href="#"><i class="fa fa-th-list"></i></a></li>
+          </ul> -->
+        </div>
+        <!-- /store top filter -->
+
+        <!-- store products -->
+        <div class="row">
+          {% for x in scbset %}
+          <!-- product -->
+          {% if not x == 'none' %}
+          <div class="col-md-4 col-xs-6">
+            <div class="product">
+              <div class="product-img">
+
+
+                <a href="/prod-sc/{{kya}}{{x}}/" class="imagekaa"><img src="{% static 'prod/img/product09.png' %}" alt="" style="width: 100%;"></a>
+                
+              </div>
+              <div class="product-body">
+
+                <h3 class="product-name"><a href="/prod-sc/{{kya}}{{x}}/">{{ x }}</a></h3>
+              </div>
+            </div>
+          </div>
+          {% endif %}
+          <!-- /product -->
+          {% endfor %}
+
+        
+        </div>
+        <!-- /store products -->
+
+        
+      </div>
+      <!-- /STORE -->
     </div>
-    {% endfor %}
-    
+    {% endif %}
+    <!-- /row -->
 
+    {% if brandset %}
+    <div class="row">
+      <!-- ASIDE -->
+      <div id="aside" class="col-md-3">
+        <!-- aside Widget -->
+        <!-- <div class="aside">
+          <h3 class="aside-title">Categories</h3>
+          <div class="checkbox-filter">
+
+            <div class="input-checkbox">
+              <input type="checkbox" id="category-1">
+              <label for="category-1">
+                <span></span>
+                Laptops
+                <small>(120)</small>
+              </label>
+            </div>
+
+            <div class="input-checkbox">
+              <input type="checkbox" id="category-2">
+              <label for="category-2">
+                <span></span>
+                Smartphones
+                <small>(740)</small>
+              </label>
+            </div>
+
+            <div class="input-checkbox">
+              <input type="checkbox" id="category-3">
+              <label for="category-3">
+                <span></span>
+                Cameras
+                <small>(1450)</small>
+              </label>
+            </div>
+
+            <div class="input-checkbox">
+              <input type="checkbox" id="category-4">
+              <label for="category-4">
+                <span></span>
+                Accessories
+                <small>(578)</small>
+              </label>
+            </div>
+
+            <div class="input-checkbox">
+              <input type="checkbox" id="category-5">
+              <label for="category-5">
+                <span></span>
+                Laptops
+                <small>(120)</small>
+              </label>
+            </div>
+
+            <div class="input-checkbox">
+              <input type="checkbox" id="category-6">
+              <label for="category-6">
+                <span></span>
+                Smartphones
+                <small>(740)</small>
+              </label>
+            </div>
+          </div>
+        </div> -->
+        <!-- /aside Widget -->
+
+        <!-- aside Widget -->
+        <!-- <div class="aside">
+          <h3 class="aside-title">Price</h3>
+          <div class="price-filter">
+            <div id="price-slider"></div>
+            <div class="input-number price-min">
+              <input id="price-min" type="number">
+              <span class="qty-up">+</span>
+              <span class="qty-down">-</span>
+            </div>
+            <span>-</span>
+            <div class="input-number price-max">
+              <input id="price-max" type="number">
+              <span class="qty-up">+</span>
+              <span class="qty-down">-</span>
+            </div>
+          </div>
+        </div> -->
+        <!-- /aside Widget -->
+
+        <!-- aside Widget -->
+        <!-- <div class="aside">
+          <h3 class="aside-title">Brand</h3>
+          <div class="checkbox-filter">
+            <div class="input-checkbox">
+              <input type="checkbox" id="brand-1">
+              <label for="brand-1">
+                <span></span>
+                SAMSUNG
+                <small>(578)</small>
+              </label>
+            </div>
+            <div class="input-checkbox">
+              <input type="checkbox" id="brand-2">
+              <label for="brand-2">
+                <span></span>
+                LG
+                <small>(125)</small>
+              </label>
+            </div>
+            <div class="input-checkbox">
+              <input type="checkbox" id="brand-3">
+              <label for="brand-3">
+                <span></span>
+                SONY
+                <small>(755)</small>
+              </label>
+            </div>
+            <div class="input-checkbox">
+              <input type="checkbox" id="brand-4">
+              <label for="brand-4">
+                <span></span>
+                SAMSUNG
+                <small>(578)</small>
+              </label>
+            </div>
+            <div class="input-checkbox">
+              <input type="checkbox" id="brand-5">
+              <label for="brand-5">
+                <span></span>
+                LG
+                <small>(125)</small>
+              </label>
+            </div>
+            <div class="input-checkbox">
+              <input type="checkbox" id="brand-6">
+              <label for="brand-6">
+                <span></span>
+                SONY
+                <small>(755)</small>
+              </label>
+            </div>
+          </div>
+        </div> -->
+        <!-- /aside Widget -->
+
+        <!-- aside Widget -->
+        <!-- <div class="aside">
+          <h3 class="aside-title">Top selling</h3>
+          <div class="product-widget">
+            <div class="product-img">
+              <img src="./img/product01.png" alt="">
+            </div>
+            <div class="product-body">
+              <p class="product-category">Category</p>
+              <h3 class="product-name"><a href="#">product name goes here</a></h3>
+              <h4 class="product-price">$980.00 <del class="product-old-price">$990.00</del></h4>
+            </div>
+          </div>
+
+          <div class="product-widget">
+            <div class="product-img">
+              <img src="./img/product02.png" alt="">
+            </div>
+            <div class="product-body">
+              <p class="product-category">Category</p>
+              <h3 class="product-name"><a href="#">product name goes here</a></h3>
+              <h4 class="product-price">$980.00 <del class="product-old-price">$990.00</del></h4>
+            </div>
+          </div>
+
+          <div class="product-widget">
+            <div class="product-img">
+              <img src="./img/product03.png" alt="">
+            </div>
+            <div class="product-body">
+              <p class="product-category">Category</p>
+              <h3 class="product-name"><a href="#">product name goes here</a></h3>
+              <h4 class="product-price">$980.00 <del class="product-old-price">$990.00</del></h4>
+            </div>
+          </div>
+        </div> -->
+        <!-- /aside Widget -->
+      </div>
+      <!-- /ASIDE -->
+
+      <!-- STORE -->
+      <div id="store" class="col-md-9">
+        <!-- store top filter -->
+        <div class="store-filter clearfix">
+          <div class="store-sort">
+            <label>
+              <h1><strong>Shop by brand</strong></h1>
+              <!-- <select class="input-select">
+                <option value="0">Popular</option>
+                <option value="1">Position</option>
+              </select> -->
+            </label>
+
+            
+          </div>
+          <!-- <ul class="store-grid">
+            <li class="active"><i class="fa fa-th"></i></li>
+            <li><a href="#"><i class="fa fa-th-list"></i></a></li>
+          </ul> -->
+        </div>
+        <!-- /store top filter -->
+
+        <!-- store products -->
+        <div class="row">
+          {% for x in brandset %}
+          <!-- product -->
+          {% if not x == 'none' %}
+          <div class="col-md-4 col-xs-6">
+            <div class="product">
+              <div class="product-img">
+
+                <a href="/prod-br/{{kya}}{{x}}/" class="imagekaa"><img src="{% static 'prod/img/product09.png' %}" alt="" style="width: 100%;"></a>
+                
+              </div>
+              <div class="product-body">
+
+                <h3 class="product-name"><a href="/prod-br/{{kya}}{{x}}/">{{ x }}</a></h3>
+              </div>
+            </div>
+          </div>
+          {% endif %}
+          <!-- /product -->
+          {% endfor %}
+
+        
+        </div>
+        <!-- /store products -->
+
+        
+      </div>
+      <!-- /STORE -->
+    </div>
+    {% endif %}
 
   </div>
+  <!-- /container -->
+</div>
+<!-- /SECTION -->
 
-  
 
-
-</section> -->
-<!--Section: Products v.3-->
 
 <!-- SECTION -->
 <div class="section">
@@ -541,4 +950,4 @@
   <!-- /container -->
 </div>
 <!-- /SECTION -->
-{% endblock content %}
+{% endblock secheku %}

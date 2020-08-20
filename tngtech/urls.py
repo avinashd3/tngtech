@@ -72,6 +72,8 @@ urlpatterns = [
             name='django.contrib.sitemaps.views.sitemap'),
     path('online-booking/<slug>/',ob.onlinebooking,name='onlinebooking'),
     path('store/<slug>/',ob.shopp,name='store'),
+    path('prod-sc/<slug>/',ob.prbysc,name='prbysc'),
+    path('prod-br/<slug>/',ob.prbybr,name='prbybr'),
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

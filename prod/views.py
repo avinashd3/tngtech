@@ -757,11 +757,23 @@ def viewaddress(request):
     return render(request,'prod/view-address.html')
 
 def catgdisp(request,slug):
+    scbset = set()
+    brandset = set()
+    context = {
+        'scbset': scbset ,
+        'brandset': brandset
+    }
     if slug == 'All':
         prdi = TngProducts.objects.all()
         context = {
             'prody': prdi
         }
+    elif slug == 'hotdeals':
+            p='H'
+            prody = TngProducts.objects.filter(label=p)
+            context = {
+                'prody': prody
+            }
     # elif slug == 'serv':
     #     mr = TngProducts.objects.filter(category='MR')
     #     lr = TngProducts.objects.filter(category='LR')
@@ -783,30 +795,82 @@ def catgdisp(request,slug):
     else:
         if slug == 'MobRep':
             p='MR'
+            prody = TngProducts.objects.filter(category=p)
+            context = {
+                'prody': prody
+            }
         if slug == 'LapRep':
             p='LR'
+            prody = TngProducts.objects.filter(category=p)
+            context = {
+                'prody': prody
+            }
         if slug == 'TabRep':
             p='TR'
+            prody = TngProducts.objects.filter(category=p)
+            context = {
+                'prody': prody
+            }
         if slug == 'MobileAccessories':
             p='MA'
+            prody = TngProducts.objects.filter(category=p)
+            scbset , brandset = subcbrand(p)
+            context = {
+            'prody': prody,
+            'scbset': scbset ,
+            'brandset': brandset,
+            'kya': p
+        }
         elif slug == 'LaptopAccessories':
             p='LA'
+            prody = TngProducts.objects.filter(category=p)
+            scbset , brandset = subcbrand(p)
+            context = {
+            'prody': prody,
+            'scbset': scbset ,
+            'brandset': brandset,
+            'kya': p
+        }
         elif slug == 'TabletAccessories':
             p='TA'
+            prody = TngProducts.objects.filter(category=p)
+            scbset , brandset = subcbrand(p)
+            context = {
+            'prody': prody,
+            'scbset': scbset ,
+            'brandset': brandset,
+            'kya': p
+        }
         elif slug == 'ElectronicGadgets':
             p='EG'
+            prody = TngProducts.objects.filter(category=p)
+            scbset , brandset = subcbrand(p)
+            context = {
+            'prody': prody,
+            'scbset': scbset ,
+            'brandset': brandset,
+            'kya': p
+        }
         elif slug == 'LatestAccessories':
             p='NA'
-        elif slug == 'hotdeals':
-            p='H'
-        if p=='H':
-            prody = TngProducts.objects.filter(label=p)
-        else:
+            scbset , brandset = subcbrand(p)
             prody = TngProducts.objects.filter(category=p)
-        context = {
-            'prody': prody
-        }
+            context = {
+                'prody': prody,
+                'scbset': scbset ,
+                'brandset': brandset,
+                'kya': p
+            }
     return render(request,'prod/item-display.html',context)
+
+def subcbrand(p):
+    prod = TngProducts.objects.filter(category = p)
+    scbset = set()
+    brandset = set()
+    for i in prod:
+        scbset.add(i.subcategory)
+        brandset.add(i.brand)
+    return scbset,brandset
 
 def contacto(request):
     if request.method == 'POST':
@@ -905,3 +969,17 @@ def shopp(request,slug):
     tr = Category.objects.get(name='iPad/Tablet Repair')
     return render(request,'prod/store.html',{'ts':thisset,'ma':ma_qs,'la':la_qs,'ta':ta_qs,
     'eg':eg_qs,'na':na_qs,'mr':mr,'lr':lr,'tr':tr})
+
+def prbysc(request,slug):
+    pr = slug[:2]
+    subc = slug[2:]
+    print(pr)
+    print(subc)
+    prod = TngProducts.objects.filter(category = pr,subcategory = subc)
+    return render(request,'prod/prod-sc.html',{'prod':prod})
+
+def prbybr(request,slug):
+    pr = slug[:2]
+    subc = slug[2:]
+    prod = TngProducts.objects.filter(category = pr,brand = subc)
+    return render(request,'prod/prod-br.html',{'prod':prod})

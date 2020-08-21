@@ -796,20 +796,32 @@ def catgdisp(request,slug):
         if slug == 'MobRep':
             p='MR'
             prody = TngProducts.objects.filter(category=p)
+            scbset , brandset = subcbrand(p)
             context = {
-                'prody': prody
+                'prody': prody,
+                'scbset': scbset ,
+                'brandset': brandset,
+                'kya': p
             }
         if slug == 'LapRep':
             p='LR'
             prody = TngProducts.objects.filter(category=p)
+            scbset , brandset = subcbrand(p)
             context = {
-                'prody': prody
+                'prody': prody,
+                'scbset': scbset ,
+                'brandset': brandset,
+                'kya': p
             }
         if slug == 'TabRep':
             p='TR'
             prody = TngProducts.objects.filter(category=p)
+            scbset , brandset = subcbrand(p)
             context = {
-                'prody': prody
+                'prody': prody,
+                'scbset': scbset ,
+                'brandset': brandset,
+                'kya': p
             }
         if slug == 'MobileAccessories':
             p='MA'

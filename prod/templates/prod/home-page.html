@@ -139,7 +139,7 @@
 					<div class="col-md-6">
 						<div class="header-search">
 							<form method="get" action="{% url 'searchprod' %}">
-								
+
 								<input class="input" type="text" name="search" placeholder="Search here">
 								<button class="search-btn" type="submit">Search</button>
 							</form>
@@ -236,7 +236,8 @@
 												</h4>
 												{% endif %}
 											</div>
-											<button class="delete remitem" id="{{ prd.id }}"><i class="fa fa-close"></i></button>
+											<button class="delete remitem" id="{{ prd.id }}"><i
+													class="fa fa-close"></i></button>
 										</div>
 										{% endfor %}
 									</div>
@@ -298,9 +299,9 @@
 							<a href="serv-prod/ElectronicGadgets/">Electronic Gadgets</a><br>
 							<a href="serv-prod/LatestAccessories/">Latest Accessories</a>
 						</div> -->
-				</li>
-				<li>
-					<a href="store/serv/">Services</a>
+					</li>
+					<li>
+						<a href="store/serv/">Services</a>
 						<!-- <a href="serv-prod/serv/" role="button" id="dropdownMenuLink"
 							data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 							Services
@@ -311,8 +312,8 @@
 							<a href="serv-prod/LapRep/">Laptop/Computer Repair</a><br>
 							<a href="serv-prod/TabRep/">iPad/Tablet Repair</a>
 						</div> -->
-					
-				</li>
+
+					</li>
 					<li><a href="{% url 'about' %}">About Us</a></li>
 					<li><a href="{% url 'contact' %}">Contact Us</a></li>
 				</ul>
@@ -400,7 +401,8 @@
 									<div class="product">
 										<div class="product-img">
 
-											<a href="{{ prd.get_absolute_url }}" class="imagekaa"><img src="{{ prd.image.url }}" alt="" style="width: 100%;"></a>
+											<a href="{{ prd.get_absolute_url }}" class="imagekaa"><img
+													src="{{ prd.image.url }}" alt="" style="width: 100%;"></a>
 											<div class="product-label">
 												<span class="sale">-30%</span>
 												{% if prd.get_label_display == 'NEW' %}
@@ -476,7 +478,8 @@
 									<div class="product">
 										<div class="product-img">
 
-											<a href="{{ prd.get_absolute_url }}" class="imagekaa"><img src="{{ prd.image.url }}" alt="" style="width: 100%;"></a>
+											<a href="{{ prd.get_absolute_url }}" class="imagekaa"><img
+													src="{{ prd.image.url }}" alt="" style="width: 100%;"></a>
 											<div class="product-label">
 												<span class="sale">-30%</span>
 												{% if prd.get_label_display == 'NEW' %}
@@ -541,7 +544,8 @@
 									<div class="product">
 										<div class="product-img">
 
-											<a href="{{ prd.get_absolute_url }}" class="imagekaa"><img src="{{ prd.image.url }}" alt="" style="width: 100%;"></a>
+											<a href="{{ prd.get_absolute_url }}" class="imagekaa"><img
+													src="{{ prd.image.url }}" alt="" style="width: 100%;"></a>
 											<div class="product-label">
 												<span class="sale">-30%</span>
 												{% if prd.get_label_display == 'NEW' %}
@@ -614,29 +618,29 @@
 			<div class="row">
 				<div class="col-md-12">
 					{% for hdeal in hd %}
-					<div class="hot-deal">
+					<div class="hot-deal hotdate" id='{{ hdeal.datetime|date:"U" }}'>
 						<ul class="hot-deal-countdown">
 							<li>
 								<div>
-									<h3>{{ hdeal.days }}</h3>
+									<h3 id="days"></h3>
 									<span>Days</span>
 								</div>
 							</li>
 							<li>
 								<div>
-									<h3>{{ hdeal.hours }}</h3>
+									<h3 id="hours"></h3>
 									<span>Hours</span>
 								</div>
 							</li>
 							<li>
 								<div>
-									<h3>{{ hdeal.minutes }}</h3>
+									<h3 id="minutes"></h3>
 									<span>Mins</span>
 								</div>
 							</li>
 							<li>
 								<div>
-									<h3>{{ hdeal.seconds }}</h3>
+									<h3 id="seconds"></h3>
 									<span>Secs</span>
 								</div>
 							</li>
@@ -742,7 +746,7 @@
 												<i class="fa fa-star-o"></i>
 											</div>
 											<div class="product-btns">
-												
+
 												<button class="quick-view"><i class="fa fa-eye"></i><span
 														class="tooltipp">quick view</span></button>
 											</div>
@@ -770,7 +774,7 @@
 											<div class="product-rating">
 											</div>
 											<div class="product-btns">
-												
+
 												<button class="quick-view"><i class="fa fa-eye"></i><span
 														class="tooltipp">quick view</span></button>
 											</div>
@@ -800,7 +804,7 @@
 												<i class="fa fa-star"></i>
 											</div>
 											<div class="product-btns">
-												
+
 												<button class="quick-view"><i class="fa fa-eye"></i><span
 														class="tooltipp">quick view</span></button>
 											</div>
@@ -830,7 +834,7 @@
 												<i class="fa fa-star"></i>
 											</div>
 											<div class="product-btns">
-												
+
 												<button class="quick-view"><i class="fa fa-eye"></i><span
 														class="tooltipp">quick view</span></button>
 											</div>
@@ -876,13 +880,15 @@
 							{% for na in newarr1 %}
 							<div class="product-widget">
 								<div class="product-img">
-									<a href="{{ na.get_absolute_url }}" class="imagekaa"><img src="{{ na.image.url }}" alt="" style="width: 100%;"></a>
+									<a href="{{ na.get_absolute_url }}" class="imagekaa"><img src="{{ na.image.url }}"
+											alt="" style="width: 100%;"></a>
 								</div>
 								<div class="product-body">
 									<p class="product-category">{{ na.get_category_display }}</p>
 									<h3 class="product-name"><a href="{{ na.get_absolute_url }}">{{ na.Name }}</a></h3>
 									{% if na.Discount_Price %}
-									<h4 class="product-price">${{ na.Discount_Price }} <del class="product-old-price">${{ na.Price }}</del></h4>
+									<h4 class="product-price">${{ na.Discount_Price }} <del
+											class="product-old-price">${{ na.Price }}</del></h4>
 									{% else %}
 									<h4 class="product-price">${{ na.Price }}</h4>
 									{% endif %}
@@ -890,7 +896,7 @@
 							</div>
 							{% endfor %}
 							<!-- /product widget -->
-							
+
 						</div>
 
 						{% if newarr2 %}
@@ -899,13 +905,15 @@
 							<div class="product-widget">
 								{% for na in newarr2 %}
 								<div class="product-img">
-									<a href="{{ na.get_absolute_url }}" class="imagekaa"><img src="{{ na.image.url }}" alt="" style="width: 100%;"></a>
+									<a href="{{ na.get_absolute_url }}" class="imagekaa"><img src="{{ na.image.url }}"
+											alt="" style="width: 100%;"></a>
 								</div>
 								<div class="product-body">
 									<p class="product-category">{{ na.get_category_display }}</p>
 									<h3 class="product-name"><a href="{{ na.get_absolute_url }}">{{ na.Name }}</a></h3>
 									{% if na.Discount_Price %}
-									<h4 class="product-price">${{ na.Discount_Price }} <del class="product-old-price">${{ na.Price }}</del></h4>
+									<h4 class="product-price">${{ na.Discount_Price }} <del
+											class="product-old-price">${{ na.Price }}</del></h4>
 									{% else %}
 									<h4 class="product-price">${{ na.Price }}</h4>
 									{% endif %}
@@ -932,13 +940,15 @@
 							{% for na in bestsell1 %}
 							<div class="product-widget">
 								<div class="product-img">
-									<a href="{{ na.get_absolute_url }}" class="imagekaa"><img src="{{ na.image.url }}" alt="" style="width: 100%;"></a>
+									<a href="{{ na.get_absolute_url }}" class="imagekaa"><img src="{{ na.image.url }}"
+											alt="" style="width: 100%;"></a>
 								</div>
 								<div class="product-body">
 									<p class="product-category">{{ na.get_category_display }}</p>
 									<h3 class="product-name"><a href="{{ na.get_absolute_url }}">{{ na.Name }}</a></h3>
 									{% if na.Discount_Price %}
-									<h4 class="product-price">${{ na.Discount_Price }} <del class="product-old-price">${{ na.Price }}</del></h4>
+									<h4 class="product-price">${{ na.Discount_Price }} <del
+											class="product-old-price">${{ na.Price }}</del></h4>
 									{% else %}
 									<h4 class="product-price">${{ na.Price }}</h4>
 									{% endif %}
@@ -947,7 +957,7 @@
 							{% endfor %}
 							<!-- /product widget -->
 
-							
+
 						</div>
 
 						{% if bestsell2 %}
@@ -955,13 +965,15 @@
 							{% for na in bestsell2 %}
 							<div class="product-widget">
 								<div class="product-img">
-									<a href="{{ na.get_absolute_url }}" class="imagekaa"><img src="{{ na.image.url }}" alt="" style="width: 100%;"></a>
+									<a href="{{ na.get_absolute_url }}" class="imagekaa"><img src="{{ na.image.url }}"
+											alt="" style="width: 100%;"></a>
 								</div>
 								<div class="product-body">
 									<p class="product-category">{{ na.get_category_display }}</p>
 									<h3 class="product-name"><a href="{{ na.get_absolute_url }}">{{ na.Name }}</a></h3>
 									{% if na.Discount_Price %}
-									<h4 class="product-price">${{ na.Discount_Price }} <del class="product-old-price">${{ na.Price }}</del></h4>
+									<h4 class="product-price">${{ na.Discount_Price }} <del
+											class="product-old-price">${{ na.Price }}</del></h4>
 									{% else %}
 									<h4 class="product-price">${{ na.Price }}</h4>
 									{% endif %}
@@ -988,13 +1000,15 @@
 							{% for na in hotdeal1 %}
 							<div class="product-widget">
 								<div class="product-img">
-									<a href="{{ na.get_absolute_url }}" class="imagekaa"><img src="{{ na.image.url }}" alt="" style="width: 100%;"></a>
+									<a href="{{ na.get_absolute_url }}" class="imagekaa"><img src="{{ na.image.url }}"
+											alt="" style="width: 100%;"></a>
 								</div>
 								<div class="product-body">
 									<p class="product-category">{{ na.get_category_display }}</p>
 									<h3 class="product-name"><a href="{{ na.get_absolute_url }}">{{ na.Name }}</a></h3>
 									{% if na.Discount_Price %}
-									<h4 class="product-price">${{ na.Discount_Price }} <del class="product-old-price">${{ na.Price }}</del></h4>
+									<h4 class="product-price">${{ na.Discount_Price }} <del
+											class="product-old-price">${{ na.Price }}</del></h4>
 									{% else %}
 									<h4 class="product-price">${{ na.Price }}</h4>
 									{% endif %}
@@ -1008,13 +1022,15 @@
 							{% for na in hotdeal2 %}
 							<div class="product-widget">
 								<div class="product-img">
-									<a href="{{ na.get_absolute_url }}" class="imagekaa"><img src="{{ na.image.url }}" alt="" style="width: 100%;"></a>
+									<a href="{{ na.get_absolute_url }}" class="imagekaa"><img src="{{ na.image.url }}"
+											alt="" style="width: 100%;"></a>
 								</div>
 								<div class="product-body">
 									<p class="product-category">{{ na.get_category_display }}</p>
 									<h3 class="product-name"><a href="{{ na.get_absolute_url }}">{{ na.Name }}</a></h3>
 									{% if na.Discount_Price %}
-									<h4 class="product-price">${{ na.Discount_Price }} <del class="product-old-price">${{ na.Price }}</del></h4>
+									<h4 class="product-price">${{ na.Discount_Price }} <del
+											class="product-old-price">${{ na.Price }}</del></h4>
 									{% else %}
 									<h4 class="product-price">${{ na.Price }}</h4>
 									{% endif %}
@@ -1152,27 +1168,29 @@
 						<ul class="footer-payments">
 							<li><img src="{% static 'prod/img/visa.jpg' %}" alt="" style="height: 18px;"></li>
 							<li><img src="{% static 'prod/img/mastercard.jpg' %}" alt="" style="height: 18px;"></li>
-							<li><img src="{% static 'prod/img/american-express.jpg' %}" alt="" style="height: 18px;"></li>
+							<li><img src="{% static 'prod/img/american-express.jpg' %}" alt="" style="height: 18px;">
+							</li>
 							<li><img src="{% static 'prod/img/qcard.jpg' %}" alt="" style="height: 18px;"></li>
 							<li><img src="{% static 'prod/img/laybuy.jpg' %}" alt="" style="height: 18px;"></li>
 							<li><img src="{% static 'prod/img/apple-pay.jpg' %}" alt="" style="height: 18px;"></li>
 							<li><img src="{% static 'prod/img/poli.jpg' %}" alt="" style="height: 18px;"></li>
-							<li class="ml-4">  <i class="fa fa-globe"> Country: NewZealand</i></li>
+							<li class="ml-4"> <i class="fa fa-globe"> Country: NewZealand</i></li>
 						</ul>
 						<span class="copyright">
 							<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
 							Copyright &copy;
 							<script>document.write(new Date().getFullYear());</script> All rights reserved |
-							tngtechsolutions.co.nz <br> TNGTech is not responsible for any topographical error and changes will be done prior any notice
+							tngtechsolutions.co.nz <br> TNGTech is not responsible for any topographical error and
+							changes will be done prior any notice
 							<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
 						</span>
 						<!-- <span class="copyright"> -->
-							<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-							<!-- Copyright &copy; -->
-							<!-- <script>document.write(new Date().getFullYear());</script> All rights reserved | This
+						<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+						<!-- Copyright &copy; -->
+						<!-- <script>document.write(new Date().getFullYear());</script> All rights reserved | This
 							template is made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a -->
-								<!-- <a href="https://colorlib.com" target="_blank" style="color: #15161D;">Colorlib</a> -->
-							<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+						<!-- <a href="https://colorlib.com" target="_blank" style="color: #15161D;">Colorlib</a> -->
+						<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
 						<!-- </span> -->
 					</div>
 				</div>
@@ -1268,7 +1286,7 @@
 
 				var apnacart = $('.apnacart' + i);
 				apnacart.show();
-				
+
 			}
 			document.getElementById('titms').innerHTML = Object.keys(cart).length;
 			document.getElementById('tot').innerHTML = "SUBTOTAL:  " + total;
@@ -1276,14 +1294,14 @@
 
 		}
 
-		$('.remitem').click(function(){
+		$('.remitem').click(function () {
 			var ids = this.id;
 			cart = JSON.parse(localStorage.getItem('cart'));
-			remitemcart(cart,ids);
-			
+			remitemcart(cart, ids);
+
 		})
-		
-		
+
+
 
 		// Yeh hai remove item ka code
 		function remitemcart(cart, a) {
@@ -1300,53 +1318,50 @@
 	{% else %}
 	<script type="text/javascript">
 		// window.onload = function () {
-			console.log('hello')
-			var cartsend = localStorage.getItem('cart');
-			if (cartsend != null) {
-				$.ajax({
-					url: "{% url 'addtocartlout' %}",
-					type: "POST",
-					data: { 'cart': cartsend, "csrfmiddlewaretoken": "{{csrf_token}}" }
-				})
-				localStorage.clear();
-				window.location.reload();
-			}
+		var cartsend = localStorage.getItem('cart');
+		if (cartsend != null) {
+			$.ajax({
+				url: "{% url 'addtocartlout' %}",
+				type: "POST",
+				data: { 'cart': cartsend, "csrfmiddlewaretoken": "{{csrf_token}}" }
+			})
+			localStorage.clear();
+			window.location.reload();
+		}
 		// }
 	</script>
 	{% endif %}
 	<script src="{% static 'prod/js/main.js' %}"></script>
+
 	<script>
-		var endTime=new Date('{{ hd.datetime|date:"U" }}' * 1000);
-		console.log(endTime);
-	</script>
-	<!-- <script>
 		function makeTimer() {
-   		var endTime=new Date('{{ hd.datetime|date:"U" }}' * 1000);
-    	endTime = (Date.parse(endTime) / 1000);
+			var hotdate = document.getElementsByClassName('hotdate')[0]
+			var endTime = new Date(hotdate.id * 1000);
+			endTime = (Date.parse(endTime) / 1000);
 
-        var now = new Date();
-        now = (Date.parse(now) / 1000);
+			var now = new Date();
+			now = (Date.parse(now) / 1000);
 
-        var timeLeft = endTime - now;
+			var timeLeft = endTime - now;
 
-        var days = Math.floor(timeLeft / 86400);
-        var hours = Math.floor((timeLeft - (days * 86400)) / 3600);
-        var minutes = Math.floor((timeLeft - (days * 86400) - (hours * 3600 )) / 60);
-        var seconds = Math.floor((timeLeft - (days * 86400) - (hours * 3600) - (minutes * 60)));
+			var days = Math.floor(timeLeft / 86400);
+			var hours = Math.floor((timeLeft - (days * 86400)) / 3600);
+			var minutes = Math.floor((timeLeft - (days * 86400) - (hours * 3600)) / 60);
+			var seconds = Math.floor((timeLeft - (days * 86400) - (hours * 3600) - (minutes * 60)));
 
-        if (hours < "10") { hours = "0" + hours; }
-        if (minutes < "10") { minutes = "0" + minutes; }
-        if (seconds < "10") { seconds = "0" + seconds; }
+			if (hours < "10") { hours = "0" + hours; }
+			if (minutes < "10") { minutes = "0" + minutes; }
+			if (seconds < "10") { seconds = "0" + seconds; }
 
-        $("#days").html(days);
-        $("#hours").html(hours);
-        $("#minutes").html(minutes);
-        $("#seconds").html(seconds);
+			$("#days").html(days);
+			$("#hours").html(hours);
+			$("#minutes").html(minutes);
+			$("#seconds").html(seconds);
 
-}
+		}
 
-setInterval(function() { makeTimer(); }, 1000);
-	</script> -->
+		setInterval(function () { makeTimer(); }, 1000);
+	</script>
 </body>
 
 </html>

@@ -890,8 +890,7 @@ def contacto(request):
         email = request.POST.get('form-email')
         subject = request.POST.get('form-Subject')
         message = request.POST.get('form-text')
-
-        message1 = (subject,message+'\n Sender name: '+name+'\n Sender email: '+email, settings.EMAIL_HOST_USER, ['guavi499@gmail.com'])
+        message1 = (subject,message+'\n Sender name: '+name+'\n Sender email: '+email, settings.EMAIL_HOST_USER, [settings.EMAIL_HOST_USER])
         message2 = ('We have noted down your request', 'We will contact to you very soon', settings.EMAIL_HOST_USER, [email])
         send_mass_mail((message1, message2), fail_silently=False)
         #mail_admins('kholo dost','Aur bhai mil gya swaad!',fail_silently=False)
@@ -962,6 +961,10 @@ def onlinebooking(request,slug):
         time = request.POST.get('time')
         OnlineBooking.objects.create(Name=name,email=email,brand=brand,contact=contact,
             device_model=device_model,device_type=device_type,repair_type=repair_type,time=time)
+        message1 = ('New Repair booking','Brand : '+brand+'\n Contact :'+contact+'\n Device Type :'+device_type+'\n Device Model :'+device_model+'\n Repair Type :'+repair_type+'\n Time chosen : '+time+'\n Sender name: '+name+'\n Sender email: '+email, settings.EMAIL_HOST_USER, [settings.EMAIL_HOST_USER])
+        message2 = ('We have noted down your request', 'We will contact to you very soon.Details for your repair service request are: \n'+
+            'Brand : '+brand+'\n Contact :'+contact+'\n Device Type :'+device_type+'\n Device Model :'+device_model+'\n Repair Type :'+repair_type+'\n Time chosen : '+time, settings.EMAIL_HOST_USER, [email])
+        send_mass_mail((message1, message2), fail_silently=False)
         messages.success(request,f'Your service has been booked')
         return redirect('homie')
     return render(request,'prod/online-booking.html',{'ob':slug})

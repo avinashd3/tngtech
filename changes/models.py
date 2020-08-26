@@ -5,7 +5,7 @@ class Shophome(models.Model):
     heading_2 = models.CharField(max_length = 35)
     link = models.CharField(max_length = 100)
     linkname = models.CharField(max_length = 20)
-    image=models.ImageField(default='default.jpg',upload_to='product_pics')
+    image=models.ImageField(upload_to='product_pics')
 
 class HotDeals(models.Model):
     image = models.ImageField(default='hotdeal.png',upload_to='product_pics')

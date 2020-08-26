@@ -7,7 +7,8 @@ from django.utils import timezone
 from django.urls import reverse
 from django_countries.fields import CountryField
 
-
+import random
+import string
 
 LABEL_CHOICES=(
     ('P','BESTSELLER'),
@@ -21,6 +22,8 @@ ADDRESS_CHOICES=(
     ('S','Shipping')
 )
 
+def slug_unique_code():
+        return ''.join(random.choices(string.ascii_lowercase + string.digits, k=6))
 
 #Products
 class TngProducts(models.Model):
@@ -43,8 +46,8 @@ class TngProducts(models.Model):
     subcategory = models.CharField(max_length = 100,default='none')
     brand = models.CharField(max_length = 50,default='none')
     label=models.CharField(max_length=1,choices=LABEL_CHOICES,default='R')
-    slug=models.SlugField(default='test-product')
-    image=models.ImageField(default='default.jpg',upload_to='product_pics')
+    slug=models.SlugField(default=slug_unique_code())
+    image=models.ImageField(upload_to='product_pics')
     image1=models.ImageField(null=True,blank=True,upload_to='product_pics')
     image2=models.ImageField(null=True,blank=True,upload_to='product_pics')
     image3=models.ImageField(null=True,blank=True,upload_to='product_pics')
@@ -64,6 +67,9 @@ class TngProducts(models.Model):
     def get_remove_from_cart_url(self):
         return reverse('removefromcart', kwargs={
             'slug':self.slug})
+
+    # def slug_unique_code(self):
+    #     return ''.join(random.choices(string.ascii_lowercase + string.digits, k=6))
     
     # def save(self,*args,**kwargs):
     #     super().save(self,*args,**kwargs)

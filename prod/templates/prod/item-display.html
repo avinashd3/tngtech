@@ -222,9 +222,11 @@
             <div class="product">
               <div class="product-img">
 
-
-                <a href="/prod-sc/{{kya}}{{x}}/" class="imagekaa"><img src="{% static 'prod/img/product09.png' %}" alt="" style="width: 100%;"></a>
-                
+                {% for sci in sbcatimg %}
+                {% if x == sci.name %}
+                <a href="/prod-sc/{{kya}}{{x}}/" class="imagekaa"><img src="{{ sci.image.url }}" alt="" style="width: 100%;"></a>
+                {% endif %}
+                {% endfor %}
               </div>
               <div class="product-body">
 
@@ -460,8 +462,11 @@
             <div class="product">
               <div class="product-img">
 
-                <a href="/prod-br/{{kya}}{{x}}/" class="imagekaa"><img src="{% static 'prod/img/product09.png' %}" alt="" style="width: 100%;"></a>
-                
+                {% for bri in brandimg %}
+                {% if x == bri.name %}
+                <a href="/prod-br/{{kya}}{{x}}/" class="imagekaa"><img src="{{ bri.image.url }}" alt="" style="width: 100%;"></a>
+                {% endif %}
+                {% endfor %}
               </div>
               <div class="product-body">
 

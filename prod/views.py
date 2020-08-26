@@ -7,7 +7,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.utils.decorators import method_decorator
 from django.views.generic import ListView,DetailView,View
 from .models import TngProducts,OrderItem,Order,Address,Payment,Coupon,Refund,NewsLetter,OnlineBooking
-from changes.models import Shophome,HotDeals,Category
+from changes.models import Shophome,HotDeals,Category,SubCategory,Brand
 from django.utils import timezone
 from django.urls import reverse
 from .forms import CheckoutForm,CouponForm,RefundForm,NewsletForm
@@ -759,6 +759,8 @@ def viewaddress(request):
 def catgdisp(request,slug):
     scbset = set()
     brandset = set()
+    sbcatimg = SubCategory.objects.all()
+    brandimg = Brand.objects.all()
     context = {
         'scbset': scbset ,
         'brandset': brandset
@@ -801,7 +803,9 @@ def catgdisp(request,slug):
                 'prody': prody,
                 'scbset': scbset ,
                 'brandset': brandset,
-                'kya': p
+                'kya': p,
+                'sbcatimg': sbcatimg,
+            'brandimg': brandimg
             }
         if slug == 'LapRep':
             p='LR'
@@ -811,7 +815,9 @@ def catgdisp(request,slug):
                 'prody': prody,
                 'scbset': scbset ,
                 'brandset': brandset,
-                'kya': p
+                'kya': p,
+                'sbcatimg': sbcatimg,
+            'brandimg': brandimg
             }
         if slug == 'TabRep':
             p='TR'
@@ -821,7 +827,9 @@ def catgdisp(request,slug):
                 'prody': prody,
                 'scbset': scbset ,
                 'brandset': brandset,
-                'kya': p
+                'kya': p,
+                'sbcatimg': sbcatimg,
+            'brandimg': brandimg
             }
         if slug == 'MobileAccessories':
             p='MA'
@@ -831,7 +839,9 @@ def catgdisp(request,slug):
             'prody': prody,
             'scbset': scbset ,
             'brandset': brandset,
-            'kya': p
+            'kya': p,
+            'sbcatimg': sbcatimg,
+            'brandimg': brandimg
         }
         elif slug == 'LaptopAccessories':
             p='LA'
@@ -841,7 +851,9 @@ def catgdisp(request,slug):
             'prody': prody,
             'scbset': scbset ,
             'brandset': brandset,
-            'kya': p
+            'kya': p,
+            'sbcatimg': sbcatimg,
+            'brandimg': brandimg
         }
         elif slug == 'TabletAccessories':
             p='TA'
@@ -851,7 +863,9 @@ def catgdisp(request,slug):
             'prody': prody,
             'scbset': scbset ,
             'brandset': brandset,
-            'kya': p
+            'kya': p,
+            'sbcatimg': sbcatimg,
+            'brandimg': brandimg
         }
         elif slug == 'ElectronicGadgets':
             p='EG'
@@ -861,7 +875,9 @@ def catgdisp(request,slug):
             'prody': prody,
             'scbset': scbset ,
             'brandset': brandset,
-            'kya': p
+            'kya': p,
+            'sbcatimg': sbcatimg,
+            'brandimg': brandimg
         }
         elif slug == 'LatestAccessories':
             p='NA'
@@ -871,7 +887,9 @@ def catgdisp(request,slug):
                 'prody': prody,
                 'scbset': scbset ,
                 'brandset': brandset,
-                'kya': p
+                'kya': p,
+                'sbcatimg': sbcatimg,
+            'brandimg': brandimg
             }
     return render(request,'prod/item-display.html',context)
 

@@ -370,8 +370,8 @@ class CheckoutView(LoginRequiredMixin,View):
                     return redirect('payment',payment_option='stripe')
                 elif payment_option=='P':
                     amt = order.get_total() + delamt
-                    payment = {'account_id': 625807,'username': '104374','password': settings.PAY_PASS,'cmd': '_xclick','amount': amt,'return_url': 'https://tngtechsolutions.co.nz/paymento/'}
-                    r = requests.post("https://uat.paymarkclick.co.nz/api/webpayments/paymentservice/rest/WPRequest", data=payment)
+                    payment = {'account_id': 13350,'username': settings.PAY_CLIENTID,'password': settings.PAYM_PSS,'cmd': '_xclick','amount': amt,'return_url': 'https://tngtechsolutions.co.nz/paymento/'}
+                    r = requests.post("https://secure.paymarkclick.co.nz/api/webpayments/paymentservice/rest/WPRequest", data=payment)
                     root = ET.fromstring(r.text)
                     return redirect(root.text)
                 else:

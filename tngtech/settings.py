@@ -172,7 +172,9 @@ SOCIAL_AUTH_FACEBOOK_KEY = os.environ.get('FB_KEY')
 SOCIAL_AUTH_FACEBOOK_SECRET = os.environ.get('FB_SECRET')
 
 PAY_PASS=os.environ.get('PAY_PASS')
+PAYM_PSS = os.environ.get('PAYM_PSS')
 PAY_SECRET=os.environ.get('PAY_SECRET')
+PAY_CLIENTID = os.environ.get('PAY_CLIENTID')
 
 # os.environ.get =====> config.get
 # config.get PAY_PASS,PAY_KEY,EMAIL_HOST_USER,EMAIL_HOST_PASSWORD,SERVER_EMAIL

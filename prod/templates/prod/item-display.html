@@ -543,7 +543,9 @@
 
                     <img src="{{ prd.image.url }}" alt="">
                     <div class="product-label">
-                      <span class="sale">-30%</span>
+                      {% if prd.Discount_Price %}
+												<span class="sale">-{{ prd.calc_sale }}%</span>
+												{% endif %}
                       {% if prd.get_label_display == 'NEW' %}
                       <span class="new">NEW</span>
                       {% elif prd.get_label_display == 'BESTSELLER' %}
@@ -617,7 +619,9 @@
 
                     <img src="{{ prd.image.url }}" alt="">
                     <div class="product-label">
-                      <span class="sale">-30%</span>
+                      {% if prd.Discount_Price %}
+												<span class="sale">-{{ prd.calc_sale }}%</span>
+												{% endif %}
                       {% if prd.get_label_display == 'NEW' %}
                       <span class="new">NEW</span>
                       {% elif prd.get_label_display == 'BESTSELLER' %}
@@ -667,7 +671,9 @@
 
                     <img src="{{ prd.image.url }}" alt="">
                     <div class="product-label">
-                      <span class="sale">-30%</span>
+                      {% if prd.Discount_Price %}
+												<span class="sale">-{{ prd.calc_sale }}%</span>
+												{% endif %}
                       {% if prd.get_label_display == 'NEW' %}
                       <span class="new">NEW</span>
                       {% elif prd.get_label_display == 'BESTSELLER' %}
@@ -730,7 +736,9 @@
 
                     <img src="{{ prd.image.url }}" alt="">
                     <div class="product-label">
-                      <span class="sale">-30%</span>
+                      {% if prd.Discount_Price %}
+												<span class="sale">-{{ prd.calc_sale }}%</span>
+												{% endif %}
                       {% if prd.get_label_display == 'NEW' %}
                       <span class="new">NEW</span>
                       {% elif prd.get_label_display == 'BESTSELLER' %}
@@ -780,7 +788,9 @@
 
                     <img src="{{ prd.image.url }}" alt="">
                     <div class="product-label">
-                      <span class="sale">-30%</span>
+                      {% if prd.Discount_Price %}
+												<span class="sale">-{{ prd.calc_sale }}%</span>
+												{% endif %}
                       {% if prd.get_label_display == 'NEW' %}
                       <span class="new">NEW</span>
                       {% elif prd.get_label_display == 'BESTSELLER' %}
@@ -843,7 +853,9 @@
 
                     <img src="{{ prd.image.url }}" alt="">
                     <div class="product-label">
-                      <span class="sale">-30%</span>
+                      {% if prd.Discount_Price %}
+												<span class="sale">-{{ prd.calc_sale }}%</span>
+												{% endif %}
                       {% if prd.get_label_display == 'NEW' %}
                       <span class="new">NEW</span>
                       {% elif prd.get_label_display == 'BESTSELLER' %}
@@ -893,7 +905,9 @@
 
                     <img src="{{ prd.image.url }}" alt="">
                     <div class="product-label">
-                      <span class="sale">-30%</span>
+                      {% if prd.Discount_Price %}
+												<span class="sale">-{{ prd.calc_sale }}%</span>
+												{% endif %}
                       {% if prd.get_label_display == 'NEW' %}
                       <span class="new">NEW</span>
                       {% elif prd.get_label_display == 'BESTSELLER' %}

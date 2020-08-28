@@ -69,6 +69,11 @@ class TngProducts(models.Model):
         return reverse('removefromcart', kwargs={
             'slug':self.slug})
 
+    def calc_sale(self):
+        if self.Discount_Price:
+            return int(((self.Price - self.Discount_Price)/self.Price)*100)
+        else:
+            return None
     # def slug_unique_code(self):
     #     return ''.join(random.choices(string.ascii_lowercase + string.digits, k=6))
     

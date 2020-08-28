@@ -546,7 +546,7 @@
 													src="{{ prd.image.url }}" alt="" style="width: 100%;"></a>
 											<div class="product-label">
 												{% if prd.Discount_Price %}
-												<span class="sale">-{{ prd.Discount_Price|divisibleby: "4" }}%</span>
+												<span class="sale">-{{ prd.calc_sale }}%</span>
 												{% endif %}
 												{% if prd.get_label_display == 'NEW' %}
 												<span class="new">NEW</span>

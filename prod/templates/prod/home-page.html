@@ -427,7 +427,7 @@
 					<li><a href="#">Hot Deals</a></li>
 					<li><a href="online-booking/nan/">Book Online</a></li>
 					<li>
-						<a href="store/prdcts/">Products</a>
+						<a href="product.php/">Products</a>
 						<!-- <a href="serv-prod/prdcts/" id="dropdownMenuLink"
 							data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 							Products
@@ -442,7 +442,7 @@
 						</div> -->
 					</li>
 					<li>
-						<a href="store/serv/">Services</a>
+						<a href="service.php/">Services</a>
 						<!-- <a href="serv-prod/serv/" role="button" id="dropdownMenuLink"
 							data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 							Services
@@ -545,7 +545,9 @@
 											<a href="{{ prd.get_absolute_url }}" class="imagekaa"><img
 													src="{{ prd.image.url }}" alt="" style="width: 100%;"></a>
 											<div class="product-label">
-												<span class="sale">-30%</span>
+												{% if prd.Discount_Price %}
+												<span class="sale">-{{ prd.Discount_Price|divisibleby: "4" }}%</span>
+												{% endif %}
 												{% if prd.get_label_display == 'NEW' %}
 												<span class="new">NEW</span>
 												{% elif prd.get_label_display == 'BESTSELLER' %}
@@ -753,7 +755,7 @@
 
 	<!-- HOT DEAL SECTION -->
 	{% for hdeal in hd %}
-	<div id="hot-deal" class="section" style="background-image: url('{{ hdeal.image.url }}');">
+	<div id="hot-deal" class="section" style="background-image: url('{{ hdeal.image.url }}');width:100%;">
 		<!-- container -->
 		<div class="container">
 			<!-- row -->

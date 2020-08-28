@@ -6,6 +6,7 @@ from PIL import Image
 from django.utils import timezone
 from django.urls import reverse
 from django_countries.fields import CountryField
+from django.utils.text import slugify
 
 import random
 import string
@@ -46,7 +47,7 @@ class TngProducts(models.Model):
     subcategory = models.CharField(max_length = 100,default='none')
     brand = models.CharField(max_length = 50,default='none')
     label=models.CharField(max_length=1,choices=LABEL_CHOICES,default='R')
-    slug=models.SlugField(default=slug_unique_code())
+    slug=models.SlugField(unique = True)
     image=models.ImageField(upload_to='product_pics')
     image1=models.ImageField(null=True,blank=True,upload_to='product_pics')
     image2=models.ImageField(null=True,blank=True,upload_to='product_pics')
@@ -79,8 +80,13 @@ class TngProducts(models.Model):
     #         img.thumbnail(output_size)
     #         img.save(self.image.path)
 
+    """ def save(self,*args,**kwargs):
+        self.slug = slugify(''.join(random.choices(string.ascii_lowercase + string.digits, k=6)))
+        super(TngProducts,self).save(self,*args,**kwargs) """
+
     class Meta:
         verbose_name_plural = 'Products'
+    
 
 
 #It links products to cart.Once a product is added to cart it becomes an orderitem

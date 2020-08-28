@@ -988,9 +988,10 @@ def onlinebooking(request,slug):
     return render(request,'prod/online-booking.html',{'ob':slug})
 
 def shopp(request,slug):
-    if slug == 'prdcts':
+    thisset = set()
+    if slug == 'product.php':
         thisset = {"Mobile Accessories", "Laptop Accessories", "Tablet Accessories","Electronic Gadgets","Latest Accessories"}
-    elif slug == 'serv':
+    elif slug == 'service.php':
         thisset = {"Mobile Repair","Laptop/Computer Repair","iPad/Tablet Repair"}
     ma_qs = Category.objects.get(name='Mobile Accessories')
     la_qs = Category.objects.get(name='Laptop Accessories')

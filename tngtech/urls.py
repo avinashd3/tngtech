@@ -71,7 +71,7 @@ urlpatterns = [
     path('sitemap.xml',sitemap,{'sitemaps': sitemaps},
             name='django.contrib.sitemaps.views.sitemap'),
     path('online-booking/<slug>/',ob.onlinebooking,name='onlinebooking'),
-    path('store/<slug>/',ob.shopp,name='store'),
+    path('<slug>/',ob.shopp,name='store'),
     path('prod-sc/<slug>/',ob.prbysc,name='prbysc'),
     path('prod-br/<slug>/',ob.prbybr,name='prbybr'),
 ]

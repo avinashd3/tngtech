@@ -1,4 +1,5 @@
 from django.db import models
+from PIL import Image
 
 class Shophome(models.Model):
     heading_1 = models.CharField(max_length = 35)
@@ -13,6 +14,14 @@ class HotDeals(models.Model):
     details = models.CharField(max_length = 100)
     datetime = models.DateTimeField(auto_now_add=False,blank=True,null=True)
 
+    def save(self,*args,**kwargs):
+        super().save(self,*args,**kwargs)
+        img = Image.open(self.image.path)
+        if img.height < 465 or img.width < 1782:
+            output_size = (1782,465)
+            img.thumbnail(output_size)
+            img.save(self.image.path)
+    
     class Meta:
         verbose_name_plural = 'Hot Deals'
 

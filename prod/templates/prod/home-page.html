@@ -1066,8 +1066,8 @@
 						{% if newarr2 %}
 						<div>
 							<!-- product widget -->
+							{% for na in newarr2 %}
 							<div class="product-widget">
-								{% for na in newarr2 %}
 								<div class="product-img">
 									<a href="{{ na.get_absolute_url }}" class="imagekaa"><img src="{{ na.image.url }}"
 											alt="" style="width: 100%;"></a>
@@ -1082,8 +1082,8 @@
 									<h4 class="product-price">${{ na.Price }}</h4>
 									{% endif %}
 								</div>
-								{% endfor %}
 							</div>
+							{% endfor %}
 							<!-- /product widget -->
 						</div>
 						{% endif %}

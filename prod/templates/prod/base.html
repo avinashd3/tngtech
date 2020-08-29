@@ -73,13 +73,28 @@
 			width: 100%;
 			position: absolute;
 		}
+
+		.float{
+			position: fixed;
+			width: 60px;
+			height: 60px;
+			bottom: 40px;
+			right: 40px;
+			background-color: #25d366;
+			color: #FFF;
+			border-radius: 50px;
+			text-align: center;
+			font-size: 30px;
+			box-shadow: 2px 2px 3px #999;
+			z-index: 100;
+		}
 	</style>
 	{% block css %}
 	{% endblock css %}
 </head>
 
 <body>
-
+	<section>
 	<!-- HEADER -->
 	<header>
 		<!-- TOP HEADER -->
@@ -425,6 +440,10 @@
 	</div>
 	<!-- /NEWSLETTER -->
 
+	<a href="https://wa.me/message/X66SOD5VCXEAF1" class="float" target="_blank">
+		<i class="fa fa-whatsapp" aria-hidden="true" style="margin-top: 16px;"></i>
+		
+		</a>
 	<!-- FOOTER -->
 	<footer id="footer">
 		<!-- top footer -->
@@ -535,7 +554,7 @@
 		<!-- /bottom footer -->
 	</footer>
 	<!-- /FOOTER -->
-
+	</section>
 	<!-- jQuery Plugins -->
 	<script src="{% static 'prod/js/jquery.min.js' %}"></script>
 	<script src="{% static 'prod/js/bootstrap.min.js' %}"></script>

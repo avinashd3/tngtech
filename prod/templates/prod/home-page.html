@@ -179,10 +179,26 @@
 		.alert-dark .alert-link {
 			color: #040505;
 		}
+
+		.float{
+			position: fixed;
+			width: 60px;
+			height: 60px;
+			bottom: 40px;
+			right: 40px;
+			background-color: #25d366;
+			color: #FFF;
+			border-radius: 50px;
+			text-align: center;
+			font-size: 30px;
+			box-shadow: 2px 2px 3px #999;
+			z-index: 100;
+		}
 	</style>
 </head>
 
 <body>
+	<section>
 	<!-- HEADER -->
 	<header>
 		<!-- TOP HEADER -->
@@ -625,7 +641,9 @@
 											<a href="{{ prd.get_absolute_url }}" class="imagekaa"><img
 													src="{{ prd.image.url }}" alt="" style="width: 100%;"></a>
 											<div class="product-label">
-												<span class="sale">-30%</span>
+												{% if prd.Discount_Price %}
+												<span class="sale">-{{ prd.calc_sale }}%</span>
+												{% endif %}
 												{% if prd.get_label_display == 'NEW' %}
 												<span class="new">NEW</span>
 												{% elif prd.get_label_display == 'BESTSELLER' %}
@@ -691,7 +709,9 @@
 											<a href="{{ prd.get_absolute_url }}" class="imagekaa"><img
 													src="{{ prd.image.url }}" alt="" style="width: 100%;"></a>
 											<div class="product-label">
-												<span class="sale">-30%</span>
+												{% if prd.Discount_Price %}
+												<span class="sale">-{{ prd.calc_sale }}%</span>
+												{% endif %}
 												{% if prd.get_label_display == 'NEW' %}
 												<span class="new">NEW</span>
 												{% elif prd.get_label_display == 'BESTSELLER' %}
@@ -1233,7 +1253,10 @@
 		<!-- /container -->
 	</div>
 	<!-- /NEWSLETTER -->
-
+	<a href="https://wa.me/message/X66SOD5VCXEAF1" class="float" target="_blank">
+		<i class="fa fa-whatsapp" aria-hidden="true" style="margin-top: 16px;"></i>
+		
+		</a>
 	<!-- FOOTER -->
 	<footer id="footer">
 		<!-- top footer -->
@@ -1346,7 +1369,7 @@
 		<!-- /bottom footer -->
 	</footer>
 	<!-- /FOOTER -->
-
+	</section>
 	<!-- jQuery Plugins -->
 	<!-- <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>

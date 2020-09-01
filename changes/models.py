@@ -1,5 +1,6 @@
 from django.db import models
 from PIL import Image
+from prod.models import TngProducts
 
 class Shophome(models.Model):
     heading_1 = models.CharField(max_length = 35)
@@ -51,3 +52,9 @@ class Brand(models.Model):
 
     def __str__(self):
         return self.name
+
+class TopSelling(models.Model):
+    category = models.ForeignKey(Category,on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.category.name

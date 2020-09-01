@@ -7,7 +7,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.utils.decorators import method_decorator
 from django.views.generic import ListView,DetailView,View
 from .models import TngProducts,OrderItem,Order,Address,Payment,Coupon,Refund,NewsLetter,OnlineBooking
-from changes.models import Shophome,HotDeals,Category,SubCategory,Brand
+from changes.models import Shophome,HotDeals,Category,SubCategory,Brand,TopSelling
 from django.utils import timezone
 from django.urls import reverse
 from .forms import CheckoutForm,CouponForm,RefundForm,NewsletForm
@@ -149,6 +149,11 @@ class HomeView(ListView):
         context['hotdeal1'] = hotdeal1
         hotdeal2 = TngProducts.objects.filter(label = 'H')[3:6]
         context['hotdeal2'] = hotdeal2
+        topsel = TopSelling.objects.all()[:4]
+        context['ts1'] = topsel[0]
+        context['ts2'] = topsel[1]
+        context['ts3'] = topsel[2]
+        context['ts4'] = topsel[3]
         if self.request.user.is_authenticated:
             if Order.objects.filter(user=self.request.user,ordered=False).exists():
                 car_qs = Order.objects.get(user=self.request.user,ordered=False)

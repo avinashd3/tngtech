@@ -46,6 +46,7 @@ class TngProducts(models.Model):
     category=models.CharField(max_length=2,choices=CATEGORY_CHOICES,default='A')
     subcategory = models.CharField(max_length = 100,default='none')
     brand = models.CharField(max_length = 50,default='none')
+    model = models.CharField(max_length = 100,default='none')
     label=models.CharField(max_length=1,choices=LABEL_CHOICES,default='R')
     slug=models.SlugField(unique = True)
     image=models.ImageField(upload_to='product_pics')

@@ -1010,15 +1010,30 @@ def shopp(request,slug):
     'eg':eg_qs,'na':na_qs,'mr':mr,'lr':lr,'tr':tr})
 
 def prbysc(request,slug):
+    modelset = set()
     pr = slug[:2]
     subc = slug[2:]
     print(pr)
     print(subc)
     prod = TngProducts.objects.filter(category = pr,subcategory = subc)
-    return render(request,'prod/prod-sc.html',{'prod':prod})
+    for i in prod:
+        modelset.add(i.model)
+    return render(request,'prod/prod-sc.html',{'prod':prod,'modelset':modelset,'cat':pr,'subcat':subc})
 
 def prbybr(request,slug):
+    modelset = set()
     pr = slug[:2]
     subc = slug[2:]
     prod = TngProducts.objects.filter(category = pr,brand = subc)
-    return render(request,'prod/prod-br.html',{'prod':prod})
+    for i in prod:
+        modelset.add(i.model)
+    return render(request,'prod/prod-br.html',{'prod':prod,'modelset':modelset,'cat':pr,'subcat':subc})
+
+def modelprod(request,categoryslug,catandbrandslug,slug):
+    kya = catandbrandslug[:2]
+    bryasc = catandbrandslug[2:]
+    if kya == 'sc':
+        prod = TngProducts.objects.filter(category = categoryslug,subcategory = bryasc,model = slug)
+    elif kya == 'br':
+        prod = TngProducts.objects.filter(category = categoryslug,brand = bryasc,model = slug)
+    return render(request,'prod/modelprod.html',{'prod':prod})

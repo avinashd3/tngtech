@@ -52,6 +52,7 @@ urlpatterns = [
     path('view-address/',ob.viewaddress,name='viewaddresses'),
     path('search/',ob.search,name='searchprod'),
     path('serv-prod/<slug>/',ob.catgdisp,name='servprod'),
+    path('serv-prod/<categoryslug>/<catandbrandslug>/<slug>/',ob.modelprod,name='model'),
     path('changeadd/<slug>/',ob.chanadd,name='changeadd'),
     path('about/',TemplateView.as_view(template_name='prod/about-us.html'),name='about'),
     path('t&c/',TemplateView.as_view(template_name='prod/tandc.html'),name='tandc'),

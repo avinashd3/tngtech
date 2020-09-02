@@ -3,74 +3,6 @@
 <!DOCTYPE html>
 {% block secheku %}
 
-<div class="section">
-  <!-- container -->
-  <div class="container">
-    <!-- row -->
-    {% if modelset %}
-    <div class="row">
-      <!-- ASIDE -->
-
-      <!-- STORE -->
-      <div id="store" class="col-md-9">
-        <!-- store top filter -->
-        <div class="store-filter clearfix">
-          <div class="store-sort">
-            <label>
-              
-              <h1><strong>Categories</strong></h1>
-              
-              <!-- <select class="input-select">
-                <option value="0">Popular</option>
-                <option value="1">Position</option>
-              </select> -->
-            </label>
-
-            
-          </div>
-          <!-- <ul class="store-grid">
-            <li class="active"><i class="fa fa-th"></i></li>
-            <li><a href="#"><i class="fa fa-th-list"></i></a></li>
-          </ul> -->
-        </div>
-        <!-- /store top filter -->
-
-        <!-- store products -->
-        <div class="row">
-          {% for x in modelset %}
-          <!-- product -->
-          {% if not x == 'none' %}
-          <div class="col-md-4 col-xs-6">
-            <div class="product">
-              <div class="product-img">
-
-                
-                <a href="/serv-prod/{{ cat }}/br{{ subcat }}/{{ x }}/" class="imagekaa"><img src="{% static 'prod/img/product01.png' %}" alt="" style="width: 100%;"></a>
-                
-              </div>
-              <div class="product-body">
-
-                <h3 class="product-name"><a href="/serv-prod/{{ cat }}/br{{ subcat }}/{{ x }}/">{{ x }}</a></h3>
-              </div>
-            </div>
-          </div>
-          {% endif %}
-          <!-- /product -->
-          {% endfor %}
-
-        
-        </div>
-        <!-- /store products -->
-
-        
-      </div>
-      <!-- /STORE -->
-    </div>
-    {% endif %}
-    <!-- /row -->
-  </div>
-</div>
-
 <!-- SECTION -->
 <div class="section">
   <!-- container -->
@@ -109,6 +41,7 @@
                   <div class="product-img">
 
                     <a href="{{ prd.get_absolute_url }}" class="imagekaa"><img src="{{ prd.image.url }}" alt="" style="width: 100%;"></a>
+                    
                     <div class="product-label">
                       <!-- <span class="sale">-30%</span> -->
                       {% if prd.get_label_display == 'NEW' %}

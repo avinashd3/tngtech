@@ -58,3 +58,17 @@ class TopSelling(models.Model):
 
     def __str__(self):
         return self.category.name
+
+class ModelofProduct(models.Model):
+
+    # prod = TngProducts.objects.all()
+    # modelset = set()
+    # for i in prod:
+    #     modelset.add(i.model)
+
+    # modelofproduct = models.ForeignKey(TngProducts,on_delete=models.CASCADE)
+    modelofproduct = models.CharField(max_length=100)
+    image = models.ImageField(upload_to = 'product_pics')
+
+    def __str__(self):
+        return self.modelofproduct

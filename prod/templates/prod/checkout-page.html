@@ -204,9 +204,9 @@
 							<select name="shiploc" id="shiploc">
 								<option selected="selected">Choose</option>
 								<option value="Auckland">Delivery - Auckland</option>
-								<option value="Whangarei to Hamilton">Delivery - Whangarei to Hamilton</option>
+								<!-- <option value="Whangarei to Hamilton">Delivery - Whangarei to Hamilton</option> -->
 								<option value="Rest of north island">Delivery - Rest of north island</option>
-								<option value="Kaikoura to Timaru">Delivery - Kaikoura to Timaru</option>
+								<!-- <option value="Kaikoura to Timaru">Delivery - Kaikoura to Timaru</option> -->
 								<option value="Christchurch">Delivery - Christchurch</option>
 								<option value="Rest of south island">Delivery - Rest of south island</option>
 							</select>
@@ -218,14 +218,14 @@
 						</div>
 					</div>
 					<div class="d-block my-3">
-						{% for value,name in form.fields.payment_option.choices %}
+						
 						<div class="custom-control custom-radio">
-							<input id="{{ name }}" name="payment_option" value="{{ value }}" type="radio"
+							<input id="Paymark" name="payment_option" value="P" type="radio"
 								class="custom-control-input" required>
 							
-							<label class="custom-control-label" for="{{ name }}">{{ name }}</label>
+							<label class="custom-control-label" for="Paymark">Paymark</label>
 						</div>
-						{% endfor %}
+						
 						
 					</div>
 					<div class="input-checkbox">
@@ -283,8 +283,8 @@
 		rnatnc.innerHTML = '<a class="primary-btn order-submit">Place order</a>';
 	}
 	if(delship == "Auckland"){
-		totalwa += 5.0;
-		document.getElementById("delcharge").innerHTML="$"+5.00;
+		totalwa += 6.0;
+		document.getElementById("delcharge").innerHTML="$"+6.00;
 		if(read_tnc.checked){
 			rnatnc.innerHTML = '<button class="btn btn-danger btn-lg btn-block" type="submit">Place order</button>';			
 		}
@@ -323,8 +323,8 @@
 		}
 	}
 	if(delship == "Christchurch"){
-		totalwa += 5.00;
-		document.getElementById("delcharge").innerHTML="$"+5.0;
+		totalwa += 12.00;
+		document.getElementById("delcharge").innerHTML="$"+12.0;
 		if(read_tnc.checked){
 			rnatnc.innerHTML = '<button class="btn btn-danger btn-lg btn-block" type="submit">Place order</button>';			
 		}

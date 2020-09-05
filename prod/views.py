@@ -357,7 +357,7 @@ class CheckoutView(LoginRequiredMixin,View):
                 
                 delcharges = form.cleaned_data.get('shiploc')
                 if delcharges == 'Auckland':
-                    delamt = 5.00
+                    delamt = 6.00
                 elif delcharges == 'Whangarei to Hamilton':
                     delamt = 6.37
                 elif delcharges == 'Rest of north island':
@@ -365,7 +365,7 @@ class CheckoutView(LoginRequiredMixin,View):
                 elif delcharges == 'Kaikoura to Timaru':
                     delamt = 19.14
                 elif delcharges == 'Christchurch':
-                    delamt = 5.00
+                    delamt = 12.00
                 elif delcharges == 'Rest of south island':
                     delamt = 19.14
 
@@ -375,8 +375,10 @@ class CheckoutView(LoginRequiredMixin,View):
                     return redirect('payment',payment_option='stripe')
                 elif payment_option=='P':
                     amt = order.get_total() + delamt
-                    payment = {'account_id': 13350,'username': settings.PAY_CLIENTID,'password': settings.PAYM_PSS,'cmd': '_xclick','amount': amt,'return_url': 'https://tngtechsolutions.co.nz/paymento/'}
+                    payment = {'account_id': 13350,'username': settings.PAY_CLIENTID,'password': settings.PAY_PASS,'cmd': '_xclick','amount': amt,'return_url': 'https://tngtechsolutions.co.nz/paymento/'}
                     r = requests.post("https://secure.paymarkclick.co.nz/api/webpayments/paymentservice/rest/WPRequest", data=payment)
+                    # payment = {'account_id': 625807,'username': 104374,'password': 'ml2IKsFGUhdhYiTO2','cmd': '_xclick','amount': amt,'return_url': 'http://127.0.0.1:8000/paymento/'}
+                    # r = requests.post("https://uat.paymarkclick.co.nz/api/webpayments/paymentservice/rest/WPRequest", data=payment)
                     root = ET.fromstring(r.text)
                     return redirect(root.text)
                 else:

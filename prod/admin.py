@@ -17,9 +17,13 @@ class OrderAdmin(admin.ModelAdmin):
 class AddressAdmin(admin.ModelAdmin):
     list_display=['user','street_address','apartment_address','zip','country','address_type','default']
     list_filter=['user','country','address_type']
-    search_fields=['user','street_address','apartment_address','zip']
+    search_fields=['user__username','street_address','apartment_address','zip']
 
-admin.site.register(TngProducts)
+class ProductsAdmin(admin.ModelAdmin):
+    list_filter = ['Name','category','subcategory','brand','model','label','slug']
+    search_fields=['Name','category','subcategory','brand','model','label','slug']
+
+admin.site.register(TngProducts,ProductsAdmin)
 admin.site.register(OrderItem)
 admin.site.register(Order,OrderAdmin)
 admin.site.register(Payment)

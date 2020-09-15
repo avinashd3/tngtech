@@ -562,6 +562,10 @@ textarea.input {
   visibility: visible;
 }
 
+.dropdown-backdrop{
+  position: static;
+}
+
 .cart-dropdown .cart-list {
   max-height: 180px;
   overflow-y: scroll;

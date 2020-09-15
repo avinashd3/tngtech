@@ -208,6 +208,7 @@
 					<li><a href="tel:+64 7 834 1325"><i class="fa fa-phone"></i> +64 7 834 1325</a></li>
 					<li><a href="mailto:info@tngtechsolutions.co.nz"><i
 								class="fa fa-envelope-o"></i>info@tngtechsolutions.co.nz</a></li>
+					<li><a href="mailto:Tngtechsolutions@gmail.com">Tngtechsolutions@gmail.com</a></li>
 					<!-- <li><a href="#"><i class="fa fa-map-marker"></i> 1734 Stonecoal Road</a></li> -->
 				</ul>
 				<ul class="header-links pull-right">
@@ -357,7 +358,7 @@
 										<h5>SUBTOTAL: ${{ ctq.get_total }}</h5>
 									</div>
 									<div class="cart-btns">
-										<a href="/order-summary/">View Cart</a>
+										<a href="http://127.0.0.1:8000/order-summary/">View Cart</a>
 										<a href="/checkout/">Checkout <i class="fa fa-arrow-circle-right"></i></a>
 									</div>
 								</div>
@@ -1451,6 +1452,7 @@
 								<li><a href="tel:+64 7 834 1325"><i class="fa fa-phone"></i>+64 7 834 1325</a></li>
 								<li><a href="mailto:info@tngtechsolutions.co.nz"><i
 											class="fa fa-envelope-o"></i>info@tngtechsolutions.co.nz</a></li>
+								<li><a href="mailto:Tngtechsolutions@gmail.com"><i class="fa fa-envelope-o"></i>Tngtechsolutions@gmail.com</a></li>
 							</ul>
 						</div>
 					</div>
@@ -1660,6 +1662,11 @@
 		}
 	</script>
 	{% else %}
+	<script type="text/javascript">
+		$('.cart-dropdown > .cart-btns > a').click(function(){
+			window.location.replace('http://127.0.0.1:8000/order-summary/');
+		})
+	</script>
 	<script type="text/javascript">
 		// window.onload = function () {
 		var cartsend = localStorage.getItem('cart');

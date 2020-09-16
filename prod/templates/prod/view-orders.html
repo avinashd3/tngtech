@@ -27,6 +27,7 @@
         <td>{{ order_item.payment.amount }}</td>
         <td>{{ order_item.payment.stripe_charge_id }}</td>
         <td>{{ order_item.ordered_date }}</td>
+        <td><a href="/trackorder/{{ order_item.ref_code }}/" class='btn btn-primary float-right'>TRACK</a></td>
       </tr>
       {% empty %}
         <tr>

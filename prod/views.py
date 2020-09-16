@@ -1041,3 +1041,16 @@ def modelprod(request,categoryslug,catandbrandslug,slug):
     elif kya == 'br':
         prod = TngProducts.objects.filter(category = categoryslug,brand = bryasc,model = slug)
     return render(request,'prod/modelprod.html',{'prod':prod})
+
+def trackorder(request,refcode):
+    order_tracked = Order.objects.filter(user=request.user,ordered=True,ref_code=refcode)
+    if order_tracked.exists():
+        context={
+            'ot':order_tracked
+        }
+    else:
+        context={
+            'ot':order_tracked
+        }
+        messages.warning(request,f'Oops! Order not found')
+    return render(request,'prod/trackorder.html',context)

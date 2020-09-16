@@ -1,0 +1,63 @@
+{% extends "prod/base.html" %}
+<!DOCTYPE html>
+{% block content %}
+<div class="table-responsive">
+  <h2>YOUR ORDERS</h2>
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Order ref_code</th>
+        <th scope="col">Being Delivered</th>
+        <th scope="col">Delivered</th>
+        <th scope="col">Refund Requested</th>
+        <th scope="col">Refund Granted</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for order_item in ot.all %}
+      <tr>
+        <th scope="row">{{ forloop.counter }}</th>
+        <td>
+          {{order_item.ref_code}}
+        </td>
+        {% if order_item.being_delivered %}
+        <td><i class="fa fa-check-circle" style="color:green;"></i></td>
+        {% else %}
+        <td><i class="fa fa-times-circle" style="color:red;"></i></td>
+        {% endif %}
+        {% if order_item.received %}
+        <td><i class="fa fa-check-circle" style="color:green;"></i></td>
+        {% else %}
+        <td><i class="fa fa-times-circle" style="color:red;"></i></td>
+        {% endif %}
+        {% if order_item.refund_requested %}
+        <td><i class="fa fa-check-circle" style="color:green;"></i></td>
+        {% else %}
+        <td><i class="fa fa-times-circle" style="color:red;"></i></td>
+        {% endif %}
+        {% if order_item.refund_granted %}
+        <td><i class="fa fa-check-circle" style="color:green;"></i></td>
+        {% else %}
+        <td><i class="fa fa-times-circle" style="color:red;"></i></td>
+        {% endif %}
+      </tr>
+      {% empty %}
+        <tr>
+          <td colspan="5">Oops! Order not found</td>
+        </tr>
+        <tr>
+          <td colspan="5">
+            <a href="/" class='btn btn-primary float-right'>Continue Shopping</a>
+          </td>
+        </tr>
+      {% endfor %}
+      <tr>
+        <td colspan="5">
+          <a href="{% url 'profile' %}" class='btn btn-primary float-right'>RETURN TO PROFILE</a>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+{% endblock content %}

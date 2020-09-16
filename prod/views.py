@@ -724,15 +724,16 @@ def profile(request):
 def vieworder(request):
     order_qs=Order.objects.filter(user=request.user,ordered=True)
     rct = order_qs.last()
-    context={
-        'object':order_qs
-    }
     if order_qs.exists():
         context={
+            'object':order_qs,
             'rct':rct
         }
     else:
         messages.warning(request,f'You do not have an order')
+        context={
+            'object':order_qs
+        }
     return render(request,'prod/view-orders.html',context)
 
 @login_required

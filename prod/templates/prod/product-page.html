@@ -466,6 +466,8 @@
 							</div> -->
 
 						<div class="add-to-cart">
+							<form method="POST">
+								{% csrf_token %}
 							<div class="qty-label">
 								Qty
 								<div class="input-number">
@@ -474,14 +476,35 @@
 									<span class="qty-down">-</span>
 								</div>
 							</div>
+						
 							{% if user.is_authenticated %}
 							{% if object.category == 'MR' or object.category == 'LR' or object.category == 'TR' %}
 							<a href="{% url 'onlinebooking' object.category %}"><button class="add-to-cart-btn"><i
 										class="fa fa-shopping-cart"></i>book
 									online</button></a>
 							{% else %}
-							<a href="{{ object.get_add_to_cart_url }}"><button class="add-to-cart-btn"><i
-										class="fa fa-shopping-cart"></i>add to cart</button></a>
+							<button type="submit" formaction="{{ object.get_add_to_cart_url }}" style="position: relative;
+							border: 2px solid transparent;
+							height: 40px;
+							padding: 0 30px;
+							background-color: #ef233c;
+							color: #FFF;
+							text-transform: uppercase;
+							font-weight: 700;
+							border-radius: 40px;
+							-webkit-transition: 0.2s all;
+							transition: 0.2s all;">add to cart</button>
+							<button type="submit" formaction="/checkbut/{{object.slug}}/" style="position: relative;
+								border: 2px solid transparent;
+								height: 40px;
+								padding: 0 30px;
+								background-color: #ef233c;
+								color: #FFF;
+								text-transform: uppercase;
+								font-weight: 700;
+								border-radius: 40px;
+								-webkit-transition: 0.2s all;
+								transition: 0.2s all;">Checkout</button>
 							{% endif %}
 							{% else %}
 							{% if object.category == 'MR' or object.category == 'LR' or object.category == 'TR' %}
@@ -489,10 +512,37 @@
 								class="fa fa-shopping-cart"></i>book
 							online</button></a>
 							{% else %}
-							<button class="add-to-cart-btn cart" id="{{ object.id }}"><i class="fa fa-shopping-cart"></i> add to
-								cart</button>
+							<!-- <button class="add-to-cart-btn cart" id="{{ object.id }}"><i class="fa fa-shopping-cart"></i> add to
+								cart</button> -->
+								<button class="cart" style="position: relative;
+								border: 2px solid transparent;
+								height: 40px;
+								padding: 0 30px;
+								background-color: #ef233c;
+								color: #FFF;
+								text-transform: uppercase;
+								font-weight: 700;
+								border-radius: 40px;
+								-webkit-transition: 0.2s all;
+								transition: 0.2s all;" id="{{ object.id }}"> add to
+									cart</button>
+								<button type="submit" formaction="/checkbut/{{object.slug}}/" style="position: relative;
+									border: 2px solid transparent;
+									height: 40px;
+									padding: 0 30px;
+									background-color: #ef233c;
+									color: #FFF;
+									text-transform: uppercase;
+									font-weight: 700;
+									border-radius: 40px;
+									-webkit-transition: 0.2s all;
+									transition: 0.2s all;">Checkout</button>
+									<!--have to use django sessions because when user is logged out 
+									adding to cart and checkout buttons don't update their quantity together
+									. Only add to cart one gets updated.   -->
 							{% endif %}
 							{% endif %}
+						</form>
 							<!-- <button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</button> -->
 						</div>
 

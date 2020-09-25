@@ -585,32 +585,78 @@ def add_to_cart(request,slug):
     tngproducts=get_object_or_404(TngProducts,slug=slug)
     #adding items as orderitem when calling this Function
 
-    order_item, created=OrderItem.objects.get_or_create(tngproducts=tngproducts,user=request.user,ordered=False) #written created because it is returning a tuple
+    if request.method == 'POST':
+        qnt = int(request.POST.get('prodqnty'))
+        order_item, created=OrderItem.objects.get_or_create(tngproducts=tngproducts,user=request.user,ordered=False) #written created because it is returning a tuple
 
-    #if user has item in his cart then we change the quantity
-            #Checking not checkedout order
-    order_qs=Order.objects.filter(user=request.user,ordered=False)  #it is query set filtering for current user and checking if product is not ordered
-    if order_qs.exists():
-        order=order_qs[0]
-        # check if order item is in order
-        if order.tngproduct.filter(tngproducts__slug=tngproducts.slug).exists():
-            order_item.quantity += 1
-            order_item.save()
-            messages.success(request, f'Product added successfully!')
-            return HttpResponseRedirect(reverse('itemlist', kwargs={'slug':slug}))
-            #return redirect('order-summary')
+        #if user has item in his cart then we change the quantity
+                #Checking not checkedout order
+        order_qs=Order.objects.filter(user=request.user,ordered=False)  #it is query set filtering for current user and checking if product is not ordered
+        if order_qs.exists():
+            order=order_qs[0]
+            # check if order item is in order
+            if order.tngproduct.filter(tngproducts__slug=tngproducts.slug).exists():
+                order_item.quantity += qnt
+                order_item.save()
+                messages.success(request, f'Product added successfully!')
+                return HttpResponseRedirect(reverse('itemlist', kwargs={'slug':slug}))
+                #return redirect('order-summary')
+            else:
+                order_item.quantity=qnt
+                order_item.save()
+                order.tngproduct.add(order_item)
+                messages.success(request, f'Product added successfully!')
+                return HttpResponseRedirect(reverse('itemlist', kwargs={'slug':slug}))
+                #return redirect('order-summary')
         else:
+            ordered_date=timezone.now()
+            order=Order.objects.create(user=request.user,ordered_date=ordered_date)
+            order_item.quantity = qnt
+            order_item.save()
             order.tngproduct.add(order_item)
-            messages.success(request, f'Product added successfully!')
+            messages.success(request, f'Product added successfully')
             return HttpResponseRedirect(reverse('itemlist', kwargs={'slug':slug}))
-            #return redirect('order-summary')
-    else:
-        ordered_date=timezone.now()
-        order=Order.objects.create(user=request.user,ordered_date=ordered_date)
-        order.tngproduct.add(order_item)
-        messages.success(request, f'Product added successfully')
-        return HttpResponseRedirect(reverse('itemlist', kwargs={'slug':slug}))
         #return redirect('itemlist')
+    return HttpResponseRedirect(reverse('itemlist', kwargs={'slug':slug}))
+
+@login_required
+def checkbut(request,slug):
+    tngproducts=get_object_or_404(TngProducts,slug=slug)
+    #adding items as orderitem when calling this Function
+
+    if request.method == 'POST':
+        qnt = int(request.POST.get('prodqnty'))
+        order_item, created=OrderItem.objects.get_or_create(tngproducts=tngproducts,user=request.user,ordered=False) #written created because it is returning a tuple
+
+        #if user has item in his cart then we change the quantity
+                #Checking not checkedout order
+        order_qs=Order.objects.filter(user=request.user,ordered=False)  #it is query set filtering for current user and checking if product is not ordered
+        if order_qs.exists():
+            order=order_qs[0]
+            # check if order item is in order
+            if order.tngproduct.filter(tngproducts__slug=tngproducts.slug).exists():
+                order_item.quantity += qnt
+                order_item.save()
+                messages.success(request, f'Product added successfully!')
+                # return HttpResponseRedirect(reverse('itemlist', kwargs={'slug':slug}))
+                return redirect('checku')
+            else:
+                order_item.quantity = qnt
+                order_item.save()
+                order.tngproduct.add(order_item)
+                messages.success(request, f'Product added successfully!')
+                # return HttpResponseRedirect(reverse('itemlist', kwargs={'slug':slug}))
+                return redirect('checku')
+        else:
+            ordered_date=timezone.now()
+            order=Order.objects.create(user=request.user,ordered_date=ordered_date)
+            order_item.quantity = qnt
+            order_item.save()
+            order.tngproduct.add(order_item)
+            messages.success(request, f'Product added successfully')
+            return redirect('checku')
+            # return HttpResponseRedirect(reverse('itemlist', kwargs={'slug':slug}))
+    return redirect('checku')
 
 @login_required
 def remove_from_cart(request,slug):

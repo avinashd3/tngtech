@@ -6,7 +6,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.utils.decorators import method_decorator
 from django.views.generic import ListView,DetailView,View
-from .models import TngProducts,OrderItem,Order,Address,Payment,Coupon,Refund,NewsLetter,OnlineBooking
+from .models import TngProducts,OrderItem,Order,Address,Payment,Coupon,Refund,NewsLetter,OnlineBooking,Colors,Product_model
 from changes.models import Shophome,HotDeals,Category,SubCategory,Brand,TopSelling
 from django.utils import timezone
 from django.urls import reverse
@@ -133,6 +133,8 @@ class HomeView(ListView):
     
     def get_context_data(self,**kwargs):
         context = super().get_context_data(**kwargs)
+        self.request.session['colorseld'] = ''
+        self.request.session['modelseld'] = ''
         shop_qs = Shophome.objects.all()[:3]
         context['shopc'] = shop_qs
         hdtime_qs = HotDeals.objects.all()[:1]
@@ -170,6 +172,24 @@ class ProductsDetailView(DetailView):
         context = super().get_context_data(**kwargs)
         allpr_qs = TngProducts.objects.all()
         context['allprd'] = allpr_qs
+        self.object = self.get_object()
+        # tngproducts=get_object_or_404(TngProducts,slug=self.kwargs)
+        try:
+            colorseld = self.request.session['colorseld']
+            context['clrsld'] = colorseld
+            # self.request.session['colorseld'] = ''
+        except KeyError:
+            self.request.session['colorseld'] = ''
+        try:
+            modelseld = self.request.session['modelseld']
+            context['modelsld'] = modelseld
+            # self.request.session['modelseld'] = ''
+        except KeyError:
+            self.request.session['modelseld'] = ''
+        clr_qs = Colors.objects.filter(product=self.object)
+        context['clrs'] = clr_qs
+        prm_qs = Product_model.objects.filter(product=self.object)
+        context['prodmod'] = prm_qs
         if self.request.user.is_authenticated:
             if Order.objects.filter(user=self.request.user,ordered=False).exists():
                 car_qs = Order.objects.get(user=self.request.user,ordered=False)
@@ -587,6 +607,9 @@ def add_to_cart(request,slug):
 
     if request.method == 'POST':
         qnt = int(request.POST.get('prodqnty'))
+        rd = request.POST.get('redda')
+        mds = request.POST.get('modda')
+        # print(rd)
         order_item, created=OrderItem.objects.get_or_create(tngproducts=tngproducts,user=request.user,ordered=False) #written created because it is returning a tuple
 
         #if user has item in his cart then we change the quantity
@@ -597,12 +620,16 @@ def add_to_cart(request,slug):
             # check if order item is in order
             if order.tngproduct.filter(tngproducts__slug=tngproducts.slug).exists():
                 order_item.quantity += qnt
+                order_item.product_colour = rd
+                order_item.prouct_model = mds
                 order_item.save()
                 messages.success(request, f'Product added successfully!')
                 return HttpResponseRedirect(reverse('itemlist', kwargs={'slug':slug}))
                 #return redirect('order-summary')
             else:
                 order_item.quantity=qnt
+                order_item.product_colour = rd
+                order_item.prouct_model = mds
                 order_item.save()
                 order.tngproduct.add(order_item)
                 messages.success(request, f'Product added successfully!')
@@ -612,6 +639,8 @@ def add_to_cart(request,slug):
             ordered_date=timezone.now()
             order=Order.objects.create(user=request.user,ordered_date=ordered_date)
             order_item.quantity = qnt
+            order_item.product_colour = rd
+            order_item.prouct_model = mds
             order_item.save()
             order.tngproduct.add(order_item)
             messages.success(request, f'Product added successfully')
@@ -652,6 +681,8 @@ def checkbut(request,slug):
 
     if request.method == 'POST':
         qnt = int(request.POST.get('prodqnty'))
+        rd = request.POST.get('redda')
+        mds = request.POST.get('modda')
         order_item, created=OrderItem.objects.get_or_create(tngproducts=tngproducts,user=request.user,ordered=False) #written created because it is returning a tuple
 
         #if user has item in his cart then we change the quantity
@@ -662,12 +693,16 @@ def checkbut(request,slug):
             # check if order item is in order
             if order.tngproduct.filter(tngproducts__slug=tngproducts.slug).exists():
                 order_item.quantity += qnt
+                order_item.product_colour = rd
+                order_item.prouct_model = mds
                 order_item.save()
                 messages.success(request, f'Product added successfully!')
                 # return HttpResponseRedirect(reverse('itemlist', kwargs={'slug':slug}))
                 return redirect('checku')
             else:
                 order_item.quantity = qnt
+                order_item.product_colour = rd
+                order_item.prouct_model = mds
                 order_item.save()
                 order.tngproduct.add(order_item)
                 messages.success(request, f'Product added successfully!')
@@ -677,6 +712,8 @@ def checkbut(request,slug):
             ordered_date=timezone.now()
             order=Order.objects.create(user=request.user,ordered_date=ordered_date)
             order_item.quantity = qnt
+            order_item.product_colour = rd
+            order_item.prouct_model = mds
             order_item.save()
             order.tngproduct.add(order_item)
             messages.success(request, f'Product added successfully')
@@ -1126,3 +1163,16 @@ def trackorder(request,refcode):
         }
         messages.warning(request,f'Oops! Order not found')
     return render(request,'prod/trackorder.html',context)
+
+def colorselector(request,slug,colour):
+    if request.method == 'POST':
+        vl = request.POST.get('imgoption')
+        rd = request.POST.get('redda')
+        request.session['colorseld'] = colour
+    return HttpResponseRedirect(reverse('itemlist', kwargs={'slug':slug}))
+
+def modelselector(request,slug,prodmodel):
+    if request.method == 'POST':
+        rd = request.POST.get('modda')
+        request.session['modelseld'] = prodmodel
+    return HttpResponseRedirect(reverse('itemlist', kwargs={'slug':slug}))

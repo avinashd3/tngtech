@@ -26,6 +26,8 @@ ADDRESS_CHOICES=(
 def slug_unique_code():
         return ''.join(random.choices(string.ascii_lowercase + string.digits, k=6))
 
+
+
 #Products
 class TngProducts(models.Model):
     CATEGORY_CHOICES=(
@@ -93,7 +95,20 @@ class TngProducts(models.Model):
     class Meta:
         verbose_name_plural = 'Products'
     
+class Colors(models.Model):
+    image = models.ImageField(upload_to='product_pics')
+    name = models.CharField(max_length=50)
+    product = models.ForeignKey(TngProducts,on_delete=models.CASCADE,blank=True,null=True)
 
+    def __str__(self):
+        return self.name
+
+class Product_model(models.Model):
+    name = models.CharField(max_length=100)
+    product = models.ForeignKey(TngProducts,on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.name
 
 #It links products to cart.Once a product is added to cart it becomes an orderitem
 #Intermediate model between Order and Products
@@ -102,6 +117,8 @@ class OrderItem(models.Model):
     ordered=models.BooleanField(default=False)
     tngproducts=models.ForeignKey(TngProducts,on_delete=models.CASCADE,default='')
     quantity=models.IntegerField(default=1)
+    product_colour = models.CharField(max_length=30,blank=True,null=True)
+    product_model = models.CharField(max_length=30,blank=True,null=True)
 
     def __str__(self):
         return f"{self.quantity} of {self.tngproducts.Name}"

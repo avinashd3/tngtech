@@ -77,6 +77,8 @@ urlpatterns = [
     path('prod-br/<slug>/',ob.prbybr,name='prbybr'),
     path('trackorder/<refcode>/',ob.trackorder,name='trackorder'),
     path('checkbut/<slug>/',ob.checkbut,name='checkbut'),
+    path('clrslc/<slug>/<colour>/',ob.colorselector,name='clrslc'),
+    path('modslc/<slug>/<prodmodel>/',ob.modelselector,name='modslc'),
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

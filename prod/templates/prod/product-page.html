@@ -468,7 +468,42 @@
 						<div class="add-to-cart">
 							<form method="POST">
 								{% csrf_token %}
-							<div class="qty-label">
+								<input type="hidden" value="{{clrsld}}" name="redda">
+								{% if not clrsld == "" %}
+								{% if clrs %}
+								<label>Color selected: <span>{{clrsld}}</span></label>
+								{% endif %}
+								{% endif %}
+								<br>
+								<input type="hidden" value="{{modelsld}}" name="modda">
+								{% if not modelsld == "" %}
+								{% if prodmod %}
+								<label>Model selected: <span>{{modelsld}}</span></label>
+								{% endif %}
+								{% endif %}
+								<br>
+								{% if prodmod %}
+								<h3>Models:</h3>
+								{% endif %}
+								{% for prmd in prodmod %}
+								
+								<button type="submit" formaction="{% url 'modslc' object.slug prmd.name %}">{{ prmd.name }}</button>
+								<!-- <input type="button" value="{{ prmd.name }}" formaction="{% url 'modslc' object.slug prmd.name %}"> -->
+								
+								{% endfor %}
+								<br>
+								{% if clrs %}
+								<h3>Colours:</h3>
+								{% endif %}
+								<!-- <input type="hidden" name="imgoption" value="testing1"> -->
+								{% for clr in clrs %}
+								
+								<!-- <img src="{{ clr.image.url }}" width="50" height="50"> -->
+								<input type="image" src="{{ clr.image.url }}" width="50" height="50" formaction="{% url 'clrslc' object.slug clr.name %}">
+								
+								{% endfor %}
+								<br>
+								<div class="qty-label">
 								Qty
 								<div class="input-number">
 									<input type="number" min="1" oninput="validity.valid||(value='');" value="1" name="prodqnty">
